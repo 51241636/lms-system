@@ -26,4 +26,6 @@ public class ClassBatch {
     private List<SubjectBatches> subjectBatchesList;
     @OneToMany(mappedBy = "classBatchId",cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
+    @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
+    private List<Notification> notificationList;
 }

@@ -30,6 +30,8 @@ public class Student {
     @Email(message = "Invalid email address")
     @Column(unique = true, nullable = false)
     private String email;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "student")
+    private List<AssignmentSubmission>  assignmentSubmissions;
     @Pattern(
             regexp = "^07[0-9]{8}$",
             message = "Invalid Sri Lankan contact number"

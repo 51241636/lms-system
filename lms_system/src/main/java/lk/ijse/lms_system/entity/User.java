@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +38,8 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Notification> notificationList;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserStatus status;
