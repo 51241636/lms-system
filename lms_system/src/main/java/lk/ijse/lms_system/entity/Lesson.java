@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +23,8 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "classBatchId")
     private ClassBatch classBatch;
+    @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
+    private List<LessonContent> lessonContentList;
 
 
 
