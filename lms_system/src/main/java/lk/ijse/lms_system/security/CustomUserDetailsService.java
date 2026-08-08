@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         try{
             Optional<User> optionalUser = userRepository.findByUsername(username);
             if(optionalUser.isEmpty()){
-                Optional<Student> optionalStudent = studentRepository.findByUsername(username);
+                Optional<Student> optionalStudent = studentRepository.findByStudentUsername(username);
                 if(optionalStudent.isEmpty()){
                     throw new LmsSystemException(404,"User Not Found");
                 }
