@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lk.ijse.lms_system.status.UserRole;
+import lk.ijse.lms_system.status.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,5 +33,11 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "userId")
     private Subject subject;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
 }

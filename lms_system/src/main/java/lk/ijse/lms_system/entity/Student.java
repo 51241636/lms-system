@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lk.ijse.lms_system.status.StudentStatus;
+import lk.ijse.lms_system.status.SubjectStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,4 +40,7 @@ public class Student {
     private String address;
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private List<StudentEnrollment> studentEnrollments;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StudentStatus studentStatus;
 }
