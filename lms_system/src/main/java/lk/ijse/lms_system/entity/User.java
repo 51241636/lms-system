@@ -31,7 +31,7 @@ public class User {
     )
     private String contact;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "subjectId")
     private Subject subject;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
