@@ -19,5 +19,7 @@ public class Subject {
     private String subjectName;
     @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
     private List<User> users;
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
+    private List<StudentEnrollment> studentEnrollments;
 
 }

@@ -1,12 +1,11 @@
 package lk.ijse.lms_system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +21,6 @@ public class Student {
     private String email;
     private String contact;
     private String address;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
+    private List<StudentEnrollment> studentEnrollments;
 }
