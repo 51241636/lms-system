@@ -1,6 +1,7 @@
 package lk.ijse.lms_system.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.lms_system.status.ClassBatchStatus;
 import lk.ijse.lms_system.status.SubjectStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,7 @@ public class Subject {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SubjectStatus subjectStatus;
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
+    private List<SubjectBatches> subjectBatchesList;
 
 }

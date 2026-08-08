@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +22,6 @@ public class ClassBatch {
     private String batchDescription;
     @Enumerated(EnumType.STRING)
     private ClassBatchStatus batchStatus;
+    @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
+    private List<SubjectBatches> subjectBatchesList;
 }
