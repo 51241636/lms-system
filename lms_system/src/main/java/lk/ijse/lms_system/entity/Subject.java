@@ -15,6 +15,7 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer subjectId;
+    @Column(unique = true, nullable = false )
     private String subjectName;
     @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
     private List<User> users;
