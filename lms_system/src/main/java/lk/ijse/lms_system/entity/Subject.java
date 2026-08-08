@@ -1,12 +1,11 @@
 package lk.ijse.lms_system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +16,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer subjectId;
     private String subjectName;
-
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
+    private List<User> users;
 
 }

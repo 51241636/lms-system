@@ -28,5 +28,8 @@ public class User {
             message = "Invalid Sri Lankan contact number"
     )
     private String contact;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private Subject subject;
 
 }
