@@ -62,7 +62,7 @@ public class SubjectServiceImpl implements SubjectService {
     public void deleteSubject(Integer subjectId) {
         try{
             Optional<Subject> byId = subjectRepository.findById(subjectId);
-            if(byId.isPresent()){
+            if(byId.isPresent() && SubjectStatus.ACTIVE.equals(byId.get().getSubjectStatus())){
                 Subject subject = byId.get();
                 subject.setSubjectStatus(SubjectStatus.INACTIVE);
                 subjectRepository.save(subject);

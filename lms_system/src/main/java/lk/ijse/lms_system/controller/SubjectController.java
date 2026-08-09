@@ -28,6 +28,7 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     //    add Subject
+    @PreAuthorize("hasRole('Admin')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse addSubject(@Valid @RequestBody SubjectDTO subjectDTO) {
         log.info("get subject detail");
@@ -38,6 +39,7 @@ public class SubjectController {
 
 
     //     update subject
+    @PreAuthorize("hasRole('Admin')")
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse updateSubject(@Valid @RequestBody SubjectDTO subjectDTO) {
         log.info("get update subject details");
@@ -47,6 +49,7 @@ public class SubjectController {
     }
 
     //    delete Subject
+    @PreAuthorize("hasRole('Admin')")
     @DeleteMapping(value = "/{subjectId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse deleteSubject(@PathVariable Integer subjectId) {
         log.info("get subject id for delete Subject");
@@ -66,6 +69,7 @@ public class SubjectController {
 
 
     //   search subjects using subject name
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping(value ="/filterSubject",produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse filterSubject(@RequestParam(value = "subjectName",required = false)String subjectName){
         List<SubjectDTO> getSubjectDTO = subjectService.searchSubjectByName(subjectName);

@@ -24,7 +24,7 @@ public class Student {
     private String studentName;
     @Column(unique = true,nullable = false,length = 50)
     private String studentUsername;
-    @Column(length = 50,nullable = false)
+    @Column(nullable = false)
     private String studentPassword;
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email address")
