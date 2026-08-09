@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
             }else{
-                String userRolesStr=optionalUser.get().getRole().toString();
+                String userRolesStr=optionalUser.get().getRole();
                 String[] roles=new String[0];
                 if(userRolesStr!= null && !userRolesStr.trim().isEmpty()){
                     roles = Arrays.stream(userRolesStr.split(",")).map(String::trim).map(role -> role.startsWith("ROLE_") ? role.substring(5) : role).filter(role -> !role.isEmpty()).toArray(String[]::new);

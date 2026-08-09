@@ -1,4 +1,5 @@
-package lk.ijse.lms_system.dto;
+package lk.ijse.lms_system.dto.response;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class GetUserDetailsDTO {
     private Long userId;
     private String username;
-    private String password;
     private String email;
     private String contact;
     private String userRole;
     private Integer subjetId;
+    private String subjectName;
 }

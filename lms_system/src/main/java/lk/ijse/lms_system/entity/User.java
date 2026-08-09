@@ -22,7 +22,7 @@ public class User {
     private Long userId;
     @Column(unique = true,nullable = false,length = 50)
     private String username;
-    @Column(length = 50,nullable = false)
+    @Column(nullable = false)
     private String password;
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email address")
@@ -36,8 +36,7 @@ public class User {
     @JoinColumn(name = "subjectId")
     private Subject subject;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private String role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Notification> notificationList;
     @Column(nullable = false)
