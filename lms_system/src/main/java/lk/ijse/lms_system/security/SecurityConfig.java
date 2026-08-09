@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/v1/user/loginUser").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/user/loginUser").permitAll().requestMatchers(HttpMethod.POST, "/v1/student/loginStudent").permitAll()
                         .anyRequest().authenticated()
                 ).exceptionHandling(exception -> exception.accessDeniedHandler(customAccessDeniedHandler))
                 .httpBasic(Customizer.withDefaults())

@@ -60,6 +60,7 @@ public class SubjectController {
 
 
     //    get all Subjects
+    @PreAuthorize("hasAnyRole('Admin','Teacher')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getAllSubjects() {
         log.info("get all subjects");

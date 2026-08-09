@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class StudentEnrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer enrollmentId;
+    private Long enrollmentId;
     @ManyToOne
     private Student student;
     @ManyToOne

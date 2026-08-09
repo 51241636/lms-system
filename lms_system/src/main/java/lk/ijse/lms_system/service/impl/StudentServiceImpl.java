@@ -1,12 +1,17 @@
 package lk.ijse.lms_system.service.impl;
 
+import jakarta.transaction.Transactional;
 import lk.ijse.lms_system.dto.LoginStudentDTO;
 import lk.ijse.lms_system.dto.StudentDTO;
 import lk.ijse.lms_system.dto.StudentLoginDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.entity.Student;
+import lk.ijse.lms_system.entity.StudentEnrollment;
+import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.exception.LmsSystemException;
+import lk.ijse.lms_system.repository.StudentEnrollmentRepository;
 import lk.ijse.lms_system.repository.StudentRepository;
+import lk.ijse.lms_system.repository.SubjectRepository;
 import lk.ijse.lms_system.service.StudentService;
 import lk.ijse.lms_system.status.StudentStatus;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +27,34 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SubjectRepository subjectRepository;
+    private final StudentEnrollmentRepository studentEnrollmentRepository;
 
+    @Transactional
     @Override
     public void registerStudent(StudentDTO studentDTO) {
         try{
             Student student = new Student();
             student.setStudentName(studentDTO.getStudentName());
             student.setStudentUsername(studentDTO.getStudentUsername());
-            student.setStudentPassword(passwordEncoder.encode(student.getStudentPassword()));
+            student.setStudentPassword(passwordEncoder.encode(studentDTO.getStudentPassword()));
             student.setEmail(studentDTO.getEmail());
             student.setContact(studentDTO.getContact());
             student.setAddress(studentDTO.getAddress());
             student.setStudentStatus(StudentStatus.ACTIVE);
-            studentRepository.save(student);
+            Student savedStudent = studentRepository.save(student);
+            for (Integer subjectId:studentDTO.getSubjectId()){
+                StudentEnrollment studentEnrollment=new StudentEnrollment();
+                studentEnrollment.setStudent(savedStudent);
+                Optional<Subject> subjectById = subjectRepository.findById(subjectId);
+                if(subjectById.isPresent()){
+                    studentEnrollment.setSubject(subjectById.get());
+                    studentEnrollmentRepository.save(studentEnrollment);
+                }else {
+                    throw new LmsSystemException(404,"subject not found");
+                }
+
+            }
         }catch(Exception e){
             throw e;
         }
@@ -48,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
                 Student student = byId.get();
                 student.setStudentName(studentDTO.getStudentName());
                 student.setStudentUsername(studentDTO.getStudentUsername());
-                student.setStudentPassword(passwordEncoder.encode(student.getStudentPassword()));
+                student.setStudentPassword(passwordEncoder.encode(studentDTO.getStudentPassword()));
                 student.setEmail(studentDTO.getEmail());
                 student.setContact(studentDTO.getContact());
                 student.setAddress(studentDTO.getAddress());
@@ -103,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
            Optional<Student> byStudentUsername = studentRepository.findByStudentUsername(studentLoginDTO.getStudentUsername());
            if(byStudentUsername.isPresent()){
                 Student student = byStudentUsername.get();
-                if(!passwordEncoder.matches(student.getStudentPassword(),student.getStudentPassword())){
+                if(!passwordEncoder.matches(studentLoginDTO.getStudentPassword(),student.getStudentPassword())){
                     throw new LmsSystemException(404,"password doesnt match");
                 }
                 return new LoginStudentDTO(student.getStudentId(),student.getStudentUsername(),"STUDENT");
