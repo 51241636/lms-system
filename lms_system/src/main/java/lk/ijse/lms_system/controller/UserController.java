@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserController {
     private final JWTUtil jwtUtil;
 
 //    register User
+@PreAuthorize("hasRole('Admin')")
     @PostMapping(value = "/registerUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse registerUser(@Valid @RequestBody UserDTO userDTO) {
         log.info("get user details");
@@ -50,6 +52,7 @@ public class UserController {
     }
 
 //     update User
+    @PreAuthorize("hasRole('Admin')")
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.info("get update user details");
@@ -59,6 +62,7 @@ public class UserController {
     }
 
 //    delete User
+@PreAuthorize("hasRole('Admin')")
     @DeleteMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse deleteUser(@PathVariable Long userId) {
         log.info("get user id for delete user");
@@ -68,6 +72,7 @@ public class UserController {
     }
 
 //    get all registered users
+@PreAuthorize("hasAnyRole('Admin','Teacher')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getAllUsers() {
         log.info("get all users");

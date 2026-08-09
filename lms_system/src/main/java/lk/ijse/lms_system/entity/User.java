@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lk.ijse.lms_system.status.UserRole;
 import lk.ijse.lms_system.status.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;

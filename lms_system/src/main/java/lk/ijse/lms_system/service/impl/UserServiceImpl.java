@@ -13,6 +13,7 @@ import lk.ijse.lms_system.status.SubjectStatus;
 import lk.ijse.lms_system.status.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -144,7 +145,10 @@ public class UserServiceImpl implements UserService {
                 throw new LmsSystemException(404,"Registered Users are  not found");
             }
             for (User user : allUser) {
-                getUserDetailsDTO.add(new GetUserDetailsDTO(user.getUserId(),user.getUsername(),user.getEmail(),user.getContact(),user.getRole(),user.getSubject().getSubjectId(),user.getSubject().getSubjectName()));
+                if(user.getStatus() == UserStatus.ACTIVE){
+                    getUserDetailsDTO.add(new GetUserDetailsDTO(user.getUserId(),user.getUsername(),user.getEmail(),user.getContact(),user.getRole(),user.getSubject().getSubjectId(),user.getSubject().getSubjectName(),user.getStatus().toString()));
+                }
+
             }
             log.info("add all users to the list");
             return getUserDetailsDTO;
@@ -164,7 +168,10 @@ public class UserServiceImpl implements UserService {
                 throw new LmsSystemException(404,"Registered Users are  not found");
             }
             for (User user : filteredUsers) {
-                getFilteredUserDetailsDTO.add(new GetUserDetailsDTO(user.getUserId(),user.getUsername(),user.getEmail(),user.getContact(),user.getRole(),user.getSubject().getSubjectId(),user.getSubject().getSubjectName()));
+                if(user.getStatus() == UserStatus.ACTIVE){
+                    getFilteredUserDetailsDTO.add(new GetUserDetailsDTO(user.getUserId(),user.getUsername(),user.getEmail(),user.getContact(),user.getRole(),user.getSubject().getSubjectId(),user.getSubject().getSubjectName(),user.getStatus().toString()));
+                }
+
             }
             log.info("add all filtered users to the list");
             return getFilteredUserDetailsDTO;

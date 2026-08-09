@@ -15,4 +15,5 @@ public class GetUserDetailsDTO {
     private String userRole;
     private Integer subjetId;
     private String subjectName;
+    private String userStatus;
 }
