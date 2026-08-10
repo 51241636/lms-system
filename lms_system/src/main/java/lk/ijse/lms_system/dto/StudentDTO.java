@@ -19,4 +19,5 @@ public class StudentDTO {
     private String contact;
     private String address;
     private List<Integer> subjectId;
+    private Long classBatchId;
 }

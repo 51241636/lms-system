@@ -45,4 +45,7 @@ public class Student {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StudentStatus studentStatus;
+    @ManyToOne
+    @JoinColumn(name = "classBatchId")
+    private ClassBatch classBatch;
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,13 +20,15 @@ public class ClassBatch {
     @Column(unique = true, nullable = false)
     private String batchName;
     @Column(nullable = false)
-    private String batchDescription;
+    private LocalDate batchStartDate;
     @Enumerated(EnumType.STRING)
     private ClassBatchStatus batchStatus;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
-    private List<SubjectBatches> subjectBatchesList;
+    private List<SubjectClass> subjectClassesList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<Notification> notificationList;
+    @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
+    private List<Student> studentList;
 }

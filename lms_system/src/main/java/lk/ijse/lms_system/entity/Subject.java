@@ -27,6 +27,6 @@ public class Subject {
     @Enumerated(EnumType.STRING)
     private SubjectStatus subjectStatus;
     @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL)
-    private List<SubjectBatches> subjectBatchesList;
+    private List<SubjectClass> subjectClassList;
 
 }

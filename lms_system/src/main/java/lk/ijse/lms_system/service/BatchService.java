@@ -1,0 +1,15 @@
+package lk.ijse.lms_system.service;
+
+import lk.ijse.lms_system.dto.ClassBatchDTO;
+import lk.ijse.lms_system.dto.StudentDTO;
+import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+
+import java.util.List;
+
+public interface BatchService {
+    void addBatch(ClassBatchDTO classBatchDTO);
+    void updateBatch(ClassBatchDTO classBatchDTO);
+    void deleteBatch(Long classBathId);
+    List<ClassBatchDTO> getAllBatches();
+    List<StudentDetailDTO> getAllBatchRelatedStudents(long classBathId);
+}

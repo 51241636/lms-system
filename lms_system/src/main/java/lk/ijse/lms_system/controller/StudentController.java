@@ -43,6 +43,7 @@ public class StudentController {
     public CommonResponse loginStudent(@Valid @RequestBody StudentLoginDTO studentLoginDTO) {
         log.info("get studentUserName and studentPassword");
         LoginStudentDTO loginStudent = studentService.getLoginStudent(studentLoginDTO);
+//        System.out.println(loginStudent.get);
         log.info("get entered student userDetails");
         String token = jwtUtil.generatedToken(loginStudent.getStudentId(), loginStudent.getRole(), loginStudent.getStudentUserName());
         log.info("get entered student token");
@@ -76,6 +77,16 @@ public class StudentController {
         log.info("get all students");
         List<StudentDetailDTO> allStudents = studentService.getAllStudents();
         return new CommonResponse(OPERATION_SUCCSESS,allStudents,RESPONSE_MESSAGE);
+    }
+
+    //    get all logged student subjects
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping(value = "/loggedStudentSubjects/{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getLoggedStudentSubjects(@PathVariable Long studentId) {
+        log.info("get logged student subject details");
+        List<SubjectDTO> loggedStudentSubjects = studentService.getLoggedStudentSubjects(studentId);
+        return new CommonResponse(OPERATION_SUCCSESS,loggedStudentSubjects,RESPONSE_MESSAGE);
+
     }
 
 

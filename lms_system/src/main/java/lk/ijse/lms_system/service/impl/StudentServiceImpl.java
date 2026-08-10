@@ -4,15 +4,19 @@ import jakarta.transaction.Transactional;
 import lk.ijse.lms_system.dto.LoginStudentDTO;
 import lk.ijse.lms_system.dto.StudentDTO;
 import lk.ijse.lms_system.dto.StudentLoginDTO;
+import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Student;
 import lk.ijse.lms_system.entity.StudentEnrollment;
 import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.exception.LmsSystemException;
+import lk.ijse.lms_system.repository.BatchRepository;
 import lk.ijse.lms_system.repository.StudentEnrollmentRepository;
 import lk.ijse.lms_system.repository.StudentRepository;
 import lk.ijse.lms_system.repository.SubjectRepository;
 import lk.ijse.lms_system.service.StudentService;
+import lk.ijse.lms_system.status.ClassBatchStatus;
 import lk.ijse.lms_system.status.StudentStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +32,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
     private final SubjectRepository subjectRepository;
+    private final BatchRepository batchRepository;
     private final StudentEnrollmentRepository studentEnrollmentRepository;
 
     @Transactional
@@ -42,6 +47,13 @@ public class StudentServiceImpl implements StudentService {
             student.setContact(studentDTO.getContact());
             student.setAddress(studentDTO.getAddress());
             student.setStudentStatus(StudentStatus.ACTIVE);
+            Optional<ClassBatch> classBatch = batchRepository.findById(studentDTO.getClassBatchId());
+            if(classBatch.isPresent() && classBatch.get().getBatchStatus().equals(ClassBatchStatus.ACTIVE)){
+                student.setClassBatch(classBatch.get());
+            }else {
+                throw new LmsSystemException(404,"batch not found");
+            }
+
             Student savedStudent = studentRepository.save(student);
             for (Integer subjectId:studentDTO.getSubjectId()){
                 StudentEnrollment studentEnrollment=new StudentEnrollment();
@@ -73,6 +85,12 @@ public class StudentServiceImpl implements StudentService {
                 student.setContact(studentDTO.getContact());
                 student.setAddress(studentDTO.getAddress());
                 student.setStudentStatus(StudentStatus.ACTIVE);
+                Optional<ClassBatch> classBatch = batchRepository.findById(studentDTO.getClassBatchId());
+                if(classBatch.isPresent()){
+                    student.setClassBatch(classBatch.get());
+                }else {
+                    throw new LmsSystemException(404,"batch not found");
+                }
                 studentRepository.save(student);
 
             }else {
@@ -133,5 +151,25 @@ public class StudentServiceImpl implements StudentService {
        }catch(Exception e){
            throw e;
        }
+    }
+
+    @Override
+    public List<SubjectDTO> getLoggedStudentSubjects(Long studentId) {
+        try{
+            Optional<Student> studentById = studentRepository.findById(studentId);
+            List<SubjectDTO> studentLoggedSubjectList = new ArrayList<>();
+            if(studentById.isPresent() && studentById.get().getStudentStatus().equals(StudentStatus.ACTIVE)){
+                lk.ijse.lms_system.entity.Student student =studentById.get();
+                for(StudentEnrollment studentEnrollment:student.getStudentEnrollments()){
+                    studentLoggedSubjectList.add(new SubjectDTO(studentEnrollment.getSubject().getSubjectId(),studentEnrollment.getSubject().getSubjectName()));
+                }
+                return studentLoggedSubjectList;
+
+            }else {
+                throw new LmsSystemException(404,"student not found");
+            }
+        }catch (Exception e){
+            throw  e;
+        }
     }
 }

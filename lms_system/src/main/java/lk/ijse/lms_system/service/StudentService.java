@@ -15,5 +15,6 @@ public interface StudentService {
     void deleteStudent(Long studentId);
     List<StudentDetailDTO> getAllStudents();
     LoginStudentDTO getLoginStudent(StudentLoginDTO studentLoginDTO);
+    List<SubjectDTO> getLoggedStudentSubjects(Long studentId);
 //    List<StudentDTO> searchStudentByStudentName(String subjectName);
 }

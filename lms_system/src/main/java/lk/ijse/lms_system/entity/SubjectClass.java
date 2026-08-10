@@ -10,10 +10,10 @@ import org.hibernate.engine.jdbc.batch.spi.Batch;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class SubjectBatches {
+public class SubjectClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subjectBatchesId;
+    private Long subjectClassId;
     @ManyToOne
     @JoinColumn(name = "subjectId")
     private Subject subject;
