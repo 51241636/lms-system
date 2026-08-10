@@ -60,7 +60,7 @@ public class SubjectController {
 
 
     //    get all Subjects
-    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getAllSubjects() {
         log.info("get all subjects");
@@ -76,4 +76,16 @@ public class SubjectController {
         List<SubjectDTO> getSubjectDTO = subjectService.searchSubjectByName(subjectName);
         return new CommonResponse(OPERATION_SUCCSESS,getSubjectDTO,RESPONSE_MESSAGE);
     }
+
+    //   get user related subject
+    @PreAuthorize("hasRole('Teacher')")
+    @GetMapping(value ="/userRelatedSubject/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse userRelatedSubject(@PathVariable Long userId){
+        SubjectDTO subjectDTO = subjectService.loadUserRelatedSubject(userId);
+        return new CommonResponse(OPERATION_SUCCSESS,subjectDTO,RESPONSE_MESSAGE);
+    }
+
+
+
+
 }

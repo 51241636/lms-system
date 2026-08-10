@@ -24,7 +24,7 @@ public class ClassBatch {
     @Enumerated(EnumType.STRING)
     private ClassBatchStatus batchStatus;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
-    private List<SubjectClass> subjectClassesList;
+    private List<SubjectBatch> subjectClassesList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)

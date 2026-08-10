@@ -2,12 +2,16 @@ package lk.ijse.lms_system.service.impl;
 
 import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.entity.Subject;
+import lk.ijse.lms_system.entity.User;
 import lk.ijse.lms_system.exception.LmsSystemException;
 import lk.ijse.lms_system.repository.SubjectRepository;
+import lk.ijse.lms_system.repository.UserRepository;
 import lk.ijse.lms_system.service.SubjectService;
 import lk.ijse.lms_system.status.SubjectStatus;
+import lk.ijse.lms_system.status.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +24,8 @@ import java.util.Optional;
 public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectRepository subjectRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
 //    save subject
     @Override
@@ -114,5 +120,20 @@ public class SubjectServiceImpl implements SubjectService {
         }catch (Exception e){
             throw e;
         }
+    }
+
+    @Override
+    public SubjectDTO loadUserRelatedSubject(Long userId) {
+       try{
+           Optional<User> userById = userRepository.findById(userId);
+           if(userById.isPresent() && userById.get().getStatus().equals(UserStatus.ACTIVE)){
+
+               return modelMapper.map(userById.get().getSubject(),SubjectDTO.class);
+           }else {
+               throw new LmsSystemException(404,"user not found");
+           }
+       }catch (Exception e){
+           throw e;
+       }
     }
 }

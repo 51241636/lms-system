@@ -9,4 +9,5 @@ public interface SubjectService {
     void deleteSubject(Integer subjectId);
     List<SubjectDTO> getAllSubjects();
     List<SubjectDTO> searchSubjectByName(String subjectName);
+    SubjectDTO loadUserRelatedSubject(Long userId);
 }

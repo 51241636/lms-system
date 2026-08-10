@@ -29,7 +29,7 @@ private final BatchService batchService;
 
 
     //    add class batch
-    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @PreAuthorize("hasRole('Admin')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse addBatch(@Valid @RequestBody ClassBatchDTO classBatchDTO) {
         log.info("get ClassBatch detail");
@@ -50,7 +50,7 @@ private final BatchService batchService;
     }
 
     //    delete Subject
-    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @PreAuthorize("hasAnyRole('Admin')")
     @DeleteMapping(value = "/{classBatchId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse deleteClassBatch(@PathVariable Long classBatchId) {
         log.info("get classBatch id for delete ClassBatch");
