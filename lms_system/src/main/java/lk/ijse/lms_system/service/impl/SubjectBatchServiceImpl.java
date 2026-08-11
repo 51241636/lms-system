@@ -1,6 +1,7 @@
 package lk.ijse.lms_system.service.impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.SubjectBatchDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Subject;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,6 +54,9 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
             throw e;
         }
     }
+
+
+
 
 
 }

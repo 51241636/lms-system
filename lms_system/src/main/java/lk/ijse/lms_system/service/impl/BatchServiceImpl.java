@@ -11,6 +11,7 @@ import lk.ijse.lms_system.service.BatchService;
 import lk.ijse.lms_system.status.ClassBatchStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @Slf4j
 public class BatchServiceImpl implements BatchService {
     private final BatchRepository batchRepository;
+    private final ModelMapper modelMapper;
     @Override
     public void addBatch(ClassBatchDTO classBatchDTO) {
         try{
@@ -90,5 +92,17 @@ public class BatchServiceImpl implements BatchService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+
+    //    after teacher login when click subject then get teacher related batch list using subjectId
+    @Override
+    public List<ClassBatchDTO> getAllTeacherRelatedBatches(Integer subjectId) {
+        List<ClassBatch> teacherRelatedClassBatches = batchRepository.teacherRelatedBatches(subjectId);
+        List<ClassBatchDTO> classBatchDTOList = new ArrayList<>();
+        for(ClassBatch classBatch:teacherRelatedClassBatches){
+            classBatchDTOList.add(modelMapper.map(classBatch,ClassBatchDTO.class));
+        }
+        return classBatchDTOList;
     }
 }

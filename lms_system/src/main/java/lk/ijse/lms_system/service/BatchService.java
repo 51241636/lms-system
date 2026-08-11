@@ -12,4 +12,5 @@ public interface BatchService {
     void deleteBatch(Long classBathId);
     List<ClassBatchDTO> getAllBatches();
     List<StudentDetailDTO> getAllBatchRelatedStudents(long classBathId);
+    List<ClassBatchDTO> getAllTeacherRelatedBatches(Integer subjectId);
 }

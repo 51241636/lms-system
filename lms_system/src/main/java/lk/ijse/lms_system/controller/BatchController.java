@@ -79,6 +79,19 @@ public CommonResponse getBatchRelatedStudentList(@PathVariable Long classBatchId
 }
 
 
+// get teacher related batch list
+//    get class batch related student list
+@PreAuthorize("hasRole('Teacher')")
+@GetMapping(value = "/teacherRelatedBatches/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
+public CommonResponse teacherRelatedBatchList(@PathVariable Integer subjectId) {
+    log.info("subject id get");
+    List<ClassBatchDTO> allTeacherRelatedBatches = batchService.getAllTeacherRelatedBatches(subjectId);
+    return new CommonResponse(OPERATION_SUCCSESS,allTeacherRelatedBatches,RESPONSE_MESSAGE);
+}
+
+
+
+
 
 
 }

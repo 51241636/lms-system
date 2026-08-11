@@ -24,7 +24,7 @@ public class SubjectBatchController {
 
 
     //    add subjectBatch
-    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @PreAuthorize("hasRole('Admin')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse addSubjectBatch(@Valid @RequestBody SubjectBatchDTO subjectBatchDTO) {
         log.info("get subjectBatch details");
@@ -32,5 +32,6 @@ public class SubjectBatchController {
         log.info("add subjectBatches success");
         return new CommonResponse(OPERATION_SUCCSESS,RESPONSE_MESSAGE);
     }
+
 
 }
