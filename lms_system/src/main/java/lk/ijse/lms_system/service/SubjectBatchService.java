@@ -7,8 +7,4 @@ import java.util.List;
 
 public interface SubjectBatchService {
     void addSubjectBatch(SubjectBatchDTO subjectBatchDTO);
-    void updateSubjectBatch(SubjectBatchDTO subjectBatchDTO);
-    void deleteSubjectBatch(Long subjectBatchId);
-//    List<SubjectDTO> getAllSubjectsBatch();
-//    List<SubjectDTO> searchSubjectByName(String subjectName);
 }

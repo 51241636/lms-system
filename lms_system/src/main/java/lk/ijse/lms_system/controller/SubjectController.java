@@ -63,8 +63,9 @@ public class SubjectController {
     @PreAuthorize("hasRole('Admin')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getAllSubjects() {
-        log.info("get all subjects");
+
         List<SubjectDTO> allSubjects = subjectService.getAllSubjects();
+        log.info("get all subjects success");
         return new CommonResponse(OPERATION_SUCCSESS,allSubjects,RESPONSE_MESSAGE);
     }
 
@@ -74,6 +75,7 @@ public class SubjectController {
     @GetMapping(value ="/filterSubject",produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse filterSubject(@RequestParam(value = "subjectName",required = false)String subjectName){
         List<SubjectDTO> getSubjectDTO = subjectService.searchSubjectByName(subjectName);
+        log.info("filtered subject list success");
         return new CommonResponse(OPERATION_SUCCSESS,getSubjectDTO,RESPONSE_MESSAGE);
     }
 

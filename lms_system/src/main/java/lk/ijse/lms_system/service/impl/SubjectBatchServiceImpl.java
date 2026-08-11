@@ -34,10 +34,12 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
                 for(Integer subjectId:subjectBatchDTO.getSubjectIdList()){
                     Optional<Subject> subjectById = subjectRepository.findById(subjectId);
                     if(subjectById.isPresent()){
+                        log.info("subject is present");
                             SubjectBatch subjectBatch = new SubjectBatch();
                             subjectBatch.setSubject(subjectById.get());
                             subjectBatch.setClassBatch(classBatchById.get());
                             subjectBatchRepository.save(subjectBatch);
+                            log.info("subject batch saved successfully");
                     }else {
                         throw new LmsSystemException(404,"subject not found");
                     }
@@ -51,13 +53,5 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
         }
     }
 
-    @Override
-    public void updateSubjectBatch(SubjectBatchDTO subjectBatchDTO) {
 
-    }
-
-    @Override
-    public void deleteSubjectBatch(Long subjectBatchId) {
-
-    }
 }
