@@ -16,7 +16,7 @@ import java.util.List;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer lessonId;
     @Column(nullable = false)
     private Integer lessonNumber;
     @Column(nullable = false)
@@ -26,8 +26,8 @@ public class Lesson {
     @Column(nullable = false)
     private LocalDate lessonCreateDate;
     @ManyToOne
-    @JoinColumn(name = "classBatchId")
-    private ClassBatch classBatch;
+    @JoinColumn(name = "subjectBatchId")
+    private SubjectBatch subjectBatch;
     @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
     private List<LessonContent> lessonContentList;
     @Enumerated(EnumType.STRING)

@@ -26,8 +26,6 @@ public class ClassBatch {
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<SubjectBatch> subjectClassesList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
-    private List<Lesson> lessonList;
-    @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<Notification> notificationList;
     @OneToMany(mappedBy = "classBatch",cascade = CascadeType.ALL)
     private List<Student> studentList;
