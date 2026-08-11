@@ -5,6 +5,7 @@ import lk.ijse.lms_system.constant.CommonResponse;
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+import lk.ijse.lms_system.dto.response.TeacherBatchDTO;
 import lk.ijse.lms_system.service.BatchService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,12 +86,9 @@ public CommonResponse getBatchRelatedStudentList(@PathVariable Long classBatchId
 @GetMapping(value = "/teacherRelatedBatches/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
 public CommonResponse teacherRelatedBatchList(@PathVariable Integer subjectId) {
     log.info("subject id get");
-    List<ClassBatchDTO> allTeacherRelatedBatches = batchService.getAllTeacherRelatedBatches(subjectId);
+    List<TeacherBatchDTO> allTeacherRelatedBatches = batchService.getAllTeacherRelatedBatches(subjectId);
     return new CommonResponse(OPERATION_SUCCSESS,allTeacherRelatedBatches,RESPONSE_MESSAGE);
 }
-
-
-
 
 
 

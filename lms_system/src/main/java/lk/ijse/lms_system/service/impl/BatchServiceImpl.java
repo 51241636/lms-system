@@ -3,6 +3,7 @@ package lk.ijse.lms_system.service.impl;
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.StudentDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+import lk.ijse.lms_system.dto.response.TeacherBatchDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Student;
 import lk.ijse.lms_system.exception.LmsSystemException;
@@ -97,12 +98,11 @@ public class BatchServiceImpl implements BatchService {
 
     //    after teacher login when click subject then get teacher related batch list using subjectId
     @Override
-    public List<ClassBatchDTO> getAllTeacherRelatedBatches(Integer subjectId) {
-        List<ClassBatch> teacherRelatedClassBatches = batchRepository.teacherRelatedBatches(subjectId);
-        List<ClassBatchDTO> classBatchDTOList = new ArrayList<>();
-        for(ClassBatch classBatch:teacherRelatedClassBatches){
-            classBatchDTOList.add(modelMapper.map(classBatch,ClassBatchDTO.class));
-        }
-        return classBatchDTOList;
+    public List<TeacherBatchDTO> getAllTeacherRelatedBatches(Integer subjectId) {
+        //        List<TeacherBatchDTO> classBatchDTOList = new ArrayList<>();
+//        for(ClassBatch classBatch:teacherRelatedClassBatches){
+//            classBatchDTOList.add(new TeacherBatchDTO(classBatch.));
+//        }
+        return batchRepository.teacherRelatedBatches(subjectId);
     }
 }
