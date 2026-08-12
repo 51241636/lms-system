@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · Teacher Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">C</div>
+            <div class="brand-text"><strong>Comstream</strong><span>Commerce Stream LMS</span></div>
+        </div>
+
+        <p class="nav-label">Workspace</p>
+        <ul class="nav">
+            <li><a href="#" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>My Classes</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Grading</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Students</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Reports</a></li>
+        </ul>
+
+        <div class="sidebar-legend">
+            <p>Subjects</p>
+            <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:#16A38A"></span>Economics</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#F2A93B"></span>Accounting</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span>Business Studies</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span>ICT</div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+      <span class="role-tag tag-teacher">
+        <svg width="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+        Teacher
+      </span>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search students, exams…">
+                </div>
+                <button class="icon-btn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="dot"></span>
+                </button>
+                <div class="profile">
+                    <div class="avatar" id="p-avatar" style="background:linear-gradient(155deg,#F2A93B,#A66B0F)">SP</div>
+                    <div class="profile-meta"><strong id="p-name">Suresh Pillai</strong><span id="p-meta">Accounting Teacher</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="view">
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">Accounting Department</p>
+                    <h1 id="hero-greeting">Welcome back, Suresh</h1>
+                    <p>You have 3 classes today and 18 submissions waiting for grading.</p>
+                </div>
+                <button class="hero-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Create exam</button>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">My Students</span><span class="stat-icon" style="--tint:#FCEBCB;--tone:#A66B0F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
+                    <div class="stat-value">141</div><span class="stat-sub">Across 5 classes</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Class Average</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span></div>
+                    <div class="stat-value">82%</div><span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+3% this term</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Pending Grading</span><span class="stat-icon" style="--tint:#FCE4E1;--tone:#E4574B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></div>
+                    <div class="stat-value">18</div><span class="stat-sub">Trial Balance Test</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Exams Scheduled</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span></div>
+                    <div class="stat-value">03</div><span class="stat-sub">Next: Aug 16, 11:00</span>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="panel">
+                        <div class="panel-head"><h2>My Classes</h2><span class="link">View all →</span></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <thead><tr><th>Class</th><th>Subject</th><th>Students</th><th>Avg. Score</th><th>Trend</th></tr></thead>
+                                <tbody>
+                                <tr><td><b>2024 A/L batch</b></td><td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td><td class="num">32</td><td class="num">85%</td><td><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>4.2%</span></td></tr>
+                                <tr><td><b>2025 A/L batch</b></td><td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td><td class="num">29</td><td class="num">79%</td><td><span class="trend down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>1.1%</span></td></tr>
+                                <tr><td><b>2026 A/L batch</b></td><td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td><td class="num">28</td><td class="num">81%</td><td><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>2.4%</span></td></tr>
+<!--                                <tr><td><b>Grade 11 · Section B</b></td><td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td><td class="num">26</td><td class="num">80%</td><td><span class="trend flat">— 0.0%</span></td></tr>-->
+<!--                                <tr><td><b>Grade 10 · Section C</b></td><td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td><td class="num">26</td><td class="num">84%</td><td><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>3.0%</span></td></tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head"><h2>Grading Queue</h2><span class="link">Grade now →</span></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <thead><tr><th>Student</th><th>Exam</th><th>Submitted</th><th>Status</th></tr></thead>
+                                <tbody>
+                                <tr><td class="cell-person"><span class="person-avatar" style="background:#F2A93B">DV</span>Divya Varma</td><td>Trial Balance Test</td><td class="num">Aug 10</td><td><span class="pill pill-c">Pending</span></td></tr>
+                                <tr><td class="cell-person"><span class="person-avatar" style="background:#8B5CF6">KR</span>Kabir Rana</td><td>Trial Balance Test</td><td class="num">Aug 10</td><td><span class="pill pill-c">Pending</span></td></tr>
+                                <tr><td class="cell-person"><span class="person-avatar" style="background:#3B82F6">SI</span>Sana Iqbal</td><td>Unit Test 2 — Journals</td><td class="num">Aug 9</td><td><span class="pill pill-a">Graded</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="panel">
+                        <div class="panel-head"><h2>Top Performers</h2></div>
+                        <div class="panel-body">
+                            <div class="person-row"><span class="person-rank">1</span><span class="person-avatar" style="background:#F2A93B">DV</span><div class="person-info"><strong>Divya Varma</strong><span>Grade 12 · Section A</span></div><span class="person-score">96%</span></div>
+                            <div class="person-row"><span class="person-rank">2</span><span class="person-avatar" style="background:#16A38A">AS</span><div class="person-info"><strong>Ayaan Siddiqui</strong><span>Grade 12 · Section A</span></div><span class="person-score">94%</span></div>
+                            <div class="person-row"><span class="person-rank">3</span><span class="person-avatar" style="background:#8B5CF6">MJ</span><div class="person-info"><strong>Meher Jain</strong><span>Grade 11 · Section A</span></div><span class="person-score">92%</span></div>
+                            <div class="person-row"><span class="person-rank">4</span><span class="person-avatar" style="background:#3B82F6">SI</span><div class="person-info"><strong>Sana Iqbal</strong><span>Grade 10 · Section C</span></div><span class="person-score">90%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head"><h2>Upcoming</h2></div>
+                        <div class="panel-body">
+                            <div class="list-row"><div class="list-icon" style="background:#FCEBCB;color:#A66B0F">16</div><div class="list-body"><p class="list-title">Trial Balance Test</p><p class="list-meta">Grade 12 · Section A</p></div><div class="list-time">11:00</div></div>
+                            <div class="list-row"><div class="list-icon" style="background:#FCEBCB;color:#A66B0F">18</div><div class="list-body"><p class="list-title">Parent-teacher meeting</p><p class="list-meta">Grade 11 · Section B</p></div><div class="list-time">15:30</div></div>
+                            <div class="list-row"><div class="list-icon" style="background:#FCEBCB;color:#A66B0F">21</div><div class="list-body"><p class="list-title">Unit Test 3 — Depreciation</p><p class="list-meta">Grade 11 · All sections</p></div><div class="list-time">09:30</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    // const session = JSON.parse(sessionStorage.getItem('cs_session') || 'null');
+    // if (!session || session.role !== 'teacher') { window.location.href = 'userlogin.html'; }
+    // else {
+    //     document.getElementById('p-name').textContent = session.name;
+    //     document.getElementById('p-avatar').textContent = session.initials;
+    //     document.getElementById('hero-greeting').textContent = 'Welcome back, ' + session.name.split(' ')[0];
+    // }
+    // document.getElementById('logout-btn').addEventListener('click', () => {
+    //     sessionStorage.removeItem('cs_session');
+    //     window.location.href = 'userlogin.html';
+    // });
+</script>
+</body>
+</html>

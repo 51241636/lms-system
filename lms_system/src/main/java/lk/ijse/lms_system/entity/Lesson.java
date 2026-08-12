@@ -29,7 +29,7 @@ public class Lesson {
     @JoinColumn(name = "subjectBatchId")
     private SubjectBatch subjectBatch;
     @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
-    private List<LessonContent> lessonContentList;
+    private List<LessonPDF> lessonPDFList;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LessonStatus lessonStatus;

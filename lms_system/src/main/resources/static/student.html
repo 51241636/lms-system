@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · Student Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">C</div>
+            <div class="brand-text"><strong>Comstream</strong><span>Commerce Stream LMS</span></div>
+        </div>
+
+        <p class="nav-label">Workspace</p>
+        <ul class="nav">
+            <li><a href="#" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Subjects</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Results</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Progress</a></li>
+        </ul>
+
+        <div class="sidebar-legend">
+            <p>Subjects</p>
+            <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:#16A38A"></span>Economics</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#F2A93B"></span>Accounting</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span>Business Studies</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span>ICT</div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+      <span class="role-tag tag-student">
+        <svg width="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+        Student
+      </span>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search exams, subjects…">
+                </div>
+                <button class="icon-btn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="dot"></span>
+                </button>
+                <div class="profile">
+                    <div class="avatar" id="p-avatar" style="background:linear-gradient(155deg,#16A38A,#0E6B5A)">DV</div>
+                    <div class="profile-meta"><strong id="p-name">Divya Varma</strong><span id="p-meta">Grade 12 · Section A</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="view">
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">Grade 12 · Section A</p>
+                    <h1 id="hero-greeting">Hey Divya, good to see you</h1>
+                    <p>You're ranked #1 in Accounting this term. Keep it up.</p>
+                </div>
+                <button class="hero-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>View full report</button>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Overall Average</span><span class="stat-icon" style="--tint:#FCEBCB;--tone:#A66B0F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span></div>
+                    <div class="stat-value">88%</div><span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+4% this term</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Exams Completed</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></div>
+                    <div class="stat-value">14</div><span class="stat-sub">2 remaining this term</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Attendance</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span></div>
+                    <div class="stat-value">96%</div><span class="stat-sub">128 of 133 days</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Class Rank</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M17 3H7v6a5 5 0 0 0 10 0V3Z"/></svg></span></div>
+                    <div class="stat-value">#1</div><span class="stat-sub">of 32 students</span>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="panel">
+                        <div class="panel-head"><h2>Recent Exams</h2><span class="link">View all →</span></div>
+                        <div class="panel-body">
+                            <table class="data-table">
+                                <thead><tr><th>Exam</th><th>Subject</th><th>Score</th><th>Grade</th><th>Trend</th></tr></thead>
+                                <tbody>
+                                <tr>
+                                    <td><b>Trial Balance Test</b><br><span style="color:var(--ink-faint);font-size:11.5px">Aug 10, 2026</span></td>
+                                    <td><span class="chip chip-acc"><span class="dot"></span>Accounting</span></td>
+                                    <td class="num">96/100</td><td><span class="pill pill-a">A+</span></td>
+                                    <td><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>6%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Market Structures Quiz</b><br><span style="color:var(--ink-faint);font-size:11.5px">Aug 5, 2026</span></td>
+                                    <td><span class="chip chip-econ"><span class="dot"></span>Economics</span></td>
+                                    <td class="num">84/100</td><td><span class="pill pill-b">B+</span></td>
+                                    <td><span class="trend down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>3%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Marketing Mix Case Study</b><br><span style="color:var(--ink-faint);font-size:11.5px">Jul 29, 2026</span></td>
+                                    <td><span class="chip chip-biz"><span class="dot"></span>Business Studies</span></td>
+                                    <td class="num">90/100</td><td><span class="pill pill-a">A</span></td>
+                                    <td><span class="trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>8%</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Database Design Practical</b><br><span style="color:var(--ink-faint);font-size:11.5px">Jul 22, 2026</span></td>
+                                    <td><span class="chip chip-ict"><span class="dot"></span>ICT</span></td>
+                                    <td class="num">88/100</td><td><span class="pill pill-a">A</span></td>
+                                    <td><span class="trend flat">— 0%</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head"><h2>Score Trend — Last 6 Exams</h2></div>
+                        <div class="panel-body">
+                            <div class="chart">
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:72%"><span class="val">72</span></div></div><span class="chart-label">E1</span></div>
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:78%"><span class="val">78</span></div></div><span class="chart-label">E2</span></div>
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:81%"><span class="val">81</span></div></div><span class="chart-label">E3</span></div>
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:88%"><span class="val">88</span></div></div><span class="chart-label">E4</span></div>
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:84%"><span class="val">84</span></div></div><span class="chart-label">E5</span></div>
+                                <div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:96%;background:#F2A93B"><span class="val">96</span></div></div><span class="chart-label">E6</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="panel">
+                        <div class="panel-head"><h2>Overall Progress</h2></div>
+                        <div class="panel-body">
+                            <div class="ring-wrap">
+                                <div class="ring" style="--pct:88"><div class="ring-inner"><strong>88%</strong><span>Average</span></div></div>
+                                <div class="ring-legend">
+                                    <div class="rl-row"><span>Assignments done</span><b>42/45</b></div>
+                                    <div class="rl-row"><span>Exams passed</span><b>14/14</b></div>
+                                    <div class="rl-row"><span>Study streak</span><b>11 days</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head"><h2>Subject Mastery</h2></div>
+                        <div class="panel-body">
+                            <div class="mastery-row"><span class="mastery-label"><span class="legend-dot" style="background:#F2A93B;display:inline-block;width:8px;height:8px;border-radius:50%"></span>Accounting</span><div class="mastery-track"><div class="mastery-fill" style="width:93%;background:#F2A93B"></div></div><span class="mastery-pct">93%</span></div>
+                            <div class="mastery-row"><span class="mastery-label"><span class="legend-dot" style="background:#16A38A;display:inline-block;width:8px;height:8px;border-radius:50%"></span>Economics</span><div class="mastery-track"><div class="mastery-fill" style="width:81%;background:#16A38A"></div></div><span class="mastery-pct">81%</span></div>
+                            <div class="mastery-row"><span class="mastery-label"><span class="legend-dot" style="background:#8B5CF6;display:inline-block;width:8px;height:8px;border-radius:50%"></span>Business Studies</span><div class="mastery-track"><div class="mastery-fill" style="width:86%;background:#8B5CF6"></div></div><span class="mastery-pct">86%</span></div>
+                            <div class="mastery-row"><span class="mastery-label"><span class="legend-dot" style="background:#3B82F6;display:inline-block;width:8px;height:8px;border-radius:50%"></span>ICT</span><div class="mastery-track"><div class="mastery-fill" style="width:88%;background:#3B82F6"></div></div><span class="mastery-pct">88%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-head"><h2>Upcoming Exams</h2></div>
+                        <div class="panel-body">
+                            <div class="list-row"><div class="list-icon" style="background:#DCF3EE;color:#16A38A">14</div><div class="list-body"><p class="list-title">Economics Mid-term</p><p class="list-meta">Chapters 1–6</p></div><div class="list-time">Mon, 09:00</div></div>
+                            <div class="list-row"><div class="list-icon" style="background:#E3EDFE;color:#3B82F6">19</div><div class="list-body"><p class="list-title">ICT Database Practical</p><p class="list-meta">SQL & normalization</p></div><div class="list-time">Wed, 13:30</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    // const session = JSON.parse(sessionStorage.getItem('cs_session') || 'null');
+    // if (!session || session.role !== 'student') { window.location.href = 'userlogin.html'; }
+    // else {
+    //     document.getElementById('p-name').textContent = session.name;
+    //     document.getElementById('p-avatar').textContent = session.initials;
+    //     document.getElementById('hero-greeting').textContent = 'Hey ' + session.name.split(' ')[0] + ', good to see you';
+    // }
+    // document.getElementById('logout-btn').addEventListener('click', () => {
+    //     sessionStorage.removeItem('cs_session');
+    //     window.location.href = 'userlogin.html';
+    // });
+</script>
+</body>
+</html>

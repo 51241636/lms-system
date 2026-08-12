@@ -29,7 +29,7 @@ public class LessonController {
 
 
     //    add new lesson
-    @PreAuthorize("hasRole('teacher')")
+    @PreAuthorize("hasRole('Teacher')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse addLesson(@Valid @RequestBody LessonDTO lessonDTO) {
         log.info("get lesson detail from frontEnd");

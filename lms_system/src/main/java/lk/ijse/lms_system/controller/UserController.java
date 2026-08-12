@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static lk.ijse.lms_system.constant.ResponseCode.OPERATION_SUCCSESS;
@@ -45,10 +46,14 @@ public class UserController {
     public CommonResponse loginUser(@Valid @RequestBody UserLoginDTO userLoginDTO) {
         log.info("get username and password");
         UserDTO loginUser = userService.getLoginUser(userLoginDTO);
+        List<String> roles =
+                Arrays.stream(loginUser.getUserRole().split(","))
+                        .map(String::trim)
+                        .toList();
         log.info("get entered user userDetails");
         String token = jwtUtil.generatedToken(loginUser.getUserId(), loginUser.getUserRole(), loginUser.getUsername());
         log.info("get entered user token");
-        return new CommonResponse(OPERATION_SUCCSESS,new UserDataDTO(loginUser.getUserId(),token),RESPONSE_MESSAGE);
+        return new CommonResponse(OPERATION_SUCCSESS,new UserDataDTO(loginUser.getUserId(),token,roles),RESPONSE_MESSAGE);
     }
 
 //     update User

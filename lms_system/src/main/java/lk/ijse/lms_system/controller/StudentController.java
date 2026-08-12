@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lk.ijse.lms_system.constant.CommonResponse;
 import lk.ijse.lms_system.dto.*;
 import lk.ijse.lms_system.dto.response.GetUserDetailsDTO;
+import lk.ijse.lms_system.dto.response.StudentDataDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.dto.response.UserDataDTO;
 import lk.ijse.lms_system.security.JWTUtil;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static lk.ijse.lms_system.constant.ResponseCode.OPERATION_SUCCSESS;
@@ -47,7 +49,7 @@ public class StudentController {
         log.info("get entered student userDetails");
         String token = jwtUtil.generatedToken(loginStudent.getStudentId(), loginStudent.getRole(), loginStudent.getStudentUserName());
         log.info("get entered student token");
-        return new CommonResponse(OPERATION_SUCCSESS,new UserDataDTO(loginStudent.getStudentId(),token),RESPONSE_MESSAGE);
+        return new CommonResponse(OPERATION_SUCCSESS,new StudentDataDTO(loginStudent.getStudentId(),token),RESPONSE_MESSAGE);
     }
 
     //     update Student

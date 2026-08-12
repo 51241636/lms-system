@@ -10,14 +10,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class LessonContent {
+public class LessonPDF {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long lessonContentId;
-    private String title;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] lessonFiles;
+    private Integer lessonFileId;
+    @Column(nullable = false)
+    private String fileName;
+    @Column(nullable = false)
+    private String filePath;
+    @Column(nullable = false)
+    private String fileContentType;
+    @Column(nullable = false)
+    private Long fileSize;
     @ManyToOne
     private Lesson lesson;
     @Enumerated(EnumType.STRING)

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · Sign in</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+<div class="auth-screen">
+
+    <!-- ===================== LEFT — BRAND PANEL ===================== -->
+    <div class="auth-hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+
+        <div class="hero-content">
+            <div class="hero-brand">
+                <div class="hero-mark">C</div>
+                <span>Comstream</span>
+            </div>
+
+            <h1>Run your commerce<br>classroom, beautifully.</h1>
+            <p class="hero-sub">One workspace for Economics, Accounting, Business Studies and ICT — built for admins, teachers and students alike.</p>
+
+            <ul class="hero-features">
+                <li>
+                    <span class="hf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+                    Track every exam and result in real time
+                </li>
+                <li>
+                    <span class="hf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+                    Watch progress across all four subjects
+                </li>
+                <li>
+                    <span class="hf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                    One login, tailored to your role
+                </li>
+            </ul>
+
+            <div class="hero-footer">A calmer way to run a busy classroom.</div>
+        </div>
+    </div>
+
+    <!-- ===================== RIGHT — LOGIN FORM ===================== -->
+    <div class="auth-form-side">
+        <div class="auth-card">
+            <div class="auth-card-head">
+                <div class="mobile-brand">
+                    <div class="hero-mark small">C</div>
+                    <span>Comstream</span>
+                </div>
+                <h2>Welcome back</h2>
+                <p>Sign in with your username and password to open your dashboard.</p>
+            </div>
+
+            <form id="login-form" novalidate>
+                <label class="field">
+                    <span>Username</span>
+                    <div class="field-input">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <input type="text" id="username" placeholder="e.g. divya.varma" autocomplete="username" />
+                    </div>
+                </label>
+
+                <label class="field">
+                    <span>Password</span>
+                    <div class="field-input">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
+                        <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Show password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                </label>
+
+                <div class="field-row">
+                    <label class="checkbox">
+                        <input type="checkbox" id="remember" />
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot">Forgot password?</a>
+                </div>
+
+                <p class="form-error" id="form-error" role="alert"></p>
+
+                <button type="button" class="btn-signin" onclick="handleUserLogin()">
+                    Sign in
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<script src="lib/jquery-4.0.0.min.js"></script>
+<script src="js/userLoginController.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="js/apiHandle/userLoginAPI.js"></script>
+<script>
+    // const USERS = {
+    //     "admin":   { password: "admin123",   role: "admin",   name: "Aarav Kapoor",  initials: "AK", meta: "Administrator" },
+    //     "teacher": { password: "teacher123", role: "teacher", name: "Suresh Pillai", initials: "SP", meta: "Accounting Teacher" },
+    //     "student": { password: "student123", role: "student", name: "Divya Varma",   initials: "DV", meta: "Grade 12 · Section A" }
+    // };
+    //
+    // const form = document.getElementById('login-form');
+    // const errorBox = document.getElementById('form-error');
+    // const card = document.querySelector('.auth-card');
+    //
+    // document.getElementById('toggle-pw').addEventListener('click', () => {
+    //     const pw = document.getElementById('password');
+    //     pw.type = pw.type === 'password' ? 'text' : 'password';
+    // });
+    //
+    // form.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     const username = document.getElementById('username').value.trim().toLowerCase();
+    //     const password = document.getElementById('password').value;
+    //
+    //     const user = USERS[username];
+    //
+    //     if (!user || user.password !== password) {
+    //         errorBox.textContent = "That username or password doesn't match our records. Try the demo credentials below.";
+    //         card.classList.remove('shake');
+    //         requestAnimationFrame(() => card.classList.add('shake'));
+    //         return;
+    //     }
+    //
+    //     errorBox.textContent = '';
+    //     sessionStorage.setItem('cs_session', JSON.stringify({
+    //         username, role: user.role, name: user.name, initials: user.initials, meta: user.meta
+    //     }));
+    //     window.location.href = user.role + '.html';
+    // });
+</script>
+
+</body>
+</html>
