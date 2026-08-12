@@ -10,27 +10,21 @@ function handleUserLogin(){
 
     let obj = JSON.stringify({"studentUsername": username, "studentPassword": password});
 
-    $.ajax({
-        url:"http://localhost:8080/v1/student/loginStudent",
-        type:'POST',
-        contentType:'application/json',
-        data:obj,
-        success:function (response){
-            localStorage.setItem('JWT',response.body.token);
-            localStorage.setItem("userId",response.body.studentId);
-            localStorage.setItem("roles", "Student");
+    studentLogin(obj)
+        .done(function (response){
+            sessionStorage.setItem('JWT',response.body.token);
+            sessionStorage.setItem("userId",response.body.studentId);
+            sessionStorage.setItem("roles", "Student");
             window.location.href = "student.html";
             $('#username').val("");
             $('#password').val("");
-        },
-        error:function (response){
-            if(response.status == 404){
-                toastr.error("Invalid username or password", "Login Failed");
-                $('#username').val("");
-                $('#password').val("");
-            }else{
-                toastr.error(" 500 Internal server error", "Login Failed");
-            }
+    }).fail(function (error){
+        if(response.status == 404){
+            toastr.error("Invalid username or password", "Login Failed");
+            $('#username').val("");
+            $('#password').val("");
+        }else{
+            toastr.error(" 500 Internal server error", "Login Failed");
         }
-    })
+    });
 }
