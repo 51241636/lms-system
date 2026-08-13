@@ -63,3 +63,14 @@ function  getStudentById(studentId){
         }
     });
 }
+
+function loadInActiveStudentCount(){
+    return $.ajax({
+        url: "http://localhost:8080/v1/student/getInActiveStudentCount",
+        type: "GET",
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT')
+        }
+    });
+}

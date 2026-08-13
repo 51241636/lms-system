@@ -18,5 +18,7 @@ public interface StudentService {
     LoginStudentDTO getLoginStudent(StudentLoginDTO studentLoginDTO);
     List<SubjectDTO> getLoggedStudentSubjects(Long studentId);
     StudentByIdDTO getStudentById(Long studentId);
+    Integer loadInActiveStudentCount();
+    List<StudentDetailDTO> filterStudent(String studentName,String studentAddress,String batchName,String contact,String subjectName);
 //    List<StudentDTO> searchStudentByStudentName(String subjectName);
 }

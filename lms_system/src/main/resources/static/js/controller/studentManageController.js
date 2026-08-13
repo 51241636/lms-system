@@ -6,9 +6,13 @@ $(document).ready(function () {
 
 
 });
+
 let isEditMode;
 let selectedSubjects = [];
 let studentList=[];
+let studentCount=0;
+let activeBatchesCount=0;
+let inActiveCount=0;
 function loadBatches(){
     getAllBatches().done(function (response){
         let batchList=response.body;
@@ -24,6 +28,7 @@ function loadBatches(){
                            ${batch.classBatchName}
                         </option>
                      `);
+            activeBatchesCount +=1;
                });
     })
         .fail(function (error){
@@ -209,8 +214,14 @@ function loadAllStudents(){
 
             $("#studentTBody").append(data);
             studentList.push(responseElement);
+            studentCount=studentCount+1;
+
     }
         loadLastRecentStudent();
+        loadStudentCount();
+        loadActiveStudents();
+        loadActiveBatchCount();
+        loadInActiveStudentCard();
 
     });
 
@@ -376,3 +387,46 @@ function loadLastRecentStudent(){
 
 }
 
+function loadStudentCount(){
+    let totalStudentCard=$("#totalStudentCard");
+    totalStudentCard.empty();
+    totalStudentCard.append(`
+    <div class="stat-top"><span class="stat-label">Total Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
+                    <div class="stat-value">0${studentCount}</div>
+                    <span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+18 this month</span>
+    `)
+}
+function loadActiveStudents(){
+    let activeStudentCard=$("#activeStudentCard");
+    activeStudentCard.empty();
+
+    activeStudentCard.append(`
+    <div class="stat-top"><span class="stat-label">Active Students</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span></div>
+                    <div class="stat-value">0${studentCount}</div>
+                    <span class="stat-sub">80% of total students</span>`)
+}
+
+function loadActiveBatchCount(){
+    let activeBatchCountCard=$("#activeBatchCount");
+    activeBatchCountCard.empty();
+    activeBatchCountCard.append(`<div class="stat-top"><span class="stat-label">Active Batches</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></span></div>
+                    <div class="stat-value">${activeBatchesCount}</div>
+                    <span class="stat-sub">ex: 2026 A/L</span>`)
+
+}
+
+function loadInActiveStudentCard(){
+    loadInActiveStudentCount().done(function (response){
+        let inActiveStudentCount=$("#inactiveStudentCard");
+        inActiveCount=response.body;
+        let percentage=(response.body/studentCount)*100;
+        inActiveStudentCount.empty();
+        inActiveStudentCount.append(`<div class="stat-top"><span class="stat-label">Inactive Students</span><span class="stat-icon" style="--tint:#FBE4E6;--tone:#D94F5C"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5m0-5-5 5"/></svg></span></div>
+                    <div class="stat-value">${response.body}</div>
+                    <span class="stat-delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>${percentage} % of total students</span>
+               `)
+    }).fail(function (error){
+        console.log("error")
+    })
+
+}

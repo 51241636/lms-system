@@ -100,5 +100,19 @@ public class StudentController {
         return new CommonResponse(OPERATION_SUCCSESS,studentService.getStudentById(studentId),RESPONSE_MESSAGE);
     }
 
+//    get inActive student count
+@PreAuthorize("hasAnyRole('Admin','Teacher')")
+@GetMapping(value = "/getInActiveStudentCount", produces = MediaType.APPLICATION_JSON_VALUE)
+public CommonResponse getInactiveStudentCount() {
+    Integer count = studentService.loadInActiveStudentCount();
+
+    return new CommonResponse(OPERATION_SUCCSESS,count,RESPONSE_MESSAGE);
+}
+// filter student
+@GetMapping(value ="/filterStudent",produces = MediaType.APPLICATION_JSON_VALUE)
+public CommonResponse filterStudents(@RequestParam(value = "studentName",required = false)String studentName,@RequestParam(value = "studentAddress",required = false)String studentAddress,@RequestParam(value = "batchName",required = false)String batchName,@RequestParam(value = "contact",required = false)String contact,@RequestParam(value = "subjectName",required = false)String subjectName){
+    List<StudentDetailDTO> studentDetailDTOList = studentService.filterStudent(studentName, studentAddress, batchName, contact, subjectName);
+    return new CommonResponse(OPERATION_SUCCSESS,studentDetailDTOList,RESPONSE_MESSAGE);
+}
 
 }

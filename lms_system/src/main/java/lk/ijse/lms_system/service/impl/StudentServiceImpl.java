@@ -200,4 +200,44 @@ public class StudentServiceImpl implements StudentService {
             throw e;
         }
     }
+
+    @Override
+    public Integer loadInActiveStudentCount() {
+        try{
+            java.util.List<Student> studentList =studentRepository.findAll();
+            if(studentList.isEmpty()){
+                throw new LmsSystemException(404,"saved students are not found");
+            }
+            int inActiveCount=0;
+            for(Student student : studentList){
+                if(student.getStudentStatus().equals(StudentStatus.INACTIVE)){
+                    inActiveCount++;
+                }
+            }
+            return inActiveCount;
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public List<StudentDetailDTO> filterStudent(String studentName, String studentAddress, String batchName, String contact,String subjectName) {
+        List<StudentEnrollment> studentEnrollments = studentEnrollmentRepository.filterStudent(studentName, studentAddress, batchName, contact, subjectName);
+        List<StudentDetailDTO> studentDetailDTOList = new ArrayList<>();
+        List<String>subjectStudent=new ArrayList<>();
+        if(studentEnrollments.isEmpty()){
+            throw new LmsSystemException(404,"students not found");
+        }
+        for(StudentEnrollment studentEnrollment : studentEnrollments){
+
+            subjectStudent.add(studentEnrollment.getSubject().getSubjectName());
+        }
+//        new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),subjectStudent,student.getClassBatch().getBatchName()
+        for(StudentEnrollment studentEnrollment : studentEnrollments){
+
+
+            studentDetailDTOList.add(new StudentDetailDTO(studentEnrollment.getStudent().getStudentId(),studentEnrollment.getStudent().getStudentName(),studentEnrollment.getStudent().getStudentUsername(),studentEnrollment.getStudent().getEmail(),studentEnrollment.getStudent().getContact(),studentEnrollment.getStudent().getAddress(),subjectStudent,studentEnrollment.getStudent().getClassBatch().getBatchName()));
+        }
+        return studentDetailDTOList;
+    }
 }

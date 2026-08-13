@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
 
@@ -74,10 +75,6 @@
                     <p>Register new students into the commerce stream and manage subject enrollment across batches.</p>
                 </div>
                 <div class="page-head-actions">
-                    <button class="btn btn-ghost">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-                        Export list
-                    </button>
                     <button class="btn btn-primary" id="newStudentBtn" onclick="openAddStudentModal()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
                         New student
@@ -87,25 +84,25 @@
 
             <!-- Quick stats -->
             <div class="stat-grid">
-                <div class="stat-card">
+                <div class="stat-card" id="totalStudentCard">
                     <div class="stat-top"><span class="stat-label">Total Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
                     <div class="stat-value">486</div>
                     <span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+18 this month</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" id="activeStudentCard">
+                    <div class="stat-top"><span class="stat-label">Active Students</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span></div>
+                    <div class="stat-value">462</div>
+                    <span class="stat-sub">95% of total students</span>
+                </div>
+                <div class="stat-card" id="inactiveStudentCard">
+                    <div class="stat-top"><span class="stat-label">Inactive Students</span><span class="stat-icon" style="--tint:#FBE4E6;--tone:#D94F5C"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5m0-5-5 5"/></svg></span></div>
+                    <div class="stat-value">24</div>
+                    <span class="stat-delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>5% of total students</span>
+                </div>
+                <div class="stat-card" id="activeBatchCount">
                     <div class="stat-top"><span class="stat-label">Active Batches</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></span></div>
-                    <div class="stat-value">12</div>
-                    <span class="stat-sub">Grades 10 – 13</span>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-top"><span class="stat-label">Pending Allocation</span><span class="stat-icon" style="--tint:#FCEBCB;--tone:#A66B0F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span></div>
-                    <div class="stat-value">05</div>
-                    <span class="stat-sub">Awaiting subject picks</span>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-top"><span class="stat-label">Avg. Subjects / Student</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
-                    <div class="stat-value">2.8</div>
-                    <span class="stat-sub">Of 4 offered</span>
+                    <div class="stat-value">2</div>
+                    <span class="stat-sub">ex: 2026 A/L</span>
                 </div>
             </div>
 
@@ -138,16 +135,7 @@
                             <div class="list-body"><p class="list-title">Sanduni Nanayakkara</p><p class="list-meta">Grade 11 · Section B · Economics, ICT</p></div>
                             <div class="list-time">Today</div>
                         </div>
-                        <div class="list-row">
-                            <div class="list-icon" style="background:#EFE7FE;color:#8B5CF6">DR</div>
-                            <div class="list-body"><p class="list-title">Dinuka Ratnayake</p><p class="list-meta">Grade 12 · Section A · Business Studies</p></div>
-                            <div class="list-time">Yesterday</div>
-                        </div>
-                        <div class="list-row">
-                            <div class="list-icon" style="background:#DCF3EE;color:#16A38A">KP</div>
-                            <div class="list-body"><p class="list-title">Kavindi Perera</p><p class="list-meta">Grade 10 · Section A · Economics, Accounting</p></div>
-                            <div class="list-time">2 days ago</div>
-                        </div>
+
                     </div>
                 </div>
             </div>
