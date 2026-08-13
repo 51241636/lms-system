@@ -74,3 +74,14 @@ function loadInActiveStudentCount(){
         }
     });
 }
+
+function studentDelete(deleteStudentId){
+    return $.ajax({
+        url: "http://localhost:8080/v1/student/" + deleteStudentId,
+        type: "DELETE",
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('JWT')
+        }
+    });
+}
