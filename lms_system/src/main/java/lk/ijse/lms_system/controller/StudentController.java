@@ -91,5 +91,14 @@ public class StudentController {
 
     }
 
+    //    get student by id
+    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @GetMapping(value = "/getStudentById/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getStudentById(@PathVariable  Long studentId) {
+        log.info("get studentId");
+
+        return new CommonResponse(OPERATION_SUCCSESS,studentService.getStudentById(studentId),RESPONSE_MESSAGE);
+    }
+
 
 }

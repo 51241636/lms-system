@@ -13,4 +13,9 @@ public class ClassBatchDTO {
     private Long classBatchId;
     private String classBatchName;
     private LocalDate classBatchStartDate;
+
+    public ClassBatchDTO(Long classBatchId, String batchName) {
+        this.classBatchId = classBatchId;
+        this.classBatchName = batchName;
+    }
 }

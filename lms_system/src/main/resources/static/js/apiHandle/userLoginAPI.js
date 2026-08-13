@@ -1,3 +1,11 @@
+
+// $(document).ready(function (){
+//     const token=localStorage.getItem("JWT");
+//     if(token && isTokenValid(token)){
+//
+//     }
+// })
+
 function loginUser(obj){
     return $.ajax({
         url: "http://localhost:8080/v1/user/loginUser",

@@ -1,10 +1,8 @@
 package lk.ijse.lms_system.service.impl;
 
 import jakarta.transaction.Transactional;
-import lk.ijse.lms_system.dto.LoginStudentDTO;
-import lk.ijse.lms_system.dto.StudentDTO;
-import lk.ijse.lms_system.dto.StudentLoginDTO;
-import lk.ijse.lms_system.dto.SubjectDTO;
+import lk.ijse.lms_system.dto.*;
+import lk.ijse.lms_system.dto.response.StudentByIdDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Student;
@@ -80,7 +78,9 @@ public class StudentServiceImpl implements StudentService {
                 Student student = byId.get();
                 student.setStudentName(studentDTO.getStudentName());
                 student.setStudentUsername(studentDTO.getStudentUsername());
-                student.setStudentPassword(passwordEncoder.encode(studentDTO.getStudentPassword()));
+                if(studentDTO.getStudentPassword() != null){
+                    student.setStudentPassword(passwordEncoder.encode(studentDTO.getStudentPassword()));
+                }
                 student.setEmail(studentDTO.getEmail());
                 student.setContact(studentDTO.getContact());
                 student.setAddress(studentDTO.getAddress());
@@ -127,7 +127,14 @@ public class StudentServiceImpl implements StudentService {
             List<Student> studentList = studentRepository.findAll();
             List<StudentDetailDTO> studentDetailDTOList = new ArrayList<>();
             for(Student student : studentList){
-                studentDetailDTOList.add(new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress()));
+                if(student.getStudentStatus().equals(StudentStatus.ACTIVE)){
+                    List<String>subjectStudent=new ArrayList<>();
+                    for(StudentEnrollment studentEnrollment:student.getStudentEnrollments()){
+                        subjectStudent.add(studentEnrollment.getSubject().getSubjectName());
+                    }
+                    studentDetailDTOList.add(new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),subjectStudent,student.getClassBatch().getBatchName()));
+
+                }
             }
             return studentDetailDTOList;
         }catch (Exception e){
@@ -170,6 +177,27 @@ public class StudentServiceImpl implements StudentService {
             }
         }catch (Exception e){
             throw  e;
+        }
+    }
+
+    @Override
+    public StudentByIdDTO getStudentById(Long studentId) {
+        try{
+            Optional<Student> studentById = studentRepository.findById(studentId);
+            if(studentById.isPresent() && studentById.get().getStudentStatus().equals(StudentStatus.ACTIVE)){
+                Student student=studentById.get();
+                List<SubjectDTO>subjectStudent=new ArrayList<>();
+                for(StudentEnrollment studentEnrollment:student.getStudentEnrollments()){
+                    subjectStudent.add(new SubjectDTO(studentEnrollment.getSubject().getSubjectId(),studentEnrollment.getSubject().getSubjectName()));
+                }
+               return new StudentByIdDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),subjectStudent,new ClassBatchDTO(student.getClassBatch().getClassBatchId(),student.getClassBatch().getBatchName()));
+
+
+            }else {
+                throw new LmsSystemException(404,"student not found");
+            }
+        }catch(Exception e){
+            throw e;
         }
     }
 }

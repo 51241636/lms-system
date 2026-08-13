@@ -4,12 +4,15 @@ import jakarta.validation.Valid;
 import lk.ijse.lms_system.constant.CommonResponse;
 import lk.ijse.lms_system.dto.StudentDTO;
 import lk.ijse.lms_system.dto.SubjectBatchDTO;
+import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.service.SubjectBatchService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static lk.ijse.lms_system.constant.ResponseCode.OPERATION_SUCCSESS;
 import static lk.ijse.lms_system.constant.ResponseMessage.RESPONSE_MESSAGE;
@@ -31,6 +34,16 @@ public class SubjectBatchController {
         subjectBatchService.addSubjectBatch(subjectBatchDTO);
         log.info("add subjectBatches success");
         return new CommonResponse(OPERATION_SUCCSESS,RESPONSE_MESSAGE);
+    }
+
+
+// get subject list batch id related
+    @GetMapping(value = "/subjects/{classBatchId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getSubjectList(@PathVariable Integer classBatchId) {
+        log.info("get classBatchId ");
+        List<SubjectDTO> batchRelatedSubject = subjectBatchService.getBatchRelatedSubject(classBatchId);
+        log.info("get subject list batch id related");
+        return new CommonResponse(OPERATION_SUCCSESS,batchRelatedSubject,RESPONSE_MESSAGE);
     }
 
 

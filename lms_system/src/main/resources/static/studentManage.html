@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · Student Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">C</div>
+            <div class="brand-text"><strong>Comstream</strong><span>Commerce Stream LMS</span></div>
+        </div>
+
+        <p class="nav-label">Workspace</p>
+        <ul class="nav">
+            <li><a href="index.html"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Teachers</a></li>
+            <li><a href="studentManage.html" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Students</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Subjects</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Reports</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82"/></svg>Settings</a></li>
+        </ul>
+
+        <div class="sidebar-legend">
+            <p>Subjects</p>
+            <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:#16A38A"></span>Economics</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#F2A93B"></span>Accounting</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#8B5CF6"></span>Business Studies</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span>ICT</div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+      <span class="role-tag tag-admin">
+        <svg width="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+        Administrator
+      </span>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search teachers, students, exams…">
+                </div>
+                <button class="icon-btn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="dot"></span>
+                </button>
+                <div class="profile">
+                    <div class="avatar" style="background:linear-gradient(155deg,#8B5CF6,#5B3FBF)">AK</div>
+                    <div class="profile-meta"><strong>Aarav Kapoor</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="view">
+
+            <div class="page-head">
+                <div>
+                    <p class="hero-eyebrow">Students · Enrollment</p>
+                    <h1>Student Management</h1>
+                    <p>Register new students into the commerce stream and manage subject enrollment across batches.</p>
+                </div>
+                <div class="page-head-actions">
+                    <button class="btn btn-ghost">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+                        Export list
+                    </button>
+                    <button class="btn btn-primary" id="newStudentBtn" onclick="openAddStudentModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        New student
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Total Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
+                    <div class="stat-value">486</div>
+                    <span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+18 this month</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Active Batches</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></span></div>
+                    <div class="stat-value">12</div>
+                    <span class="stat-sub">Grades 10 – 13</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Pending Allocation</span><span class="stat-icon" style="--tint:#FCEBCB;--tone:#A66B0F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span></div>
+                    <div class="stat-value">05</div>
+                    <span class="stat-sub">Awaiting subject picks</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span class="stat-label">Avg. Subjects / Student</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
+                    <div class="stat-value">2.8</div>
+                    <span class="stat-sub">Of 4 offered</span>
+                </div>
+            </div>
+
+            <div class="grid-2-even">
+                <div class="panel">
+                    <div class="panel-head"><h2>Before you save</h2></div>
+                    <div class="panel-body">
+                        <div class="guide-list">
+                            <div class="guide-item">
+                                <span class="guide-num">01</span>
+                                <p><strong>Username must be unique</strong>System checks this against all existing student and teacher accounts.</p>
+                            </div>
+                            <div class="guide-item">
+                                <span class="guide-num">02</span>
+                                <p><strong>Pick a batch first</strong>Available subjects and exam schedules are tied to the class / batch you select.</p>
+                            </div>
+                            <div class="guide-item">
+                                <span class="guide-num">03</span>
+                                <p><strong>Subjects drive access</strong>Ticked subjects decide which course material and exams the student can see.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h2>Recently Added</h2></div>
+                    <div class="panel-body"  id="recentlyAddedContainer">
+                        <div class="list-row">
+                            <div class="list-icon" style="background:#E3EDFE;color:#3B82F6">SN</div>
+                            <div class="list-body"><p class="list-title">Sanduni Nanayakkara</p><p class="list-meta">Grade 11 · Section B · Economics, ICT</p></div>
+                            <div class="list-time">Today</div>
+                        </div>
+                        <div class="list-row">
+                            <div class="list-icon" style="background:#EFE7FE;color:#8B5CF6">DR</div>
+                            <div class="list-body"><p class="list-title">Dinuka Ratnayake</p><p class="list-meta">Grade 12 · Section A · Business Studies</p></div>
+                            <div class="list-time">Yesterday</div>
+                        </div>
+                        <div class="list-row">
+                            <div class="list-icon" style="background:#DCF3EE;color:#16A38A">KP</div>
+                            <div class="list-body"><p class="list-title">Kavindi Perera</p><p class="list-meta">Grade 10 · Section A · Economics, Accounting</p></div>
+                            <div class="list-time">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== All students table ============== -->
+            <div class="panel">
+                <div class="table-toolbar">
+                    <div class="filter-tabs">
+                        <a href="#" class="active">All</a>
+                        <a href="#">Economics</a>
+                        <a href="#">Accounting</a>
+                        <a href="#">Business</a>
+                        <a href="#">ICT</a>
+                    </div>
+                    <div class="toolbar-search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Search students…">
+                    </div>
+                </div>
+                <div class="panel-body no-pad">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Contact</th>
+                            <th>address</th>
+                            <th>Subjects</th>
+                            <th>Batch</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="studentTBody">
+                        <tr>
+                            <td class="id-tag">#1042</td>
+                            <td class="cell-person">
+                                <span class="person-avatar" style="background:#3B82F6">SN</span>
+                                <span>Sanduni Nanayakkara<span class="cell-sub">sanduni.n · sanduni.n@comstream.edu</span></span>
+                            </td>
+                            <td class="num">077 214 5583</td>
+                            <td class="address">hrana</td>
+                            <td><span class="chip chip-econ"><span class="dot"></span>Eco</span> <span class="chip chip-ict"><span class="dot"></span>ICT</span></td>
+                            <td>Grade 11 · B</td>
+                            <td><span class="pill pill-a">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                                    <button aria-label="Delete" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="id-tag">#1041</td>
+                            <td class="cell-person">
+                                <span class="person-avatar" style="background:#8B5CF6">DR</span>
+                                <span>Dinuka Ratnayake<span class="cell-sub">dinuka.r · dinuka.r@comstream.edu</span></span>
+                            </td>
+                            <td class="num">071 998 2201</td>
+                            <td><span class="chip chip-biz"><span class="dot"></span>Business</span></td>
+                            <td>Grade 12 · A</td>
+                            <td><span class="pill pill-a">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button aria-label="Edit" id="editBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                                    <button aria-label="Delete" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span>Showing 5 of 486 students</span>
+                    <div class="pagination">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">…</a>
+                        <a href="#">98</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<!-- ============== Add Student modal ============== -->
+<div class="modal-overlay" id="addStudentModal">
+    <div class="modal">
+        <div class="modal-head">
+            <div>
+                <h2>Add New Student</h2>
+                <p>Register a new student and assign their subjects.</p>
+            </div>
+            <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form id="addStudentForm">
+                <div class="form-section">
+                    <p class="form-section-title">Personal details</p>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="studentName">Full name</label>
+                            <input class="input" type="text" id="studentName" name="studentName" placeholder="e.g. Priya Nair">
+                        </div>
+                        <div class="field">
+                            <label for="studentUsername">Username</label>
+                            <input class="input" type="text" id="studentUsername" name="studentUsername" placeholder="e.g. priya.nair">
+                        </div>
+                        <div class="field">
+                            <label for="email">Email address</label>
+                            <input class="input" type="email" id="email" name="email" placeholder="priya.nair@comstream.edu">
+                        </div>
+                        <div class="field">
+                            <label for="contact">Contact number</label>
+                            <input class="input" type="tel" id="contact" name="contact" placeholder="+94 77 123 4567">
+                        </div>
+                        <div class="field">
+                            <label for="studentPassword">Temporary password</label>
+                            <div class="pw-row">
+                                <input class="input" type="password" id="studentPassword" name="studentPassword" placeholder="Set a login password">
+                                <button class="btn-generate" type="button" id="generatePasswordBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                                    Generate
+                                </button>
+                            </div>
+                            <span class="field-hint">Student can change this after first sign-in.</span>
+                        </div>
+                        <div class="field">
+                            <label for="classBatchId">Class / Batch</label>
+                            <select class="select" id="classBatchId" name="classBatchId">
+                                <option value="">Select a batch</option>
+                                <option value="1">Grade 10 · Section A</option>
+                            </select>
+                        </div>
+                        <div class="field span-2">
+                            <label for="address">Address <span class="optional">(optional)</span></label>
+                            <textarea class="textarea" id="address" name="address" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <p class="form-section-title">Subjects</p>
+                    <div class="subject-toggle-grid" id="subjectContainer">
+                    </div>
+                    <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-foot">
+            <button class="btn btn-ghost" type="button" onclick="closeAddStudentModal()" >Cancel</button>
+            <button class="btn btn-primary" type="button" id="submitAddStudentBtn" onclick="addStudentBtn()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                Add Student
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="lib/jquery-4.0.0.min.js"></script>
+<script src="js/controller/studentManageController.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="js/apiHandle/studentManageAPI.js"></script>
+</body>
+</html>

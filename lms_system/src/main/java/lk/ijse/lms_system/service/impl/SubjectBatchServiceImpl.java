@@ -3,6 +3,7 @@ package lk.ijse.lms_system.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.SubjectBatchDTO;
+import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.entity.SubjectBatch;
@@ -11,10 +12,12 @@ import lk.ijse.lms_system.repository.BatchRepository;
 import lk.ijse.lms_system.repository.SubjectBatchRepository;
 import lk.ijse.lms_system.repository.SubjectRepository;
 import lk.ijse.lms_system.service.SubjectBatchService;
+import lk.ijse.lms_system.status.SubjectStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,8 +58,24 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
         }
     }
 
-
-
+    @Override
+    public List<SubjectDTO> getBatchRelatedSubject(Integer batchId) {
+        try{
+            List<Subject> batchRelatedSubject = subjectBatchRepository.getBatchRelatedSubject(batchId);
+            if(batchRelatedSubject.isEmpty()){
+                throw new LmsSystemException(404,"subject not found");
+            }
+            List<SubjectDTO> subjectDTOList=new ArrayList<>();
+            for (Subject subject:batchRelatedSubject){
+               if(subject.getSubjectStatus().equals(SubjectStatus.ACTIVE)){
+                   subjectDTOList.add(new SubjectDTO(subject.getSubjectId(),subject.getSubjectName()));
+               }
+            }
+            return subjectDTOList;
+        }catch (Exception e){
+            throw e;
+        }
+    }
 
 
 }
