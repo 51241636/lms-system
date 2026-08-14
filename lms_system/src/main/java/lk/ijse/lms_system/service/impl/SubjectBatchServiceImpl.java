@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.SubjectBatchDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
+import lk.ijse.lms_system.dto.response.GetLogginTeacherSubjectDTO;
+import lk.ijse.lms_system.dto.response.GetSubjectRelatedBatchDetailDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.entity.SubjectBatch;
@@ -75,6 +77,25 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
         }catch (Exception e){
             throw e;
         }
+    }
+
+    @Override
+    public List<GetSubjectRelatedBatchDetailDTO> getSubjectRelatedBatchDetail(Integer subjectId) {
+       try{
+         return  subjectBatchRepository.getAllSubjectRelatedBatchDetails(subjectId);
+       }catch (Exception e){
+           throw e;
+       }
+
+    }
+
+    @Override
+    public GetLogginTeacherSubjectDTO getLoggingTeacherSubject(Integer subjectId) {
+      try{
+         return subjectBatchRepository.getLoggedTeacherSubject(subjectId);
+      }catch (Exception e){
+          throw e;
+      }
     }
 
 

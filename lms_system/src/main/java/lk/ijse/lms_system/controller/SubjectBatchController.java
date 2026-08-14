@@ -46,5 +46,19 @@ public class SubjectBatchController {
         return new CommonResponse(OPERATION_SUCCSESS,batchRelatedSubject,RESPONSE_MESSAGE);
     }
 
+    // get batch subjectId related
+    @GetMapping(value = "/batchList/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getSubjectRelatedBatchList(@PathVariable Integer subjectId) {
+        log.info("get subjectId ");
+        return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getSubjectRelatedBatchDetail(subjectId),RESPONSE_MESSAGE);
+    }
+
+    // get batch subjectId related
+    @GetMapping(value = "/teacherSubjectName/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getTeacherSubjectName(@PathVariable Integer subjectId) {
+        log.info("get subjectId for get subjectName ");
+        return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getLoggingTeacherSubject(subjectId),RESPONSE_MESSAGE);
+    }
+
 
 }

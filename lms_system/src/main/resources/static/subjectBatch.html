@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · My Classes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Redesigned batch card additions (progress bar removed) --- */
+        .batch-stats-row {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .batch-stat.is-progress b {
+            color: var(--batch-accent, #F2A93B);
+        }
+        .batch-card-foot {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: color-mix(in srgb, var(--batch-accent, #F2A93B) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--batch-accent, #F2A93B) 28%, transparent);
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-top: 4px;
+        }
+        .batch-card-foot svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            color: var(--batch-accent, #F2A93B);
+        }
+        .batch-card-foot .foot-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            line-height: 1.25;
+        }
+        .batch-card-foot .foot-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            opacity: .65;
+        }
+        .batch-card-foot .foot-value {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">C</div>
+            <div class="brand-text"><strong>Comstream</strong><span>Commerce Stream LMS</span></div>
+        </div>
+
+        <p class="nav-label">Workspace</p>
+        <ul class="nav">
+            <li><a href="teacherDashboard.html"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
+            <li><a href="subjectBatch.html" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>My Classes</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Grading</a></li>
+            <li><a href="subjectRelateStudentManage.html"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Students</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Reports</a></li>
+        </ul>
+
+        <div class="sidebar-legend">
+            <p>My Subject</p>
+            <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:#F2A93B"></span>Accounting</div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+      <span class="role-tag tag-teacher">
+        <svg width="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+        Teacher
+      </span>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search batches, lessons…">
+                </div>
+                <button class="icon-btn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="dot"></span>
+                </button>
+                <div class="profile">
+                    <div class="avatar" style="background:linear-gradient(155deg,#F2A93B,#A66B0F)">SP</div>
+                    <div class="profile-meta"><strong>Suresh Pillai</strong><span>Accounting Teacher</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="view">
+
+            <div class="page-head">
+                <div>
+                    <p class="hero-eyebrow">My Classes · Accounting</p>
+                    <h1>Accounting Batches</h1>
+                    <p>Every batch you teach Accounting to. Open a batch to get to its lessons, materials, and gradebook.</p>
+                </div>
+            </div>
+
+            <!-- ============== Subject overview ============== -->
+            <div class="subject-overview">
+                <div class="subject-overview-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <div class="subject-overview-body">
+                    <h2>Accounting</h2>
+                    <p>You're the only subject teacher assigned — all three A/L batches sit under this one subject.</p>
+                </div>
+                <div class="subject-overview-stats">
+                    <div class="batch-stat"><b>3</b><span>Batches</span></div>
+                    <div class="batch-stat"><b>89</b><span>Students</span></div>
+                    <div class="batch-stat"><b>50</b><span>Lessons taught</span></div>
+                </div>
+            </div>
+
+            <!-- ============== Batch cards ============== -->
+            <div class="batch-grid" id="batchGrid" >
+
+                <div class="batch-card" style="--batch-accent:#F2A93B" tabindex="0" role="button"
+                     onclick="openBatchLessons('2024')" onkeydown="if(event.key==='Enter')openBatchLessons('2024')">
+                    <div class="batch-card-top">
+                        <div>
+                            <p class="batch-name">2024 A/L batch</p>
+                            <p class="batch-sub">Section A · Since Jan 2024</p>
+                        </div>
+                        <span class="batch-arrow" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+
+                    <div class="batch-stats-row">
+                        <div class="batch-stat"><b>32</b><span>Students</span></div>
+                        <div class="batch-stat"><b>24</b><span>Lessons</span></div>
+                        <div class="batch-stat"><b>6</b><span>Assignments</span></div>
+                        <div class="batch-stat is-progress"><b>78%</b><span>Syllabus</span></div>
+                    </div>
+
+                    <div class="batch-card-foot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        <div class="foot-text">
+                            <span class="foot-label">Next up</span>
+                            <span class="foot-value">Trial Balance Test · Aug 16, 11:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-card" style="--batch-accent:#F2A93B" tabindex="0" role="button"
+                     onclick="openBatchLessons('2025')" onkeydown="if(event.key==='Enter')openBatchLessons('2025')">
+                    <div class="batch-card-top">
+                        <div>
+                            <p class="batch-name">2025 A/L batch</p>
+                            <p class="batch-sub">Section A · Since Jan 2025</p>
+                        </div>
+                        <span class="batch-arrow" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+
+                    <div class="batch-stats-row">
+                        <div class="batch-stat"><b>29</b><span>Students</span></div>
+                        <div class="batch-stat"><b>17</b><span>Lessons</span></div>
+                        <div class="batch-stat"><b>4</b><span>Assignments</span></div>
+                    </div>
+
+                    <div class="batch-card-foot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        <div class="foot-text">
+                            <span class="foot-label">Next up</span>
+                            <span class="foot-value">Unit Test 2 — Journals · Aug 19, 09:30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-card" style="--batch-accent:#F2A93B" tabindex="0" role="button"
+                     onclick="openBatchLessons('2026')" onkeydown="if(event.key==='Enter')openBatchLessons('2026')">
+                    <div class="batch-card-top">
+                        <div>
+                            <p class="batch-name">2026 A/L batch</p>
+                            <p class="batch-sub">Section A · Since Jan 2026</p>
+                        </div>
+                        <span class="batch-arrow" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+
+                    <div class="batch-stats-row">
+                        <div class="batch-stat"><b>28</b><span>Students</span></div>
+                        <div class="batch-stat"><b>9</b><span>Lessons</span></div>
+                        <div class="batch-stat"><b>2</b><span>Assignments</span></div>
+                        <div class="batch-stat is-progress"><b>31%</b><span>Syllabus</span></div>
+                    </div>
+
+                    <div class="batch-card-foot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        <div class="foot-text">
+                            <span class="foot-label">Next up</span>
+                            <span class="foot-value">Depreciation basics · Aug 21, 10:00</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<script src="lib/jquery-4.0.0.min.js"></script>
+<script src="js/controller/subjectRelatedBatchController.js"></script>
+<script src="js/apiHandle/subjectRelatedBatchAPI.js"></script>
+</body>
+</html>
