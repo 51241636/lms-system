@@ -31,8 +31,29 @@ function loadBatches(){
             activeBatchesCount +=1;
                });
     })
-        .fail(function (error){
-            console.log("error")
+        .fail(function (xhr){
+
+            if (xhr.status === 401 || xhr.status === 404) {
+
+                toastr.error(
+                    "cant load batches",
+                    "Login Failed"
+                );
+
+            } else if (xhr.status === 500) {
+
+                toastr.error(
+                    "Internal server error. Please try again later.",
+                    "Server Error"
+                );
+
+            } else {
+
+                toastr.error(
+                    "Something went wrong.",
+                    "Login Failed"
+                );
+            }
         });
 }
 
@@ -56,8 +77,30 @@ $("#classBatchId").on("change", function () {
                                             <span class="st-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>
                                         </label>`)
             })
-        }).fail(function (error){
-        console.log("error")
+        }).fail(function (xhr){
+
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "subject still not added for the batch",
+                "Login Failed"
+            );
+
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
     });
 });
 // when click subject add to the list
@@ -148,8 +191,33 @@ function addStudentBtn(){
         console.log("Sucess")
         loadAllStudents();
         clearBtn();
-    }).fail(function (error){
-       console.log("not savesd")
+        toastr.success(
+            "student saved successfullt",
+            "student registered"
+        );
+    }).fail(function (xhr){
+        clearBtn();
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "student not saved",
+                "Login Failed"
+            );
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
     });
 
 
@@ -223,6 +291,28 @@ function loadAllStudents(){
         loadActiveBatchCount();
         loadInActiveStudentCard();
 
+    }).fail(function (xhr){
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "student not allowed",
+                "Login Failed"
+            );
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
     });
 
 
@@ -338,8 +428,34 @@ function updateStudentBtn(){
         closeAddStudentModal();
         loadAllStudents();
         clearBtn();
-    }).fail(function (error){
-        console.log("not savesd")
+        toastr.success(
+            "student  updated successfully",
+            "update successfully"
+        );
+
+    }).fail(function (xhr){
+        clearBtn();
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "student not updated",
+                "update Failed"
+            );
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
     });
 }
 
@@ -426,7 +542,10 @@ function loadInActiveStudentCard(){
                     <span class="stat-delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>${percentage} % of total students</span>
                `)
     }).fail(function (error){
-        console.log("error")
+        toastr.error(
+            "cant load inactive students",
+            "inactive studnt load failed"
+        );
     })
 
 }
@@ -434,9 +553,104 @@ function loadInActiveStudentCard(){
 $(document).on("click",".danger",function (){
     let deleteStudentId = $(this).data("id");
     studentDelete(deleteStudentId).done(function (response){
-        console.log("delete success");
+
         loadAllStudents();
-    }).fail(function (error){
-        console.log(error)
+        toastr.success(
+            "student deleted successfully",
+            "delete failed"
+        );
+
+    }).fail(function (xhr){
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "student not deleted",
+                "delete failed"
+            );
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
     });
 });
+
+$("#searchStudent").on("keydown", function (event) {
+  if(event.key === "Enter"){
+      let searchName = $(this).val().trim();
+
+
+      if(searchName === ""){
+          loadAllStudents();
+          return;
+      }
+        searchStudent(searchName).done(function (response){
+            $("#studentTBody").empty();
+            for (const responseElement of response.body) {
+                const studentId = responseElement.studentId;
+                const studentName = responseElement.studentName;
+                const studentUsername = responseElement.studentUsername;
+                const email = responseElement.email;
+                const contact = responseElement.contact;
+                const address = responseElement.address;
+                const subjectStudentList = responseElement.subjectStudent;
+                const batchName = responseElement.batchName;
+
+                let data = `<tr> <td class="id-tag">${studentId}</td>
+                            <td class="cell-person">
+                                <span class="person-avatar" style="background:#3B82F6">${studentName.charAt(0)}</span>
+                                <span>${studentName}<span class="cell-sub">${email}</span></span>
+                            </td>
+                            <td class="num">${contact}</td>
+                            <td class="address">${address}</td>
+                          
+                            <td><span class="chip chip-econ"><span class="dot"></span>${subjectStudentList.join(", ")}</span></td>
+                            <td>${batchName}</td>
+                            <td><span class="pill pill-a">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button aria-label="Edit" id="editBtn" data-id="${studentId}" class="editBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                                    <button aria-label="Delete" class="danger" data-id="${studentId}" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>
+                                </div>
+                            </td>
+                                   </tr>`
+
+                $("#studentTBody").append(data);
+            }
+
+        }).fail(function(xhr){
+            loadAllStudents();
+            if (xhr.status === 401 || xhr.status === 404) {
+
+                toastr.error(
+                    "search student not allowed",
+                    "search failed"
+                );
+
+            } else if (xhr.status === 500) {
+
+                toastr.error(
+                    "Internal server error. Please try again later.",
+                    "Server Error"
+                );
+
+            } else {
+
+                toastr.error(
+                    "Something went wrong.",
+                    "Login Failed"
+                );
+            }
+        })
+  }
+})

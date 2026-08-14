@@ -34,4 +34,16 @@ public class StudentDetailDTO {
         this.contact = contact;
         this.address = address;
     }
+    public StudentDetailDTO(Long studentId, String studentName, String studentUsername, @NotBlank(message = "Email is required") @Email(message = "Invalid email address") String email, @Pattern(
+            regexp = "^07[0-9]{8}$",
+            message = "Invalid Sri Lankan contact number"
+    ) String contact, String address,String batchName) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.studentUsername = studentUsername;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.batchName = batchName;
+    }
 }

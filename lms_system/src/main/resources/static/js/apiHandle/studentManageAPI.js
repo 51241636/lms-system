@@ -85,3 +85,21 @@ function studentDelete(deleteStudentId){
         }
     });
 }
+
+function searchStudent(searchName){
+  return  $.ajax({
+        url: "http://localhost:8080/v1/student/filterStudent",
+        type: "GET",
+
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("JWT")
+        },
+
+        data: {
+            studentName: searchName,
+            studentAddress:searchName,
+            batchName:searchName,
+            contact:searchName,
+        }
+    });
+}

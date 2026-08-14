@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comstream · My Students</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">C</div>
+            <div class="brand-text"><strong>Comstream</strong><span>Commerce Stream LMS</span></div>
+        </div>
+
+        <p class="nav-label">Workspace</p>
+        <ul class="nav">
+            <li><a href="teacher.html" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>My Classes</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Grading</a></li>
+            <li><a href="subjectRelateStudentManage.html"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Students</a></li>
+            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Reports</a></li>
+        </ul>
+
+        <div class="sidebar-legend">
+            <p>My Subjects</p>
+            <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:#16A38A"></span>Economics</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#3B82F6"></span>ICT</div>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+      <span class="role-tag tag-teacher">
+        <svg width="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Teacher
+      </span>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" placeholder="Search your students…">
+                </div>
+                <button class="icon-btn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    <span class="dot"></span>
+                </button>
+                <div class="profile">
+                    <div class="avatar" style="background:linear-gradient(155deg,#F2A93B,#A66B0F)">NP</div>
+                    <div class="profile-meta"><strong>Nadeesha Perera</strong><span>Teacher · Economics, ICT</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="view">
+
+            <div class="page-head">
+                <div>
+                    <p class="hero-eyebrow">Students · My classes</p>
+                    <h1>My Students</h1>
+                    <p>Students enrolled in the subjects you teach. Update their details or remove a record if it's no longer needed.</p>
+                </div>
+                <div class="page-head-actions">
+                    <span class="info-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        Only administrators can register new students
+                    </span>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="stat-grid">
+                <div class="stat-card" id="myStudentCard">
+                    <div class="stat-top"><span class="stat-label">My Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
+                    <div class="stat-value">112</div>
+                    <span class="stat-sub">Across Economics &amp; ICT</span>
+                </div>
+                <div class="stat-card" id="myActiveCard">
+                    <div class="stat-top"><span class="stat-label">Active Students</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span></div>
+                    <div class="stat-value">108</div>
+                    <span class="stat-sub">96% of your students</span>
+                </div>
+                <div class="stat-card" id="myClassCard">
+                    <div class="stat-top"><span class="stat-label">Classes Assigned</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></span></div>
+                    <div class="stat-value">3</div>
+                    <span class="stat-sub">2026 A/L, 2027 A/L</span>
+                </div>
+                <div class="stat-card" id="mySubjectCard">
+                    <div class="stat-top"><span class="stat-label">Subjects Taught</span><span class="stat-icon" style="--tint:#FCEBCB;--tone:#A66B0F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
+                    <div class="stat-value">2</div>
+                    <span class="stat-sub">Economics, ICT</span>
+                </div>
+            </div>
+
+            <div class="grid-2-even">
+                <div class="panel">
+                    <div class="panel-head"><h2>Working with your students</h2></div>
+                    <div class="panel-body">
+                        <div class="guide-list">
+                            <div class="guide-item">
+                                <span class="guide-num">01</span>
+                                <p><strong>This list is scoped to you</strong>Only students enrolled in a subject you teach show up here.</p>
+                            </div>
+                            <div class="guide-item">
+                                <span class="guide-num">02</span>
+                                <p><strong>Enrollment is admin-only</strong>New registrations are handled by an administrator — ask them to add a student.</p>
+                            </div>
+                            <div class="guide-item">
+                                <span class="guide-num">03</span>
+                                <p><strong>You can still edit or remove</strong>Fix contact details, address, or subjects, or remove a record with the actions on each row.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h2>Recently Updated</h2></div>
+                    <div class="panel-body" id="recentlyUpdatedContainer">
+                        <div class="list-row">
+                            <div class="list-icon" style="background:#E3EDFE;color:#3B82F6">SN</div>
+                            <div class="list-body"><p class="list-title">Sanduni Nanayakkara</p><p class="list-meta">Contact number updated · Economics, ICT</p></div>
+                            <div class="list-time">Today</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== My students table ============== -->
+            <div class="panel">
+                <div class="table-toolbar">
+                    <div class="panel-head"><h2>All My Students</h2></div>
+                    <div class="toolbar-search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Search students…" id="searchStudent">
+                    </div>
+                </div>
+                <div class="panel-body no-pad">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th>Batch</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="studentTBody">
+                        <tr data-student-id="1042">
+                            <td class="id-tag">#1042</td>
+                            <td class="cell-person">
+                                <span class="person-avatar" style="background:#3B82F6">SN</span>
+                                <span>Sanduni Nanayakkara<span class="cell-sub">sanduni.n · sanduni.n@comstream.edu</span></span>
+                            </td>
+                            <td class="num">077 214 5583</td>
+                            <td class="address">Horana</td>
+                            <td>2026 A/L</td>
+                            <td><span class="pill pill-a">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button aria-label="Edit" onclick="openEditStudentModal('1042')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                                    <button aria-label="Delete" class="danger" onclick="openDeleteStudentModal('1042','Sanduni Nanayakkara')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span>Showing your students only</span>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<!-- ============== Edit Student modal ============== -->
+<div class="modal-overlay" id="editStudentModal">
+    <div class="modal">
+        <div class="modal-head">
+            <div>
+                <h2>Edit Student</h2>
+                <p>Update contact details, address, or subject enrollment.</p>
+            </div>
+            <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form id="editStudentForm">
+                <input type="hidden" id="editStudentId" name="editStudentId">
+                <div class="form-section">
+                    <p class="form-section-title">Personal details</p>
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="editStudentName">Full name</label>
+                            <input class="input" type="text" id="editStudentName" name="editStudentName" placeholder="e.g. Priya Nair">
+                        </div>
+                        <div class="field">
+                            <label for="editStudentUsername">Username</label>
+                            <input class="input" type="text" id="editStudentUsername" name="editStudentUsername" disabled>
+                        </div>
+                        <div class="field">
+                            <label for="editEmail">Email address</label>
+                            <input class="input" type="email" id="editEmail" name="editEmail" placeholder="priya.nair@comstream.edu">
+                        </div>
+                        <div class="field">
+                            <label for="editContact">Contact number</label>
+                            <input class="input" type="tel" id="editContact" name="editContact" placeholder="+94 77 123 4567">
+                        </div>
+                        <div class="field">
+                            <label for="editClassBatchId">Class / Batch</label>
+                            <select class="select" id="editClassBatchId" name="editClassBatchId">
+                                <option value="">Select a batch</option>
+                                <option value="1">2026 A/L</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="editStatus">Status</label>
+                            <select class="select" id="editStatus" name="editStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="field span-2">
+                            <label for="editAddress">Address <span class="optional">(optional)</span></label>
+                            <textarea class="textarea" id="editAddress" name="editAddress" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <p class="form-section-title">Subjects</p>
+                    <div class="subject-toggle-grid" id="editSubjectContainer">
+                    </div>
+                    <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-foot">
+            <button class="btn btn-ghost" type="button" onclick="closeEditStudentModal()">Cancel</button>
+            <button class="btn btn-primary" type="button" id="submitEditStudentBtn" onclick="studentUpdate()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                Save changes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============== Delete Student confirm modal ============== -->
+<div class="modal-overlay" id="deleteStudentModal">
+    <div class="modal modal-sm">
+        <div class="modal-head">
+            <div><h2>Remove student?</h2></div>
+            <button class="modal-close" onclick="closeDeleteStudentModal()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="confirm-body">
+            <div class="confirm-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </div>
+            <h3 id="deleteStudentName">Remove this student?</h3>
+            <p>This removes <strong id="deleteStudentNameInline">the student</strong> from your class list. This can't be undone from here — an administrator can re-add them if needed.</p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" type="button" onclick="closeDeleteStudentModal()">Cancel</button>
+            <button class="btn btn-danger" type="button" id="confirmDeleteStudentBtn" onclick="deleteStudentBtn()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                Remove student
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="lib/jquery-4.0.0.min.js"></script>
+<script src="js/controller/subjectRelatedStudentController.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="js/apiHandle/sbjectRelatedStudentAPI.js"></script>
+
+</body>
+</html>

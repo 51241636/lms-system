@@ -11,6 +11,7 @@ function handleUserLogin(){
 
             localStorage.setItem("JWT", response.body.token);
             localStorage.setItem("userId", response.body.userId);
+            localStorage.setItem("subjectId", response.body.subjectId);
             localStorage.setItem("roles", JSON.stringify(roles));
 
             // Clear inputs

@@ -110,9 +110,17 @@ public CommonResponse getInactiveStudentCount() {
 }
 // filter student
 @GetMapping(value ="/filterStudent",produces = MediaType.APPLICATION_JSON_VALUE)
-public CommonResponse filterStudents(@RequestParam(value = "studentName",required = false)String studentName,@RequestParam(value = "studentAddress",required = false)String studentAddress,@RequestParam(value = "batchName",required = false)String batchName,@RequestParam(value = "contact",required = false)String contact,@RequestParam(value = "subjectName",required = false)String subjectName){
-    List<StudentDetailDTO> studentDetailDTOList = studentService.filterStudent(studentName, studentAddress, batchName, contact, subjectName);
+public CommonResponse filterStudents(@RequestParam(value = "studentName",required = false)String studentName,@RequestParam(value = "studentAddress",required = false)String studentAddress,@RequestParam(value = "batchName",required = false)String batchName,@RequestParam(value = "contact",required = false)String contact){
+    List<StudentDetailDTO> studentDetailDTOList = studentService.filterStudent(studentName, studentAddress, batchName, contact);
     return new CommonResponse(OPERATION_SUCCSESS,studentDetailDTOList,RESPONSE_MESSAGE);
 }
+
+
+    // get subject related studentList
+    @GetMapping(value ="/getSubjectRelatedStudents/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse filterStudents(@PathVariable Integer subjectId){
+        List<StudentDetailDTO> subjectRelatedStudent = studentService.getSubjectRelatedStudent(subjectId);
+        return new CommonResponse(OPERATION_SUCCSESS,subjectRelatedStudent,RESPONSE_MESSAGE);
+    }
 
 }

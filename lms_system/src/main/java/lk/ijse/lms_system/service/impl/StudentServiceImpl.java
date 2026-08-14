@@ -221,23 +221,44 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDetailDTO> filterStudent(String studentName, String studentAddress, String batchName, String contact,String subjectName) {
-        List<StudentEnrollment> studentEnrollments = studentEnrollmentRepository.filterStudent(studentName, studentAddress, batchName, contact, subjectName);
+    public List<StudentDetailDTO> filterStudent(String studentName, String studentAddress, String batchName, String contact) {
+        List<Student> filteredStudent = studentRepository.filterStudent(studentName, studentAddress, batchName, contact);
         List<StudentDetailDTO> studentDetailDTOList = new ArrayList<>();
-        List<String>subjectStudent=new ArrayList<>();
-        if(studentEnrollments.isEmpty()){
+        if(filteredStudent.isEmpty()){
             throw new LmsSystemException(404,"students not found");
         }
-        for(StudentEnrollment studentEnrollment : studentEnrollments){
+        for(Student student : filteredStudent){
+            if(student.getStudentStatus().equals(StudentStatus.ACTIVE)){
+                List<String>subjectStudent=new ArrayList<>();
+                for(StudentEnrollment studentEnrollment:student.getStudentEnrollments()){
+                    subjectStudent.add(studentEnrollment.getSubject().getSubjectName());
+                }
+                studentDetailDTOList.add(new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),subjectStudent,student.getClassBatch().getBatchName()));
 
-            subjectStudent.add(studentEnrollment.getSubject().getSubjectName());
-        }
-//        new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),subjectStudent,student.getClassBatch().getBatchName()
-        for(StudentEnrollment studentEnrollment : studentEnrollments){
-
-
-            studentDetailDTOList.add(new StudentDetailDTO(studentEnrollment.getStudent().getStudentId(),studentEnrollment.getStudent().getStudentName(),studentEnrollment.getStudent().getStudentUsername(),studentEnrollment.getStudent().getEmail(),studentEnrollment.getStudent().getContact(),studentEnrollment.getStudent().getAddress(),subjectStudent,studentEnrollment.getStudent().getClassBatch().getBatchName()));
+            }
         }
         return studentDetailDTOList;
+    }
+
+    @Override
+    public List<StudentDetailDTO> getSubjectRelatedStudent(Integer subjectId) {
+        try{
+            List<Student> subjectRelatedStudentList = studentRepository.getSubjectRelatedStudentList(subjectId);
+            if(subjectRelatedStudentList.isEmpty()){
+                throw new LmsSystemException(404,"subject related student not found");
+            }
+            List<StudentDetailDTO> studentDetailDTOList = new ArrayList<>();
+            for(Student student : subjectRelatedStudentList){
+                if(student.getStudentStatus().equals(StudentStatus.ACTIVE)){
+                    studentDetailDTOList.add(new StudentDetailDTO(student.getStudentId(),student.getStudentName(),student.getStudentUsername(),student.getEmail(),student.getContact(),student.getAddress(),student.getClassBatch().getBatchName()));
+
+                }
+            }
+            return studentDetailDTOList;
+
+        }catch (Exception e){
+            throw  e;
+
+        }
     }
 }

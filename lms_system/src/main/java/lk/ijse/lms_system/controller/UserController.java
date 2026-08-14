@@ -53,7 +53,7 @@ public class UserController {
         log.info("get entered user userDetails");
         String token = jwtUtil.generatedToken(loginUser.getUserId(), loginUser.getUserRole(), loginUser.getUsername());
         log.info("get entered user token");
-        return new CommonResponse(OPERATION_SUCCSESS,new UserDataDTO(loginUser.getUserId(),token,roles),RESPONSE_MESSAGE);
+        return new CommonResponse(OPERATION_SUCCSESS,new UserDataDTO(loginUser.getUserId(),token,roles,loginUser.getSubjetId()),RESPONSE_MESSAGE);
     }
 
 //     update User

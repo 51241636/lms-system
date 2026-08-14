@@ -13,4 +13,5 @@ public class UserDataDTO {
     private Long userId;
     private String token;
     private List<String> userRoleList;
+    private Integer subjectId;
 }
