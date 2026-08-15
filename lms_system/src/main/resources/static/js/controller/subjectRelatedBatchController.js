@@ -2,6 +2,7 @@ $(document).ready(function () {
 
 
     loadSubjectRelatedBatches();
+    loadTeacherBatchDetail();
 
 
 
@@ -45,6 +46,49 @@ function loadSubjectRelatedBatches(){
         });
 
 
+    }).fail(function (xhr){
+        if (xhr.status === 401 || xhr.status === 404) {
+
+            toastr.error(
+                "student not allowed",
+                "Login Failed"
+            );
+
+        } else if (xhr.status === 500) {
+
+            toastr.error(
+                "Internal server error. Please try again later.",
+                "Server Error"
+            );
+
+        } else {
+
+            toastr.error(
+                "Something went wrong.",
+                "Login Failed"
+            );
+        }
+    });
+}
+
+function loadTeacherBatchDetail(){
+    getBatchRelatedSubjectDetail(localStorage.getItem("subjectId")).done(function (response){
+       let subject=response.body;
+        $("#subjectOverview").empty();
+        let data=` <div class="subject-overview-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <div class="subject-overview-body">
+                    <h2>${subject.subjectName}</h2>
+                    <p>You're the only subject teacher assigned — all  A/L batches sit under this one subject.</p>
+                </div>
+                <div class="subject-overview-stats">
+                    <div class="batch-stat"><b>${subject.batchCount}</b><span>Batches</span></div>
+                    <div class="batch-stat"><b>${subject.studentCount}</b><span>Students</span></div>
+                    <div class="batch-stat"><b>${subject.lessonCount}</b><span>Lessons taught</span></div>
+                </div>`;
+
+        $("#subjectOverview").append(data);
     }).fail(function (xhr){
         if (xhr.status === 401 || xhr.status === 404) {
 

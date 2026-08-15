@@ -60,5 +60,11 @@ public class SubjectBatchController {
         return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getLoggingTeacherSubject(subjectId),RESPONSE_MESSAGE);
     }
 
+    // get studentCount
+    @GetMapping(value = "/studentCount",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getStudentCount() {
+        return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getStudentCountSubjectRelated(),RESPONSE_MESSAGE);
+    }
+
 
 }

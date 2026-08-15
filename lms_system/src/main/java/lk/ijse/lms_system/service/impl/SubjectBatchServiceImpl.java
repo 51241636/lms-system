@@ -98,5 +98,10 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
       }
     }
 
+    @Override
+    public Long getStudentCountSubjectRelated() {
+        return subjectBatchRepository.getStudentCount();
+    }
+
 
 }

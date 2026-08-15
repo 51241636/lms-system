@@ -1394,3 +1394,136 @@ body.modal-open{overflow:hidden;}
     .batch-grid{grid-template-columns:1fr;}
     .subject-overview{flex-direction:column;align-items:flex-start;}
 }
+
+/* ============================================================
+   Subject Management (added) — CRUD registry for the four
+   commerce-stream subjects: colour identity, table, popup form
+   ============================================================ */
+
+/* ---------- subject identity cell (table) ---------- */
+.subject-cell{display:flex;align-items:center;gap:12px;}
+.subject-icon-box{
+    width:38px;height:38px;border-radius:11px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-weight:800;font-size:14px;
+}
+.subject-cell-info strong{display:block;font-size:13.5px;font-weight:700;color:var(--text);}
+.subject-cell-info .subject-id-tag{
+    display:inline-flex;align-items:center;gap:5px;
+    font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:2px;
+}
+.subject-cell-info .subject-id-tag svg{width:10px;height:10px;}
+
+/* ---------- toolbar count / results ---------- */
+.results-count{font-size:12px;color:var(--text-faint);}
+.results-count b{color:var(--text);font-weight:700;}
+
+/* ---------- empty state ---------- */
+.empty-state{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:14px;padding:56px 24px 48px;
+}
+.empty-state .es-icon{
+    width:58px;height:58px;border-radius:18px;
+    background:var(--brand-tint);color:var(--brand);
+    display:flex;align-items:center;justify-content:center;
+}
+.empty-state .es-icon svg{width:26px;height:26px;}
+.empty-state h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin:0;color:var(--text);}
+.empty-state p{font-size:13px;color:var(--text-soft);margin:0;max-width:320px;line-height:1.6;}
+
+/* ---------- Subject ID input with live prefix preview ---------- */
+.id-input-wrap{position:relative;}
+.id-input-wrap .input{padding-left:14px;text-transform:uppercase;letter-spacing:.03em;font-family:var(--font-mono);font-weight:600;}
+.id-input-wrap .id-status{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    font-size:11px;font-weight:700;font-family:var(--font-body);
+    display:flex;align-items:center;gap:5px;
+}
+.id-input-wrap .id-status svg{width:13px;height:13px;}
+.id-input-wrap .id-status.ok{color:var(--success);}
+.id-input-wrap .id-status.taken{color:var(--danger);}
+
+/* ---------- Colour / identity swatch picker ---------- */
+.color-swatch-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;}
+.color-swatch{
+    position:relative;aspect-ratio:1;border-radius:12px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid transparent;transition:transform .12s ease;
+}
+.color-swatch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;}
+.color-swatch:hover{transform:translateY(-2px);}
+.color-swatch svg{width:15px;height:15px;color:#fff;opacity:0;transition:opacity .1s ease;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));}
+.color-swatch:has(input:checked){box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--swatch-color,var(--brand));}
+.color-swatch:has(input:checked) svg{opacity:1;}
+.color-swatch:has(input:focus-visible){outline:2px solid var(--brand-light);outline-offset:3px;}
+
+/* live preview of the chosen identity, shown above the swatch grid */
+.identity-preview{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 14px;border:1px dashed var(--border);border-radius:var(--radius-sm);
+    background:var(--surface-alt);margin-bottom:14px;
+}
+.identity-preview .subject-icon-box{width:42px;height:42px;font-size:15px;}
+.identity-preview-text strong{display:block;font-size:13.5px;color:var(--text);}
+.identity-preview-text span{display:block;font-size:11.5px;color:var(--text-faint);font-family:var(--font-mono);}
+
+/* ---------- status pill toggle (active/archived) inside modal ---------- */
+.status-toggle-row{display:flex;gap:10px;}
+.status-toggle{
+    flex:1;position:relative;display:flex;align-items:center;justify-content:center;gap:8px;
+    border:1.5px solid var(--border);background:var(--surface-alt);
+    border-radius:var(--radius-sm);padding:11px 13px;cursor:pointer;
+    font-size:13px;font-weight:600;color:var(--text-soft);
+    transition:border-color .15s ease, background .15s ease, color .15s ease;
+}
+.status-toggle input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;}
+.status-toggle svg{width:14px;height:14px;}
+.status-toggle:has(input:checked){border-color:var(--success);background:var(--success-tint);color:#0E7A66;}
+.status-toggle.archived-opt:has(input:checked){border-color:var(--text-faint);background:var(--border-soft);color:var(--text-soft);}
+
+/* ---------- toast notifications ---------- */
+.toast-stack{
+    position:fixed;bottom:26px;right:26px;z-index:200;
+    display:flex;flex-direction:column-reverse;gap:10px;
+    pointer-events:none;
+}
+.toast{
+    pointer-events:auto;
+    display:flex;align-items:center;gap:12px;
+    background:var(--text);color:#fff;
+    border-radius:var(--radius-sm);padding:13px 16px;
+    min-width:280px;max-width:360px;
+    box-shadow:0 16px 34px -14px rgba(24,26,46,.45);
+    animation:toast-in .22s cubic-bezier(.2,.9,.3,1.2);
+}
+.toast.leaving{animation:toast-out .18s ease forwards;}
+@keyframes toast-in{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes toast-out{to{opacity:0;transform:translateX(12px);}}
+.toast-icon{
+    width:28px;height:28px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.14);
+}
+.toast-icon svg{width:14px;height:14px;}
+.toast.success .toast-icon{background:rgba(22,163,138,.35);color:#5FE0C4;}
+.toast.danger .toast-icon{background:rgba(217,79,92,.35);color:#FF9AA4;}
+.toast-msg{flex:1;font-size:13px;font-weight:600;line-height:1.4;}
+.toast-close{background:transparent;border:none;color:rgba(255,255,255,.5);display:flex;padding:0;}
+.toast-close svg{width:14px;height:14px;}
+.toast-close:hover{color:#fff;}
+
+/* ---------- subject count badge on page-head ---------- */
+.count-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:12px;font-weight:700;
+    background:var(--brand-tint);color:var(--brand-dark);
+    padding:6px 12px;border-radius:var(--radius-pill);
+}
+
+@media (max-width:640px){
+    .color-swatch-grid{grid-template-columns:repeat(4,1fr);}
+    .status-toggle-row{flex-direction:column;}
+    .toast-stack{left:16px;right:16px;bottom:16px;}
+    .toast{min-width:0;max-width:none;}
+}

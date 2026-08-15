@@ -87,6 +87,14 @@ public class SubjectController {
         return new CommonResponse(OPERATION_SUCCSESS,subjectDTO,RESPONSE_MESSAGE);
     }
 
+    //   get subject by subjectId
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping(value ="/subjectById/{subjectId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getSubject(@PathVariable Integer subjectId){
+        SubjectDTO subjectDTO =subjectService.subjectById(subjectId);
+        return new CommonResponse(OPERATION_SUCCSESS,subjectDTO,RESPONSE_MESSAGE);
+    }
+
 
 
 

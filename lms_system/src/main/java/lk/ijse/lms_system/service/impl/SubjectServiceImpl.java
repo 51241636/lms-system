@@ -136,4 +136,19 @@ public class SubjectServiceImpl implements SubjectService {
            throw e;
        }
     }
+
+    @Override
+    public SubjectDTO subjectById(Integer subjectId) {
+        try{
+            Optional<Subject> subjectById = subjectRepository.findById(subjectId);
+            if(subjectById.isPresent() && SubjectStatus.ACTIVE.equals(subjectById.get().getSubjectStatus())){
+                Subject subject=subjectById.get();
+                return new SubjectDTO(subject.getSubjectId(),subject.getSubjectName());
+            }else {
+                throw new LmsSystemException(404,"Subject not found");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

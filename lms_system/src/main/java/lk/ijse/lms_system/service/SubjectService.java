@@ -10,4 +10,5 @@ public interface SubjectService {
     List<SubjectDTO> getAllSubjects();
     List<SubjectDTO> searchSubjectByName(String subjectName);
     SubjectDTO loadUserRelatedSubject(Long userId);
+    SubjectDTO subjectById(Integer subjectId);
 }

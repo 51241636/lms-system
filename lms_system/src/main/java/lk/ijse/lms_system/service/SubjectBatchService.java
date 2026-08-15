@@ -14,5 +14,6 @@ public interface SubjectBatchService {
     List<SubjectDTO> getBatchRelatedSubject(Integer batchId);
     List<GetSubjectRelatedBatchDetailDTO> getSubjectRelatedBatchDetail(Integer subjectId);
     GetLogginTeacherSubjectDTO getLoggingTeacherSubject(Integer subjectId);
+    Long getStudentCountSubjectRelated();
 
 }

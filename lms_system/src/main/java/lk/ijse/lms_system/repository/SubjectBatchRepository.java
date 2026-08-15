@@ -53,5 +53,8 @@ public interface SubjectBatchRepository extends JpaRepository<SubjectBatch, Long
             "    s.subject_name",nativeQuery = true)
     GetLogginTeacherSubjectDTO getLoggedTeacherSubject(Integer subjectId);
 
+    @Query(value = "SELECT count(student_id) FROM student where student_status=\"ACTIVE\"",nativeQuery = true)
+    Long getStudentCount();
+
 
 }
