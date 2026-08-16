@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lk.ijse.lms_system.constant.CommonResponse;
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
+import lk.ijse.lms_system.dto.response.GetUserDetailsDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.dto.response.TeacherBatchDTO;
 import lk.ijse.lms_system.service.BatchService;
@@ -13,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static lk.ijse.lms_system.constant.ResponseCode.OPERATION_SUCCSESS;
@@ -89,6 +91,23 @@ public CommonResponse teacherRelatedBatchList(@PathVariable Integer subjectId) {
     List<TeacherBatchDTO> allTeacherRelatedBatches = batchService.getAllTeacherRelatedBatches(subjectId);
     return new CommonResponse(OPERATION_SUCCSESS,allTeacherRelatedBatches,RESPONSE_MESSAGE);
 }
+
+    //   get batch by batchId
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping(value ="/batchById/{batchId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getBatch(@PathVariable Long batchId){
+        ClassBatchDTO batchById = batchService.getBatchById(batchId);
+        return new CommonResponse(OPERATION_SUCCSESS,batchById,RESPONSE_MESSAGE);
+    }
+
+    //   search batch by batchName or createDate
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping(value ="/filterBatch",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse filterSubject(@RequestParam(value = "batchName",required = false)String batchName){
+        List<ClassBatchDTO> filterBatchList = batchService.getFilterBatchList(batchName);
+        return new CommonResponse(OPERATION_SUCCSESS,filterBatchList,RESPONSE_MESSAGE);
+    }
+
 
 
 

@@ -5,6 +5,7 @@ import lk.ijse.lms_system.dto.StudentDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.dto.response.TeacherBatchDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BatchService {
@@ -14,4 +15,6 @@ public interface BatchService {
     List<ClassBatchDTO> getAllBatches();
     List<StudentDetailDTO> getAllBatchRelatedStudents(long classBathId);
     List<TeacherBatchDTO> getAllTeacherRelatedBatches(Integer subjectId);
+    ClassBatchDTO getBatchById(Long classBatchId);
+    List<ClassBatchDTO> getFilterBatchList(String batchName);
 }

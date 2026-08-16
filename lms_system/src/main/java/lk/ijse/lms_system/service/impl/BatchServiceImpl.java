@@ -2,19 +2,23 @@ package lk.ijse.lms_system.service.impl;
 
 import lk.ijse.lms_system.dto.ClassBatchDTO;
 import lk.ijse.lms_system.dto.StudentDTO;
+import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
 import lk.ijse.lms_system.dto.response.TeacherBatchDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Student;
+import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.exception.LmsSystemException;
 import lk.ijse.lms_system.repository.BatchRepository;
 import lk.ijse.lms_system.service.BatchService;
 import lk.ijse.lms_system.status.ClassBatchStatus;
+import lk.ijse.lms_system.status.SubjectStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +34,7 @@ public class BatchServiceImpl implements BatchService {
         try{
             ClassBatch classBatch = new ClassBatch();
             classBatch.setBatchName(classBatchDTO.getClassBatchName());
-            classBatch.setBatchStartDate(classBatchDTO.getClassBatchStartDate());
+            classBatch.setBatchStartDate(LocalDate.now());
             classBatch.setBatchStatus(ClassBatchStatus.ACTIVE);
             batchRepository.save(classBatch);
             log.info("Batch added successfully");
@@ -46,7 +50,7 @@ public class BatchServiceImpl implements BatchService {
             if(classBatchOptional.isPresent()){
                 ClassBatch classBatch = classBatchOptional.get();
                 classBatch.setBatchName(classBatchDTO.getClassBatchName());
-                classBatch.setBatchStartDate(classBatchDTO.getClassBatchStartDate());
+                classBatch.setBatchStartDate(LocalDate.now());
                 classBatch.setBatchStatus(ClassBatchStatus.ACTIVE);
                 batchRepository.save(classBatch);
             }else {
@@ -69,7 +73,9 @@ public class BatchServiceImpl implements BatchService {
     public List<ClassBatchDTO> getAllBatches() {
         List<ClassBatchDTO> classBatchDTOList = new ArrayList<>();
         batchRepository.findAll().forEach(batch -> {
-            classBatchDTOList.add(new ClassBatchDTO(batch.getClassBatchId(),batch.getBatchName(),batch.getBatchStartDate()));
+            if(batch.getBatchStatus().equals(ClassBatchStatus.ACTIVE)){
+                classBatchDTOList.add(new ClassBatchDTO(batch.getClassBatchId(),batch.getBatchName(),batch.getBatchStartDate()));
+            }
         });
         return classBatchDTOList;
     }
@@ -104,5 +110,37 @@ public class BatchServiceImpl implements BatchService {
 //            classBatchDTOList.add(new TeacherBatchDTO(classBatch.));
 //        }
         return batchRepository.teacherRelatedBatches(subjectId);
+    }
+
+    @Override
+    public ClassBatchDTO getBatchById(Long classBatchId) {
+        try{
+            Optional<ClassBatch> batchById =batchRepository.findById(classBatchId);
+            if(batchById.isPresent() && ClassBatchStatus.ACTIVE.equals(batchById.get().getBatchStatus())){
+                lk.ijse.lms_system.entity.ClassBatch classBatch =batchById.get();
+                return new ClassBatchDTO(classBatch.getClassBatchId(),classBatch.getBatchName(),classBatch.getBatchStartDate());
+            }else {
+                throw new LmsSystemException(404,"Subject not found");
+            }
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public List<ClassBatchDTO> getFilterBatchList(String batchName) {
+        try{
+            List<ClassBatch> classBatches = batchRepository.filterBatch(batchName);
+            if(classBatches.isEmpty()){
+                throw new LmsSystemException(404,"Batches not found");
+            }
+            List<ClassBatchDTO> classBatchDTOList = new ArrayList<>();
+            for(ClassBatch classBatch:classBatches){
+                classBatchDTOList.add(new ClassBatchDTO(classBatch.getClassBatchId(),classBatch.getBatchName(),classBatch.getBatchStartDate()));
+            }
+            return classBatchDTOList;
+        }catch (Exception e){
+            throw e;
+        }
     }
 }

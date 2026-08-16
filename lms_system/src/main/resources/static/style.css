@@ -1527,3 +1527,59 @@ body.modal-open{overflow:hidden;}
     .toast-stack{left:16px;right:16px;bottom:16px;}
     .toast{min-width:0;max-width:none;}
 }
+
+/* ============================================================
+   Batch Management (added) — CRUD registry for teaching batches,
+   each tied to a subject. Reuses subject-cell / color-swatch /
+   modal / toast / empty-state components from Subject Management.
+   ============================================================ */
+
+/* ---------- batch identity cell (table) — icon + name + subject tag ---------- */
+.batch-name-cell{display:flex;align-items:center;gap:12px;}
+.batch-name-cell .subject-icon-box{width:38px;height:38px;font-size:13px;}
+.batch-name-info strong{display:block;font-size:13.5px;font-weight:700;color:var(--text);}
+.subject-mini-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:600;color:var(--text-soft);margin-top:3px;
+}
+.subject-mini-chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+
+/* ---------- Batch ID column tag ---------- */
+.batch-id-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--text);
+    background:var(--surface-alt);border:1px solid var(--border);
+    padding:5px 10px;border-radius:var(--radius-sm);
+}
+.batch-id-chip svg{width:11px;height:11px;color:var(--text-faint);}
+
+/* ---------- Start date column badge ---------- */
+.batch-date-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:12.5px;color:var(--text-soft);
+}
+.batch-date-badge svg{width:14px;height:14px;color:var(--text-faint);flex-shrink:0;}
+.batch-date-badge .rel{
+    font-family:var(--font-body);font-size:10.5px;font-weight:600;
+    color:var(--text-faint);margin-left:2px;
+}
+.batch-date-badge.upcoming .rel{color:var(--brand);}
+.batch-date-badge.started .rel{color:var(--success);}
+
+/* ---------- subject select (radio pills, reuses .subject-toggle visuals) ---------- */
+.subject-select-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+
+/* ---------- date input icon wrap ---------- */
+.date-input-wrap{position:relative;}
+.date-input-wrap svg{
+    position:absolute;left:13px;top:50%;transform:translateY(-50%);
+    width:15px;height:15px;color:var(--text-faint);pointer-events:none;
+}
+.date-input-wrap input[type="date"]{padding-left:38px;}
+.date-input-wrap input[type="date"]::-webkit-calendar-picker-indicator{
+    opacity:.55;cursor:pointer;
+}
+
+@media (max-width:640px){
+    .subject-select-grid{grid-template-columns:1fr;}
+}
