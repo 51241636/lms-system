@@ -1583,3 +1583,42 @@ body.modal-open{overflow:hidden;}
 @media (max-width:640px){
     .subject-select-grid{grid-template-columns:1fr;}
 }
+
+/* ============================================================
+   User Management (added) — admin/teacher accounts, each tied
+   to a role and (for teachers) a subject. Reuses cell-person /
+   person-avatar / chip / modal / form-grid components already
+   defined above.
+   ============================================================ */
+
+/* ---------- role pill (table + anywhere else) ---------- */
+.role-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:var(--radius-pill);
+}
+.role-pill svg{width:12px;height:12px;}
+.role-pill.admin{background:var(--brand-tint);color:var(--brand-dark);}
+.role-pill.teacher{background:var(--acc-tint);color:var(--acc-strong);}
+
+/* ---------- contact column ---------- */
+.contact-cell{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:12.5px;color:var(--text-soft);
+}
+.contact-cell svg{width:13px;height:13px;color:var(--text-faint);flex-shrink:0;}
+
+/* ---------- user ID column chip ---------- */
+.user-id-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--text);
+    background:var(--surface-alt);border:1px solid var(--border);
+    padding:5px 10px;border-radius:var(--radius-sm);
+}
+.user-id-chip svg{width:11px;height:11px;color:var(--text-faint);}
+
+/* ---------- role select — subtly recolors to match chosen role ---------- */
+.role-select-row{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;}
+
+@media (max-width:640px){
+    .role-select-row{grid-template-columns:1fr;}
+}
