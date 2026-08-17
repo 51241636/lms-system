@@ -86,7 +86,7 @@ function studentDelete(deleteStudentId){
     });
 }
 
-function searchStudent(searchName){
+function searchUser(searchName){
   return  $.ajax({
         url: "http://localhost:8080/v1/student/filterStudent",
         type: "GET",
@@ -96,9 +96,8 @@ function searchStudent(searchName){
         },
 
         data: {
-            studentName: searchName,
-            studentAddress:searchName,
-            batchName:searchName,
+            userName: searchName,
+            subjectName:searchName,
             contact:searchName,
         }
     });

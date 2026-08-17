@@ -88,9 +88,19 @@ public class UserController {
     @GetMapping(value ="/filterUser",produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse filterUsers(@RequestParam(value = "userName",required = false)String userName,@RequestParam(value = "subjectName",required = false)String subjectName,@RequestParam(value = "contact",required = false)String contact){
         List<GetUserDetailsDTO> getUserDetailsDTOS = userService.searchUsersByNameSubjectNameContact(userName, subjectName, contact);
+        for(GetUserDetailsDTO getUserDetailsDTO:getUserDetailsDTOS){
+            System.out.println(getUserDetailsDTO.getUsername());
+        }
+
         return new CommonResponse(OPERATION_SUCCSESS,getUserDetailsDTOS,RESPONSE_MESSAGE);
     }
 
-
+    //    get user by userId
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping(value = "/getUserDetail/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getUserById(@PathVariable Long userId) {
+        log.info("get user id for get user by id");
+        return new CommonResponse(OPERATION_SUCCSESS,userService.getUserByUserId(userId),RESPONSE_MESSAGE);
+    }
 
 }

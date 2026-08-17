@@ -1,11 +1,11 @@
-$(document).ready(function () {
+    $(document).ready(function () {
 
 
-loadAllSubject();
+    loadAllSubject();
 
 
 
-});
+    });
 let subjectCount=0;
 function loadCards(){
     $("#totalSubjectCard").empty();

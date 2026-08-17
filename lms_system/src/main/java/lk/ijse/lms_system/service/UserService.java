@@ -13,4 +13,5 @@ public interface UserService {
     void deleteUser(Long userId);
     List<GetUserDetailsDTO> getAllUsers();
     List<GetUserDetailsDTO> searchUsersByNameSubjectNameContact(String userName,String userEmail,String userPhone);
+    UserDTO getUserByUserId(Long userId);
 }

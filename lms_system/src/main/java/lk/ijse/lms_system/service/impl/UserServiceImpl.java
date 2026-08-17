@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDTO userDTO) {
         try{
             Optional<Subject> subjectById = subjectRepository.findById(userDTO.getSubjetId());
+            System.out.print(subjectById.get().getSubjectName());
             if(subjectById.isPresent() && subjectById.get().getSubjectStatus() == SubjectStatus.ACTIVE){
                 User user=new User();
                 user.setUsername(userDTO.getUsername());
@@ -85,7 +86,10 @@ public class UserServiceImpl implements UserService {
             if(byId.isPresent()){
                 User user = byId.get();
                 user.setUsername(userDTO.getUsername());
-                user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                if(userDTO.getPassword()!=null){
+                    user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+                }
+
                 user.setEmail(userDTO.getEmail());
                 user.setContact(userDTO.getContact());
                 user.setRole(userDTO.getUserRole());
@@ -180,6 +184,20 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
 
+    }
+
+    @Override
+    public UserDTO getUserByUserId(Long userId) {
+        try{
+            Optional<User> userById = userRepository.findById(userId);
+            if(userById.isEmpty()){
+                throw new LmsSystemException(404,"user is not found");
+            }
+            User user = userById.get();
+            return new UserDTO(user.getUserId(),user.getUsername(),user.getEmail(),user.getContact(),user.getRole(),user.getSubject().getSubjectId());
+        }catch (Exception e){
+            throw e;
+        }
     }
 
 
