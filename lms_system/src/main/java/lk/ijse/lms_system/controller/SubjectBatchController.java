@@ -66,5 +66,12 @@ public class SubjectBatchController {
         return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getStudentCountSubjectRelated(),RESPONSE_MESSAGE);
     }
 
+//    get all subjectbatch List
+        @GetMapping(value = "/getAllSubjectBatch",produces = MediaType.APPLICATION_JSON_VALUE)
+        public CommonResponse getAllSubjectBatch() {
+            return new CommonResponse(OPERATION_SUCCSESS,subjectBatchService.getAllSubjectBatchDetail(),RESPONSE_MESSAGE);
+        }
+
+
 
 }

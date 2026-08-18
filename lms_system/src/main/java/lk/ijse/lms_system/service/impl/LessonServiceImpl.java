@@ -111,9 +111,9 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonDetailDTO> filterLesson(Integer lessonNumber,String lessonName,LocalDate lessonCreateDate) {
+    public List<LessonDetailDTO> filterLesson(String subjectName) {
         try {
-            List<Lesson> filteredLessonList = lessonRepository.filterLesson(lessonNumber, lessonName, lessonCreateDate);
+            List<Lesson> filteredLessonList = lessonRepository.filterLesson(subjectName);
             if(filteredLessonList.isEmpty()){
                 throw new LmsSystemException(404,"related lessons not found");
             }
@@ -127,6 +127,27 @@ public class LessonServiceImpl implements LessonService {
             log.info("lessonDetailDTOList is created");
             return lessonDetailDTOList;
 
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public List<LessonDetailDTO> getLessonSubjectAndBatchRelated(Long subjectClassId) {
+        try{
+            List<Lesson> lessonSubjectAndBatchRelated = lessonRepository.getLessonSubjectAndBatchRelated(subjectClassId);
+            List<LessonDetailDTO> lessonDetailDTOList = new ArrayList<>();
+            if(lessonSubjectAndBatchRelated.isEmpty()){
+                throw new LmsSystemException(404,"lessons not yet added");
+            }
+            log.info("allLessonList is present");
+            for(Lesson lesson:lessonSubjectAndBatchRelated){
+                if(lesson.getLessonStatus().equals(LessonStatus.ACTIVE)){
+                    lessonDetailDTOList.add(new LessonDetailDTO(lesson.getLessonId(),lesson.getLessonNumber(),lesson.getLessonTitle(),lesson.getLessonDescription(),lesson.getLessonCreateDate(),lesson.getSubjectBatch().getSubject().getSubjectName(),lesson.getSubjectBatch().getClassBatch().getBatchName()));
+                }
+            }
+            log.info("lessons added success to the lessonDetailDTOList");
+            return lessonDetailDTOList;
         }catch (Exception e){
             throw e;
         }

@@ -194,6 +194,7 @@ function loadAllSubjects(){
 
 }
 
+
 function addSubjectBatchBtn(){
     if (selectedBatchId === 0) {
         alert("please select batch name");

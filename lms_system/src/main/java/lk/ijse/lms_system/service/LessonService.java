@@ -13,5 +13,6 @@ public interface LessonService {
     void updateLesson(LessonDTO lessonDTO);
     void deleteLesson(Integer lessonId);
     List<LessonDetailDTO> getAllLessons();
-    List<LessonDetailDTO> filterLesson(Integer lessonNumber, String lessonName, LocalDate lessonCreateDate);
+    List<LessonDetailDTO> filterLesson(String subjectName);
+    List<LessonDetailDTO> getLessonSubjectAndBatchRelated(Long subjectClassId);
 }

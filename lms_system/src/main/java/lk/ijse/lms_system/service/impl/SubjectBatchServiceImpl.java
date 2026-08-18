@@ -6,6 +6,7 @@ import lk.ijse.lms_system.dto.SubjectBatchDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.GetLogginTeacherSubjectDTO;
 import lk.ijse.lms_system.dto.response.GetSubjectRelatedBatchDetailDTO;
+import lk.ijse.lms_system.dto.response.SubjectBatchDetailDTO;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Subject;
 import lk.ijse.lms_system.entity.SubjectBatch;
@@ -101,6 +102,20 @@ public class SubjectBatchServiceImpl implements SubjectBatchService {
     @Override
     public Long getStudentCountSubjectRelated() {
         return subjectBatchRepository.getStudentCount();
+    }
+
+    @Override
+    public List<SubjectBatchDetailDTO> getAllSubjectBatchDetail() {
+        try{
+            List<SubjectBatch> allSubjectDetails = subjectBatchRepository.findAll();
+            List<SubjectBatchDetailDTO> subjectBatchDetailDTOList=new ArrayList<>();
+            for(SubjectBatch subjectBatch:allSubjectDetails){
+                subjectBatchDetailDTOList.add(new SubjectBatchDetailDTO(subjectBatch.getSubjectClassId(),subjectBatch.getSubject().getSubjectName(),subjectBatch.getClassBatch().getBatchName()));
+            }
+            return subjectBatchDetailDTOList;
+        } catch (Exception e){
+            throw e;
+        }
     }
 
 

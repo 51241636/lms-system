@@ -50,8 +50,8 @@ public class LessonController {
 
 //    delete added lesson
     @PreAuthorize("hasRole('Teacher')")
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse deleteLesson(@Valid @RequestBody Integer lessonId) {
+    @DeleteMapping(value = "/{lessonId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse deleteLesson(@PathVariable Integer lessonId) {
         log.info("get lesson id for delete");
         lessonService.deleteLesson(lessonId);
         log.info("delete lesson success");
@@ -66,11 +66,19 @@ public class LessonController {
         return new CommonResponse(OPERATION_SUCCSESS,allLessonsSubjectRelated,RESPONSE_MESSAGE);
     }
 
-//    filter lessons using lesson number , lesson name or lesson created date
+//    filter lessons using subjectName
     @GetMapping(value = "/filterLesson", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse filterLesson(@RequestParam(value = "lessonNumber",required = false)Integer lessonId, @RequestParam(value = "lessonName",required = false)String lessonName, @RequestParam(value = "lessonCreateDate",required = false)LocalDate createDate) {
-        List<LessonDetailDTO> filteredLessonList = lessonService.filterLesson(lessonId, lessonName, createDate);
+    public CommonResponse filterLesson(@RequestParam(value = "subjectName",required = false)String subjectName ) {
+        List<LessonDetailDTO> filteredLessonList = lessonService.filterLesson(subjectName);
         log.info("lesson filtered success");
         return new CommonResponse(OPERATION_SUCCSESS,filteredLessonList,RESPONSE_MESSAGE);
+    }
+
+//    get subject and batch related lesson list
+    @GetMapping(value = "getLessonBySubjectClassId/{subjectClassId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getLessonSubjectAndBatchRelated(@PathVariable Long subjectClassId) {
+        List<LessonDetailDTO> allLessonsSubjectRelated = lessonService.getLessonSubjectAndBatchRelated(subjectClassId);
+        log.info("get all subjectRelated lesson success");
+        return new CommonResponse(OPERATION_SUCCSESS,allLessonsSubjectRelated,RESPONSE_MESSAGE);
     }
 }

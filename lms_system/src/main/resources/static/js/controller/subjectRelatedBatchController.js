@@ -7,7 +7,15 @@ $(document).ready(function () {
 
 
 });
+function openBatchLessons(subjectClassId, batchName, batchStartDate) {
+    const params = new URLSearchParams({
+        subjectClassId: subjectClassId,
+        batchName: batchName,
+        batchStartDate: batchStartDate
+    });
+    window.location.href = "lessonShow.html?" + params.toString();
 
+}
 function loadSubjectRelatedBatches(){
     getBatchList(localStorage.getItem("subjectId")).done(function (response){
         let batchList=response.body;
@@ -16,7 +24,7 @@ function loadSubjectRelatedBatches(){
 
         batchList.forEach(function (batch){
             let card =`  <div class="batch-card" style="--batch-accent:#F2A93B" tabindex="0" role="button"
-                     onclick="openBatchLessons('${batch.subjectClassId}')" onkeydown="if(event.key==='Enter')openBatchLessons('${batch.subjectClassId}')">
+                     onclick="openBatchLessons('${batch.subjectClassId}', '${batch.batchName}', '${batch.batchStartDate}')" onkeydown="if(event.key==='Enter')openBatchLessons('${batch.subjectClassId}', '${batch.batchName}', '${batch.batchStartDate}')">
                     <div class="batch-card-top">
                         <div>
                             <p class="batch-name">${batch.batchName}</p>

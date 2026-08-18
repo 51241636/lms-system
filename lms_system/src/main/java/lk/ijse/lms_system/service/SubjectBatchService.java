@@ -5,6 +5,7 @@ import lk.ijse.lms_system.dto.SubjectBatchDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.GetLogginTeacherSubjectDTO;
 import lk.ijse.lms_system.dto.response.GetSubjectRelatedBatchDetailDTO;
+import lk.ijse.lms_system.dto.response.SubjectBatchDetailDTO;
 import lk.ijse.lms_system.entity.Subject;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface SubjectBatchService {
     List<GetSubjectRelatedBatchDetailDTO> getSubjectRelatedBatchDetail(Integer subjectId);
     GetLogginTeacherSubjectDTO getLoggingTeacherSubject(Integer subjectId);
     Long getStudentCountSubjectRelated();
+    List<SubjectBatchDetailDTO> getAllSubjectBatchDetail();
+
 
 }
