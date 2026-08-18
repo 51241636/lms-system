@@ -1622,3 +1622,100 @@ body.modal-open{overflow:hidden;}
 @media (max-width:640px){
     .role-select-row{grid-template-columns:1fr;}
 }
+
+
+
+
+/* ============================================================
+   Subject–Batch Manage (added) — pick one batch (radio) on the
+   left, multi-select subjects (click-toggle) on the right, then
+   attach the selection via the sticky action bar.
+   Append this block to the end of style.css
+   ============================================================ */
+
+/* ---------- left: batch pick list (single select via radio) ---------- */
+.batch-pick-list{display:flex;flex-direction:column;}
+.batch-pick-item{
+    position:relative;display:flex;align-items:flex-start;gap:14px;
+    padding:16px 22px;cursor:pointer;
+    border-bottom:1px solid var(--border-soft);
+    border-left:3px solid transparent;
+    transition:background .15s ease, border-color .15s ease;
+}
+.batch-pick-item:last-child{border-bottom:none;}
+.batch-pick-item:hover{background:var(--surface-alt);}
+.batch-pick-item input{position:absolute;opacity:0;width:1px;height:1px;}
+
+.batch-pick-radio{
+    width:19px;height:19px;border-radius:50%;flex-shrink:0;margin-top:2px;
+    border:2px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s ease;
+}
+.batch-pick-radio::after{
+    content:"";width:9px;height:9px;border-radius:50%;
+    background:var(--pick-accent,var(--brand));
+    transform:scale(0);transition:transform .12s ease;
+}
+.batch-pick-item input:checked ~ .batch-pick-radio{border-color:var(--pick-accent,var(--brand));}
+.batch-pick-item input:checked ~ .batch-pick-radio::after{transform:scale(1);}
+.batch-pick-item input:focus-visible ~ .batch-pick-radio{outline:2px solid var(--brand-light);outline-offset:2px;}
+.batch-pick-item:has(input:checked){
+    background:var(--surface-alt);
+    border-left-color:var(--pick-accent,var(--brand));
+}
+
+.batch-pick-info{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.batch-pick-info strong{font-size:14px;font-weight:700;color:var(--text);}
+.batch-pick-meta{font-size:12px;color:var(--text-faint);}
+.batch-pick-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+
+/* ---------- right: subject pick grid (multi select via click) ---------- */
+.subject-pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding-bottom:4px;}
+
+.subject-pick-card{
+    position:relative;display:flex;align-items:center;gap:12px;
+    border:1.5px solid var(--border);background:var(--surface-alt);
+    border-radius:var(--radius-md);padding:14px 16px;cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .12s ease;
+}
+.subject-pick-card:hover{transform:translateY(-2px);border-color:var(--pick-tone,var(--brand-light));}
+.subject-pick-card.selected{
+    border-color:var(--pick-tone,var(--brand));
+    background:var(--pick-tint,var(--brand-tint));
+}
+.subject-pick-card:focus-visible{outline:2px solid var(--brand-light);outline-offset:2px;}
+
+.subject-pick-check{
+    position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;
+    border:1.5px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s ease, border-color .15s ease;
+}
+.subject-pick-check svg{width:11px;height:11px;color:#fff;opacity:0;transition:opacity .1s ease;}
+.subject-pick-card.selected .subject-pick-check{background:var(--pick-tone,var(--brand));border-color:var(--pick-tone,var(--brand));}
+.subject-pick-card.selected .subject-pick-check svg{opacity:1;}
+
+.subject-pick-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.subject-pick-text strong{font-size:13.5px;font-weight:700;color:var(--text);}
+.subject-pick-text span{font-size:11.5px;color:var(--text-faint);}
+
+/* ---------- sticky action bar ---------- */
+.batch-subject-actionbar{
+    position:sticky;bottom:20px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:16px 22px;
+    box-shadow:0 20px 40px -18px rgba(24,26,46,.28);
+}
+.actionbar-summary{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-soft);flex-wrap:wrap;}
+.actionbar-summary svg{width:16px;height:16px;color:var(--brand);flex-shrink:0;}
+.actionbar-summary strong{color:var(--text);font-weight:700;}
+.actionbar-sep{color:var(--text-faint);}
+#actionbar-subject-count{font-family:var(--font-mono);font-weight:700;color:var(--brand-dark);}
+
+@media (max-width:640px){
+    .subject-pick-grid{grid-template-columns:1fr;}
+    .batch-subject-actionbar{position:static;flex-direction:column;align-items:stretch;}
+    .batch-subject-actionbar .btn{width:100%;justify-content:center;}
+}
