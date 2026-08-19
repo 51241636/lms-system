@@ -6,6 +6,7 @@ import lk.ijse.lms_system.dto.StudentLoginDTO;
 import lk.ijse.lms_system.dto.SubjectDTO;
 import lk.ijse.lms_system.dto.response.StudentByIdDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+import lk.ijse.lms_system.dto.response.StudentEnrollmentDetails;
 
 import java.util.List;
 
@@ -21,5 +22,6 @@ public interface StudentService {
     Integer loadInActiveStudentCount();
     List<StudentDetailDTO> filterStudent(String studentName,String studentAddress,String batchName,String contact);
     List<StudentDetailDTO> getSubjectRelatedStudent(Integer subjectId);
+    List<StudentEnrollmentDetails> getAllStudentEnrollmentDetails(Long studentId,Long batchId);
 //    List<StudentDTO> searchStudentByStudentName(String subjectName);
 }

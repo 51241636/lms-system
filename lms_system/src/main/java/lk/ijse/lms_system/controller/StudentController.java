@@ -92,7 +92,6 @@ public class StudentController {
     }
 
     //    get student by id
-    @PreAuthorize("hasAnyRole('Admin','Teacher')")
     @GetMapping(value = "/getStudentById/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getStudentById(@PathVariable  Long studentId) {
         log.info("get studentId");
@@ -121,6 +120,13 @@ public CommonResponse filterStudents(@RequestParam(value = "studentName",require
     public CommonResponse filterStudents(@PathVariable Integer subjectId){
         List<StudentDetailDTO> subjectRelatedStudent = studentService.getSubjectRelatedStudent(subjectId);
         return new CommonResponse(OPERATION_SUCCSESS,subjectRelatedStudent,RESPONSE_MESSAGE);
+    }
+
+
+    // get student related subject details
+    @GetMapping(value ="/getStudentRelatedSubjectDetails",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getStudentRelatedSubjectDetails(@RequestParam(value = "studentId",required = false)Long studentId,@RequestParam(value = "batchId",required = false)Long classBatchId){
+        return new CommonResponse(OPERATION_SUCCSESS,studentService.getAllStudentEnrollmentDetails(studentId,classBatchId),RESPONSE_MESSAGE);
     }
 
 }

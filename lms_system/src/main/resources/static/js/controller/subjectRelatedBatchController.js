@@ -8,6 +8,7 @@ $(document).ready(function () {
 
 });
 function openBatchLessons(subjectClassId, batchName, batchStartDate) {
+
     const params = new URLSearchParams({
         subjectClassId: subjectClassId,
         batchName: batchName,
@@ -97,6 +98,8 @@ function loadTeacherBatchDetail(){
                 </div>`;
 
         $("#subjectOverview").append(data);
+
+        $(".subjectName").text(subject.subjectName )
     }).fail(function (xhr){
         if (xhr.status === 401 || xhr.status === 404) {
 

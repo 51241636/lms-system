@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.ijse.lms_system.dto.*;
 import lk.ijse.lms_system.dto.response.StudentByIdDTO;
 import lk.ijse.lms_system.dto.response.StudentDetailDTO;
+import lk.ijse.lms_system.dto.response.StudentEnrollmentDetails;
 import lk.ijse.lms_system.entity.ClassBatch;
 import lk.ijse.lms_system.entity.Student;
 import lk.ijse.lms_system.entity.StudentEnrollment;
@@ -259,6 +260,19 @@ public class StudentServiceImpl implements StudentService {
         }catch (Exception e){
             throw  e;
 
+        }
+    }
+
+    @Override
+    public List<StudentEnrollmentDetails> getAllStudentEnrollmentDetails(Long studentId, Long batchId) {
+        try{
+            List<StudentEnrollmentDetails> subjectByStudentId = studentEnrollmentRepository.findSubjectByStudentId(studentId, batchId);
+            if(subjectByStudentId.isEmpty()){
+                throw new LmsSystemException(404,"no student related subjects found");
+            }
+            return subjectByStudentId;
+        }catch (Exception e){
+            throw e;
         }
     }
 }

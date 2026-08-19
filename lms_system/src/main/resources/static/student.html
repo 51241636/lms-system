@@ -20,7 +20,21 @@
         <p class="nav-label">Workspace</p>
         <ul class="nav">
             <li><a href="#" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
-            <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Subjects</a></li>
+            <li><a href="#"
+                   class="load-page"
+                   data-page="studentSubject.html">
+
+                <svg class="ic"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                </svg>
+
+                student subject
+            </a></li>
             <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Exams</a></li>
             <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Results</a></li>
             <li><a href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Progress</a></li>
@@ -63,7 +77,7 @@
             </div>
         </header>
 
-        <section class="view">
+        <section class="view" id="page-content">
             <div class="hero-banner">
                 <div class="hero-text">
                     <p class="hero-eyebrow">Grade 12 · Section A</p>
@@ -182,18 +196,24 @@
     </div>
 </div>
 
-<script>
-    // const session = JSON.parse(sessionStorage.getItem('cs_session') || 'null');
-    // if (!session || session.role !== 'student') { window.location.href = 'userlogin.html'; }
-    // else {
-    //     document.getElementById('p-name').textContent = session.name;
-    //     document.getElementById('p-avatar').textContent = session.initials;
-    //     document.getElementById('hero-greeting').textContent = 'Hey ' + session.name.split(' ')[0] + ', good to see you';
-    // }
-    // document.getElementById('logout-btn').addEventListener('click', () => {
-    //     sessionStorage.removeItem('cs_session');
-    //     window.location.href = 'userlogin.html';
-    // });
+<script src="lib/jquery-4.0.0.min.js"></script>
+    <script>
+        $(document).on("click", ".load-page", function (e) {
+
+        e.preventDefault();
+
+        const page = $(this).data("page");
+
+        $("#page-content").load(page + " .view", function () {
+            if (page === "subjectRelateStudentManage.html") {
+                initSubjectRelatedStudent();
+            }
+
+        console.log("Page loaded:", page);
+
+    });
+
+    });
 </script>
 </body>
 </html>

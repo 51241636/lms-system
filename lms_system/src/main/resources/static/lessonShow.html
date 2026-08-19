@@ -85,7 +85,6 @@
                 </div>
                 <div class="lbb-stats">
                     <div class="lbb-stat" ><b class="lessonCount">24</b><span>Lessons</span></div>
-                    <div class="lbb-stat"><b>32</b><span>Students</span></div>
                 </div>
             </div>
 
@@ -145,13 +144,60 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     <span><strong id="lessonCount">24</strong> lessons in this batch so far</span>
                 </div>
-                <a href="lessonManage.html" class="btn-add-lesson">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
-                    Add new lesson
-                </a>
+                <button class="btn btn-primary" id="open-add-lesson" onclick="openAddLessonModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+                    Add lesson
+                </button>
             </div>
 
         </section>
+    </div>
+</div>
+
+<div class="modal-overlay" id="lesson-modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="lesson-modal-title">
+        <div class="modal-head">
+            <div>
+                <h2 id="lesson-modal-title">Add lesson</h2>
+                <p>Create a lesson and link it to the subject batch it belongs to.</p>
+            </div>
+            <button class="modal-close" id="close-lesson-modal" onclick="closeAddLessonModal()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="form-section">
+                <p class="form-section-title">Lesson details</p>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="input-lesson-number">Lesson number</label>
+                        <input class="input" type="number" id="input-lesson-number" placeholder="e.g. 1" min="1" required>
+                    </div>
+
+                    <div class="field span-2">
+                        <label for="input-lesson-title">Lesson title</label>
+                        <input class="input" type="text" id="input-lesson-title" placeholder="e.g. Introduction to Demand and Supply" maxlength="120" required>
+                    </div>
+
+                    <div class="field span-2">
+                        <label for="input-lesson-description">Lesson description</label>
+                        <textarea class="textarea" id="input-lesson-description" placeholder="Short summary of what this lesson covers…"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-foot">
+            <button type="button" class="btn btn-ghost" id="cancel-lesson-modal" onclick="closeAddLessonModal()">Cancel</button>
+            <button type="button" class="btn btn-primary" id="save-lesson-btn" onclick="addLessonBtn()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+                Save lesson
+            </button>
+        </div>
     </div>
 </div>
 

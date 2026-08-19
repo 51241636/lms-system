@@ -9,6 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(
+        name = "student_enrollment",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"student_student_id", "subject_subject_id"}
+                )
+        }
+)
 public class StudentEnrollment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

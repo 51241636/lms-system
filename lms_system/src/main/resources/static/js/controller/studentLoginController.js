@@ -12,9 +12,9 @@ function handleUserLogin(){
 
     studentLogin(obj)
         .done(function (response){
-            sessionStorage.setItem('JWT',response.body.token);
-            sessionStorage.setItem("userId",response.body.studentId);
-            sessionStorage.setItem("roles", "Student");
+            localStorage.setItem('JWT',response.body.token);
+            localStorage.setItem("studentId",response.body.studentId);
+            localStorage.setItem("roles", "Student");
             window.location.href = "student.html";
             $('#username').val("");
             $('#password').val("");

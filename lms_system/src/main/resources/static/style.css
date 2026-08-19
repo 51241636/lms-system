@@ -1956,8 +1956,46 @@ body.modal-open{overflow:hidden;}
     background:var(--surface-alt);border:1px solid var(--border);
     padding:7px 12px;border-radius:var(--radius-sm);
 }
+
+.lesson-delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #f1b8b8;
+    border-radius: 8px;
+
+    background: #fff5f5;
+    color: #dc3545;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.lesson-delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.lesson-delete-btn:hover {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.lesson-delete-btn:active {
+    transform: scale(0.97);
+}
 .lesson-resource-btn svg{width:13px;height:13px;}
 .lesson-resource-btn:hover{background:var(--surface);color:var(--brand);border-color:var(--brand-light);}
+#deleteLesson:hover{background:var(--surface);color:var(--brand);border-color:var(--brand-light);}
 
 /* ---------- empty state reuses .empty-state from base stylesheet ---------- */
 
@@ -1997,4 +2035,122 @@ body.modal-open{overflow:hidden;}
     .lesson-card-top{flex-direction:column;align-items:flex-start;}
     .add-lesson-bar{flex-direction:column;align-items:stretch;}
     .btn-add-lesson{justify-content:center;}
+}
+
+/* ============================================================
+   Student · My Subjects (added) — registered-subject overview
+   cards with mastery ring, teacher, stats and a "view lessons"
+   CTA. Reuses --econ/--acc/--biz/--ict tokens, .page-head,
+   .count-badge, .panel, .mastery-row and .list-row already
+   defined above.
+   ============================================================ */
+
+.subjects-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.my-subject-card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:22px 24px 20px;
+    box-shadow:var(--shadow-card);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.my-subject-card::before{
+    content:"";
+    position:absolute;top:0;left:0;bottom:0;width:5px;
+    background:var(--subj-accent,var(--brand));
+}
+.my-subject-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 40px -18px rgba(24,26,46,.26);
+    border-color:var(--subj-accent,var(--brand-light));
+}
+
+.msc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.msc-id{display:flex;align-items:center;gap:14px;min-width:0;}
+.msc-icon{
+    width:50px;height:50px;border-radius:14px;flex-shrink:0;
+    background:var(--subj-tint,var(--brand-tint));color:var(--subj-accent,var(--brand-dark));
+    display:flex;align-items:center;justify-content:center;
+}
+.msc-icon svg{width:23px;height:23px;}
+.msc-id-text{min-width:0;}
+.msc-id-text h3{font-family:var(--font-display);font-size:16.5px;font-weight:700;margin:0 0 4px;color:var(--text);}
+.msc-teacher{
+    display:flex;align-items:center;gap:6px;
+    font-size:12px;color:var(--text-soft);
+}
+.msc-teacher svg{width:12px;height:12px;color:var(--text-faint);flex-shrink:0;}
+
+.msc-registered-chip{
+    flex-shrink:0;display:inline-flex;align-items:center;gap:6px;
+    font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    background:var(--success-tint);color:#0E7A66;
+    padding:5px 10px;border-radius:var(--radius-pill);
+    white-space:nowrap;
+}
+.msc-registered-chip svg{width:11px;height:11px;}
+
+.msc-progress{
+    display:flex;align-items:center;gap:16px;
+    padding:14px 16px;
+    background:var(--surface-alt);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-md);
+}
+.msc-ring{
+    width:64px;height:64px;border-radius:50%;flex-shrink:0;
+    display:grid;place-items:center;
+    background:conic-gradient(var(--subj-accent,var(--brand)) calc(var(--pct) * 1%), var(--border-soft) 0);
+}
+.msc-ring-inner{
+    width:48px;height:48px;border-radius:50%;background:var(--surface);
+    display:grid;place-items:center;
+}
+.msc-ring-inner strong{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text);}
+.msc-progress-text{flex:1;min-width:0;}
+.msc-progress-text .msc-pt-label{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin:0 0 3px;}
+.msc-progress-text .msc-pt-value{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text);margin:0;}
+
+.msc-stats-row{display:flex;gap:0;border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);}
+.msc-stat{
+    flex:1;text-align:center;padding:12px 6px;
+    border-right:1px solid var(--border-soft);
+}
+.msc-stat:last-child{border-right:none;}
+.msc-stat b{display:block;font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text);}
+.msc-stat span{display:block;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;margin-top:3px;}
+
+.msc-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.msc-next{display:flex;align-items:center;gap:8px;min-width:0;}
+.msc-next svg{width:14px;height:14px;color:var(--subj-accent,var(--brand));flex-shrink:0;}
+.msc-next-text{min-width:0;}
+.msc-next-text span{display:block;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.04em;}
+.msc-next-text strong{display:block;font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.btn-view-lessons{
+    flex-shrink:0;display:inline-flex;align-items:center;gap:7px;
+    background:var(--subj-accent,var(--brand));color:#fff;border:none;
+    padding:10px 16px;border-radius:var(--radius-pill);
+    font-size:12.5px;font-weight:700;white-space:nowrap;
+    transition:transform .12s ease, filter .12s ease;
+}
+.btn-view-lessons svg{width:13px;height:13px;}
+.btn-view-lessons:hover{filter:brightness(0.92);transform:translateY(-1px);}
+
+@media (max-width:1180px){
+    .subjects-grid{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+    .msc-foot{flex-direction:column;align-items:stretch;}
+    .btn-view-lessons{justify-content:center;}
 }
