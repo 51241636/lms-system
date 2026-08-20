@@ -141,91 +141,88 @@
                 </div>
             </div>
 
-        </section>
-    </div>
-</div>
+            <!-- ============== Add Student modal ============== -->
+            <div class="modal-overlay" id="addStudentModal">
+                <div class="modal">
+                    <div class="modal-head">
+                        <div>
+                            <h2>Add New Student</h2>
+                            <p>Register a new student and assign their subjects.</p>
+                        </div>
+                        <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+                        </button>
+                    </div>
 
-<!-- ============== Add Student modal ============== -->
-<div class="modal-overlay" id="addStudentModal">
-    <div class="modal">
-        <div class="modal-head">
-            <div>
-                <h2>Add New Student</h2>
-                <p>Register a new student and assign their subjects.</p>
-            </div>
-            <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
-            </button>
-        </div>
-
-        <div class="modal-body">
-            <form id="addStudentForm">
-                <div class="form-section">
-                    <p class="form-section-title">Personal details</p>
-                    <div class="form-grid">
-                        <div class="field">
-                            <label for="studentName">Full name</label>
-                            <input class="input" type="text" id="studentName" name="studentName" placeholder="e.g. Priya Nair">
-                        </div>
-                        <div class="field">
-                            <label for="studentUsername">Username</label>
-                            <input class="input" type="text" id="studentUsername" name="studentUsername" placeholder="e.g. priya.nair">
-                        </div>
-                        <div class="field">
-                            <label for="email">Email address</label>
-                            <input class="input" type="email" id="email" name="email" placeholder="priya.nair@comstream.edu">
-                        </div>
-                        <div class="field">
-                            <label for="contact">Contact number</label>
-                            <input class="input" type="tel" id="contact" name="contact" placeholder="+94 77 123 4567">
-                        </div>
-                        <div class="field">
-                            <label for="studentPassword">Temporary password</label>
-                            <div class="pw-row">
-                                <input class="input" type="password" id="studentPassword" name="studentPassword" placeholder="Set a login password">
-                                <button class="btn-generate" type="button" id="generatePasswordBtn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-                                    Generate
-                                </button>
+                    <div class="modal-body">
+                        <form id="addStudentForm">
+                            <div class="form-section">
+                                <p class="form-section-title">Personal details</p>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="studentName">Full name</label>
+                                        <input class="input" type="text" id="studentName" name="studentName" placeholder="e.g. Priya Nair">
+                                    </div>
+                                    <div class="field">
+                                        <label for="studentUsername">Username</label>
+                                        <input class="input" type="text" id="studentUsername" name="studentUsername" placeholder="e.g. priya.nair">
+                                    </div>
+                                    <div class="field">
+                                        <label for="email">Email address</label>
+                                        <input class="input" type="email" id="email" name="email" placeholder="priya.nair@comstream.edu">
+                                    </div>
+                                    <div class="field">
+                                        <label for="contact">Contact number</label>
+                                        <input class="input" type="tel" id="contact" name="contact" placeholder="+94 77 123 4567">
+                                    </div>
+                                    <div class="field">
+                                        <label for="studentPassword">Temporary password</label>
+                                        <div class="pw-row">
+                                            <input class="input" type="password" id="studentPassword" name="studentPassword" placeholder="Set a login password">
+                                            <button class="btn-generate" type="button" id="generatePasswordBtn">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                                                Generate
+                                            </button>
+                                        </div>
+                                        <span class="field-hint">Student can change this after first sign-in.</span>
+                                    </div>
+                                    <div class="field">
+                                        <label for="classBatchId">Class / Batch</label>
+                                        <select class="select" id="classBatchId" name="classBatchId">
+                                            <option value="">Select a batch</option>
+                                            <option value="1">Grade 10 · Section A</option>
+                                        </select>
+                                    </div>
+                                    <div class="field span-2">
+                                        <label for="address">Address <span class="optional">(optional)</span></label>
+                                        <textarea class="textarea" id="address" name="address" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="field-hint">Student can change this after first sign-in.</span>
-                        </div>
-                        <div class="field">
-                            <label for="classBatchId">Class / Batch</label>
-                            <select class="select" id="classBatchId" name="classBatchId">
-                                <option value="">Select a batch</option>
-                                <option value="1">Grade 10 · Section A</option>
-                            </select>
-                        </div>
-                        <div class="field span-2">
-                            <label for="address">Address <span class="optional">(optional)</span></label>
-                            <textarea class="textarea" id="address" name="address" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
-                        </div>
+
+                            <div class="form-section">
+                                <p class="form-section-title">Subjects</p>
+                                <div class="subject-toggle-grid" id="subjectContainer">
+                                </div>
+                                <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-foot">
+                        <button class="btn btn-ghost" type="button" onclick="closeAddStudentModal()" >Cancel</button>
+                        <button class="btn btn-primary" type="button" id="submitAddStudentBtn" onclick="addStudentBtn()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                            Add Student
+                        </button>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-section">
-                    <p class="form-section-title">Subjects</p>
-                    <div class="subject-toggle-grid" id="subjectContainer">
-                    </div>
-                    <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
-                </div>
-            </form>
-        </div>
 
-        <div class="modal-foot">
-            <button class="btn btn-ghost" type="button" onclick="closeAddStudentModal()" >Cancel</button>
-            <button class="btn btn-primary" type="button" id="submitAddStudentBtn" onclick="addStudentBtn()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                Add Student
-            </button>
-        </div>
-    </div>
-</div>
+        </section>
 
-<script src="lib/jquery-4.0.0.min.js"></script>
-<script src="js/controller/studentManageController.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="js/apiHandle/studentManageAPI.js"></script>
+
+
 </body>
 </html>

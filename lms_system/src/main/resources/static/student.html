@@ -22,7 +22,9 @@
             <li><a href="#" class="active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a></li>
             <li><a href="#"
                    class="load-page"
-                   data-page="studentSubject.html">
+                   data-page="studentSubject.html"
+                   data-js="js/controller/studentSubjectLoadController.js"
+                   data-api="js/apiHandle/studentSubjectLoadAPI.js">
 
                 <svg class="ic"
                      viewBox="0 0 24 24"
@@ -197,21 +199,76 @@
 </div>
 
 <script src="lib/jquery-4.0.0.min.js"></script>
-    <script>
-        $(document).on("click", ".load-page", function (e) {
+<script src="lib/jquery-4.0.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).on("click", ".load-page", function (e) {
 
         e.preventDefault();
 
         const page = $(this).data("page");
+        const jsFile = $(this).data("js");
+        const apiFile = $(this).data("api");
 
         $("#page-content").load(page + " .view", function () {
-            if (page === "subjectRelateStudentManage.html") {
-                initSubjectRelatedStudent();
+
+            console.log("HTML loaded:", page);
+
+            // Load API JS
+            if (apiFile) {
+                $.getScript(apiFile)
+                    .done(function () {
+
+                        console.log("API JS loaded:", apiFile);
+
+                        loadController();
+
+                    })
+                    .fail(function () {
+                        console.error("API JS failed:", apiFile);
+                    });
+            } else {
+                loadController();
             }
 
-        console.log("Page loaded:", page);
 
-    });
+            function loadController() {
+
+                // Load Controller JS
+                if (jsFile) {
+
+                    $.getScript(jsFile)
+                        .done(function () {
+
+                            console.log("Controller JS loaded:", jsFile);
+
+                            initializePage(page);
+
+                        })
+                        .fail(function () {
+                            console.error("Controller JS failed:", jsFile);
+                        });
+
+                } else {
+                    initializePage(page);
+                }
+            }
+
+
+            function initializePage(page) {
+
+                if (page === "studentSubject.html") {
+
+                    if (typeof initStudentSubjectRelatedBatch === "function") {
+                        initStudentSubjectRelatedBatch();
+                    }
+
+                }
+
+
+            }
+
+        });
 
     });
 </script>

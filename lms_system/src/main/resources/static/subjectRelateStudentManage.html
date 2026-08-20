@@ -132,115 +132,113 @@
                 </div>
             </div>
 
+            <!-- ============== Edit Student modal ============== -->
+            <div class="modal-overlay" id="editStudentModal">
+                <div class="modal">
+                    <div class="modal-head">
+                        <div>
+                            <h2>Edit Student</h2>
+                            <p>Update contact details, address, or subject enrollment.</p>
+                        </div>
+                        <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="editStudentForm">
+                            <input type="hidden" id="editStudentId" name="editStudentId">
+                            <div class="form-section">
+                                <p class="form-section-title">Personal details</p>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="editStudentName">Full name</label>
+                                        <input class="input" type="text" id="editStudentName" name="editStudentName" placeholder="e.g. Priya Nair">
+                                    </div>
+                                    <div class="field">
+                                        <label for="editStudentUsername">Username</label>
+                                        <input class="input" type="text" id="editStudentUsername" name="editStudentUsername" disabled>
+                                    </div>
+                                    <div class="field">
+                                        <label for="editEmail">Email address</label>
+                                        <input class="input" type="email" id="editEmail" name="editEmail" placeholder="priya.nair@comstream.edu">
+                                    </div>
+                                    <div class="field">
+                                        <label for="editContact">Contact number</label>
+                                        <input class="input" type="tel" id="editContact" name="editContact" placeholder="+94 77 123 4567">
+                                    </div>
+                                    <div class="field">
+                                        <label for="editClassBatchId">Class / Batch</label>
+                                        <select class="select" id="editClassBatchId" name="editClassBatchId">
+                                            <option value="">Select a batch</option>
+                                            <option value="1">2026 A/L</option>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label for="editStatus">Status</label>
+                                        <select class="select" id="editStatus" name="editStatus">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <div class="field span-2">
+                                        <label for="editAddress">Address <span class="optional">(optional)</span></label>
+                                        <textarea class="textarea" id="editAddress" name="editAddress" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <p class="form-section-title">Subjects</p>
+                                <div class="subject-toggle-grid" id="editSubjectContainer">
+                                </div>
+                                <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-foot">
+                        <button class="btn btn-ghost" type="button" onclick="closeEditStudentModal()">Cancel</button>
+                        <button class="btn btn-primary" type="button" id="submitEditStudentBtn" onclick="studentUpdate()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== Delete Student confirm modal ============== -->
+            <div class="modal-overlay" id="deleteStudentModal">
+                <div class="modal modal-sm">
+                    <div class="modal-head">
+                        <div><h2>Remove student?</h2></div>
+                        <button class="modal-close" onclick="closeDeleteStudentModal()" aria-label="Close">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div class="confirm-body">
+                        <div class="confirm-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                        </div>
+                        <h3 id="deleteStudentName">Remove this student?</h3>
+                        <p>This removes <strong id="deleteStudentNameInline">the student</strong> from your class list. This can't be undone from here — an administrator can re-add them if needed.</p>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn btn-ghost" type="button" onclick="closeDeleteStudentModal()">Cancel</button>
+                        <button class="btn btn-danger" type="button" id="confirmDeleteStudentBtn" onclick="deleteStudentBtn()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                            Remove student
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </section>
-    </div>
-</div>
 
-<!-- ============== Edit Student modal ============== -->
-<div class="modal-overlay" id="editStudentModal">
-    <div class="modal">
-        <div class="modal-head">
-            <div>
-                <h2>Edit Student</h2>
-                <p>Update contact details, address, or subject enrollment.</p>
-            </div>
-            <button class="modal-close" id="closeAddStudentModalBtn" onclick="closeAddStudentModal()" aria-label="Close">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
-            </button>
-        </div>
 
-        <div class="modal-body">
-            <form id="editStudentForm">
-                <input type="hidden" id="editStudentId" name="editStudentId">
-                <div class="form-section">
-                    <p class="form-section-title">Personal details</p>
-                    <div class="form-grid">
-                        <div class="field">
-                            <label for="editStudentName">Full name</label>
-                            <input class="input" type="text" id="editStudentName" name="editStudentName" placeholder="e.g. Priya Nair">
-                        </div>
-                        <div class="field">
-                            <label for="editStudentUsername">Username</label>
-                            <input class="input" type="text" id="editStudentUsername" name="editStudentUsername" disabled>
-                        </div>
-                        <div class="field">
-                            <label for="editEmail">Email address</label>
-                            <input class="input" type="email" id="editEmail" name="editEmail" placeholder="priya.nair@comstream.edu">
-                        </div>
-                        <div class="field">
-                            <label for="editContact">Contact number</label>
-                            <input class="input" type="tel" id="editContact" name="editContact" placeholder="+94 77 123 4567">
-                        </div>
-                        <div class="field">
-                            <label for="editClassBatchId">Class / Batch</label>
-                            <select class="select" id="editClassBatchId" name="editClassBatchId">
-                                <option value="">Select a batch</option>
-                                <option value="1">2026 A/L</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label for="editStatus">Status</label>
-                            <select class="select" id="editStatus" name="editStatus">
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="field span-2">
-                            <label for="editAddress">Address <span class="optional">(optional)</span></label>
-                            <textarea class="textarea" id="editAddress" name="editAddress" placeholder="No. 24, Lake Road, Colombo 06"></textarea>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-section">
-                    <p class="form-section-title">Subjects</p>
-                    <div class="subject-toggle-grid" id="editSubjectContainer">
-                    </div>
-                    <span class="field-hint">Tick every subject this student is enrolling in — at least one is required.</span>
-                </div>
-            </form>
-        </div>
 
-        <div class="modal-foot">
-            <button class="btn btn-ghost" type="button" onclick="closeEditStudentModal()">Cancel</button>
-            <button class="btn btn-primary" type="button" id="submitEditStudentBtn" onclick="studentUpdate()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-                Save changes
-            </button>
-        </div>
-    </div>
-</div>
 
-<!-- ============== Delete Student confirm modal ============== -->
-<div class="modal-overlay" id="deleteStudentModal">
-    <div class="modal modal-sm">
-        <div class="modal-head">
-            <div><h2>Remove student?</h2></div>
-            <button class="modal-close" onclick="closeDeleteStudentModal()" aria-label="Close">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <div class="confirm-body">
-            <div class="confirm-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
-            </div>
-            <h3 id="deleteStudentName">Remove this student?</h3>
-            <p>This removes <strong id="deleteStudentNameInline">the student</strong> from your class list. This can't be undone from here — an administrator can re-add them if needed.</p>
-        </div>
-        <div class="modal-foot">
-            <button class="btn btn-ghost" type="button" onclick="closeDeleteStudentModal()">Cancel</button>
-            <button class="btn btn-danger" type="button" id="confirmDeleteStudentBtn" onclick="deleteStudentBtn()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
-                Remove student
-            </button>
-        </div>
-    </div>
-</div>
-
-<script src="lib/jquery-4.0.0.min.js"></script>
-<script src="js/controller/subjectRelatedStudentController.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="js/apiHandle/sbjectRelatedStudentAPI.js"></script>
 
 </body>
 </html>

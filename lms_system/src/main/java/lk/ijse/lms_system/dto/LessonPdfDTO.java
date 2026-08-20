@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LessonPdfDTO {
+    private Integer lessonFileId;
     private Integer lessonId;
     private MultipartFile lessonPdfFile;
 }

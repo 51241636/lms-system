@@ -1,12 +1,14 @@
-$(document).ready(function () {
-
-
+function  initSubjectRelatedBatch(){
     loadSubjectRelatedBatches();
     loadTeacherBatchDetail();
+}
 
 
 
-});
+
+
+
+
 function openBatchLessons(subjectClassId, batchName, batchStartDate) {
 
     const params = new URLSearchParams({
@@ -14,7 +16,7 @@ function openBatchLessons(subjectClassId, batchName, batchStartDate) {
         batchName: batchName,
         batchStartDate: batchStartDate
     });
-    window.location.href = "lessonShow.html?" + params.toString();
+    window.open("lessonShow.html?" + params.toString(),"_blank")
 
 }
 function loadSubjectRelatedBatches(){

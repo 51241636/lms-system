@@ -1,11 +1,12 @@
-    $(document).ready(function () {
+function initsubjectManageRelatedBatch(){
+
 
 
     loadAllSubject();
 
 
 
-    });
+    };
 let subjectCount=0;
 function loadCards(){
     $("#totalSubjectCard").empty();

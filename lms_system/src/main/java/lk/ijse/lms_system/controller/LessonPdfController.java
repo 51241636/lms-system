@@ -11,7 +11,9 @@ import lk.ijse.lms_system.service.PDFStorageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,16 +44,50 @@ public class LessonPdfController {
 
 
     @GetMapping(value = "/{lessonId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse addPDF(@PathVariable Integer lessonId)  {
+    public CommonResponse getAllPdfRelatedLesson(@PathVariable Integer lessonId)  {
         List<GetLessonPdfDetails> lessonPdfList = lessonPdfService.getLessonPdfByLessonId(lessonId);
 
         return new CommonResponse(OPERATION_SUCCSESS,lessonPdfList,RESPONSE_MESSAGE);
     }
-    @GetMapping(value = "/downloadPdf/{lessonPdfId}", produces =MediaType.APPLICATION_PDF_VALUE)
-    public Resource downloadPDF(@PathVariable Integer lessonPdfId, HttpServletResponse response) throws IOException {
-        return lessonPdfService.downloadSelectedPdf(lessonPdfId, response);
+
+    @GetMapping(value = "/downloadPdf/{lessonPdfId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> downloadPDF(@PathVariable Integer lessonPdfId, HttpServletResponse response) throws IOException {
+        Resource resource = lessonPdfService.downloadSelectedPdf(lessonPdfId, response);
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + resource.getFilename() + "\""
+                )
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
 
     }
+    @GetMapping(value = "/lessonPdfDetailById/{lessonPdfId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getLessonPdfById(@PathVariable Integer lessonPdfId) throws IOException {
+        GetLessonPdfDetails getLessonPdfDetail = lessonPdfService.getsavedLessonPdf(lessonPdfId);
+        return new CommonResponse(OPERATION_SUCCSESS,getLessonPdfDetail,RESPONSE_MESSAGE);
+
+    }
+
+
+    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CommonResponse updatePdf(@ModelAttribute LessonPdfDTO lessonPdfDTO) throws IOException {
+
+        lessonPdfService.updateLessonPdf(lessonPdfDTO);
+
+        return new CommonResponse(OPERATION_SUCCSESS,RESPONSE_MESSAGE);
+    }
+
+
+    @PreAuthorize("hasAnyRole('Admin','Teacher')")
+    @DeleteMapping(value = "/{lessonPdfId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse deleteLessonPdf(@PathVariable Integer lessonPdfId) throws IOException {
+        lessonPdfService.deleteLessonPdf(lessonPdfId);
+        return new CommonResponse(OPERATION_SUCCSESS,RESPONSE_MESSAGE);
+
+    }
+
 
 
 

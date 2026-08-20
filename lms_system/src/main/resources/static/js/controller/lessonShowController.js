@@ -34,6 +34,7 @@ function loadAllSubjectAndBatchRelatedLesson(){
     getAllRelatedLesson(subjectClassId).done(function (response) {
 
         $("#lessonList").empty();
+        let deleteButton="";
         for (const lesson of response.body) {
 
             const lessonId = lesson.lessonId;
@@ -41,9 +42,11 @@ function loadAllSubjectAndBatchRelatedLesson(){
             const lessonTitle = lesson.lessonTitle;
             const description = lesson.lessonDescription;
             const subjectBatchName = lesson.subjectName;
+
             if (localStorage.getItem("roles") !== "Student") {
+                console.log(localStorage.getItem("roles"))
                 deleteButton = `
-        <button class="lesson-delete-btn"
+                <button class="lesson-delete-btn"
                 type="button"
                 data-id="${lessonId}"
                 title="Delete Lesson">
@@ -90,10 +93,14 @@ function loadAllSubjectAndBatchRelatedLesson(){
                             <span class="lesson-topic-chip"><span class="dot"></span>see meterials and assignments</span>
                             <div class="lesson-resource-row">
                             
-                                ${deleteBtn}
-                                <button class="lesson-resource-btn" type="button" data-id="${lessonId}" >
+                                ${deleteButton}
+                                <button class="lesson-resource-btn" type="button" data-id="${lessonId}" onclick="openLessonPdf('${lessonId}')" >
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
                                     Materials
+                                </button>
+                                <button class="lesson-resource-btn" type="button" data-id="${lessonId}" >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                                    lessonVedio
                                 </button>
                                 <button class="lesson-resource-btn" type="button" data-id="${lessonId}">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -162,7 +169,18 @@ $(document).on("click", "#lesson-modal-overlay", function (e){
     if (e.target === this) {
         closeAddLessonModal();
     }
-});
+})
+;
+function openLessonPdf(lessonId){
+    const params = new URLSearchParams({
+        lessonId: lessonId
+    });
+
+    window.open(
+        "lessonPdf.html?" + params.toString(),
+        "_blank"
+    )
+}
 
 
 function addLessonBtn() {

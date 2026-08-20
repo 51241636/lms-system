@@ -1,11 +1,12 @@
-$(document).ready(function () {
+function initstudentManageRelatedBatch(){
+
 
     loadBatches();
     loadAllStudents();
 
 
 
-});
+};
 
 let isEditMode;
 let selectedSubjects = [];

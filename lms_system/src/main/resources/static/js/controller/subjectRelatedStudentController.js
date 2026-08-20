@@ -1,11 +1,13 @@
-$(document).ready(function () {
-
-
+function initsubjectRelateStudentManageRelatedBatch(){
     loadAllStudents();
+}
 
 
 
-});
+
+
+
+
 let studentCount=0;
 let studentList=[];
 function loadAllStudents(){
@@ -120,6 +122,7 @@ function closeAddStudentModal() {
     $("#editStudentModal").removeClass("active");
     $("body").removeClass("modal-open");
 }
+
 
 function studentUpdate(){
     let studentName= $("#editStudentName").val().trim();

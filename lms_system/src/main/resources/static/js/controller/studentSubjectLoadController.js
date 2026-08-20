@@ -1,14 +1,16 @@
 let batchId=0;
 let batchName="";
-$(document).ready(function () {
-
+function initStudentSubjectRelatedBatch(){
     getStudentBatchId()
+}
 
 
 
 
 
-});
+
+
+
 
 function getStudentBatchId(){
     loadStudentDetail(localStorage.getItem("studentId")).done(function (response){

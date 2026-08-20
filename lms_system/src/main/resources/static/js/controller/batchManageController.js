@@ -1,11 +1,11 @@
-$(document).ready(function () {
+function initbatchManageRelatedBatch(){
 
 
     loadAllBatch();
 
 
 
-});
+};
 
 let batchCount = 0;
 let batchId;

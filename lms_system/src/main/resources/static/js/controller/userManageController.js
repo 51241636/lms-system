@@ -1,12 +1,7 @@
-$(document).ready(function () {
-
-
+function  initUserManageRelatedBatch(){
     loadAllSubject();
     loadAllUser();
-
-
-
-});
+}
 let activeSubjectCount;
 function loadAllSubject(){
     getAllSubject().done(function (response){
@@ -52,9 +47,11 @@ function loadAllSubject(){
         });
 }
 
-
-function addUserBtn(){
-
+// Fixed: the "Save user" button in the modal calls onclick="addUserBtn()",
+// so this must be a real function named addUserBtn (it previously was a
+// $(document).on("click", "#add-user-btn", ...) delegated handler bound to
+// an id that doesn't exist anywhere in the HTML, so it never fired).
+function addUserBtn() {
     let userName = $("#input-user-name").val().trim();
     let email = $("#input-user-email").val().trim();
     let contact = $("#input-user-contact").val().trim();
@@ -139,6 +136,7 @@ function addUserBtn(){
         }
     });
 }
+
 
 
 
@@ -312,6 +310,7 @@ let userCount=0;
 function loadAllUser() {
     getAllUser().done(function (response) {
         $("#userTBody").empty();
+        userCount = 0;
 
 
         for (const responseElement of response.body) {
@@ -444,44 +443,38 @@ function clearUserBtn(){
     $("#input-user-subject").val("");
 }
 
-(function(){
-    "use strict";
+$(document).on("click", "#open-add-user", function () {
 
-    /* ---------------------------------------------------------
-       Add User — click opens the popup
-       --------------------------------------------------------- */
-    var overlay  = document.getElementById("user-modal-overlay");
-    var openBtn  = document.getElementById("open-add-user");
-    var closeBtn = document.getElementById("close-user-modal");
-    var cancelBtn = document.getElementById("cancel-user-modal");
+    $("#user-modal-overlay").addClass("active");
+    $("body").addClass("modal-open");
 
-    function openModal(){
-        overlay.classList.add("active");
-        document.body.classList.add("modal-open");
-    }
-    function closeModal(){
-        overlay.classList.remove("active");
-        document.body.classList.remove("modal-open");
-        $("#save-user-btn")
-            .html(`
+});
+$(document).on("click", "#close-user-modal, #cancel-user-modal", function () {
+
+    $("#user-modal-overlay").removeClass("active");
+    $("body").removeClass("modal-open");
+
+    $("#save-user-btn")
+        .html(`
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M20 6 9 17l-5-5"/>
             </svg>
-            save user
+            Save user
         `)
+        .attr("onclick", "addUserBtn()");
+
+    $("#input-user-id").prop("readonly", false);
+
+    clearUserBtn();
+});
+$(document).on("click", "#user-modal-overlay", function (e) {
+
+    if (e.target === this) {
+
+        $("#user-modal-overlay").removeClass("active");
+        $("body").removeClass("modal-open");
+
         clearUserBtn();
     }
 
-    openBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
-    overlay.addEventListener("click", function(e){
-        if(e.target === overlay) closeModal();
-    });
-
-})();
-// function closeUserModal(){
-//     $("#user-modal-overlay").removeClass("active");
-//     $("body").removeClass("modal-open");
-//     clearUserBtn();
-// }
+});

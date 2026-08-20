@@ -21,7 +21,8 @@
         <ul class="nav">
             <li><a href="#"
                    class="load-page"
-                   data-page="teacher.html">
+                   data-page="teacher.html"
+                   >
 
                 <svg class="ic"
                      viewBox="0 0 24 24"
@@ -36,7 +37,9 @@
             </a></li>
             <li><a href="#"
                    class="load-page"
-                   data-page="subjectBatch.html">
+                   data-page="subjectBatch.html"
+                   data-js="js/controller/subjectRelatedBatchController.js"
+                   data-api="js/apiHandle/subjectRelatedBatchAPI.js">
 
                 <svg class="ic"
                      viewBox="0 0 24 24"
@@ -198,10 +201,65 @@
         e.preventDefault();
 
         const page = $(this).data("page");
+        const jsFile = $(this).data("js");
+        const apiFile = $(this).data("api");
 
         $("#page-content").load(page + " .view", function () {
 
-            console.log("Page loaded:", page);
+            console.log("HTML loaded:", page);
+
+            // Load API JS
+            if (apiFile) {
+                $.getScript(apiFile)
+                    .done(function () {
+
+                        console.log("API JS loaded:", apiFile);
+
+                        loadController();
+
+                    })
+                    .fail(function () {
+                        console.error("API JS failed:", apiFile);
+                    });
+            } else {
+                loadController();
+            }
+
+
+            function loadController() {
+
+                // Load Controller JS
+                if (jsFile) {
+
+                    $.getScript(jsFile)
+                        .done(function () {
+
+                            console.log("Controller JS loaded:", jsFile);
+
+                            initializePage(page);
+
+                        })
+                        .fail(function () {
+                            console.error("Controller JS failed:", jsFile);
+                        });
+
+                } else {
+                    initializePage(page);
+                }
+            }
+
+
+            function initializePage(page) {
+
+                if (page === "subjectBatch.html") {
+
+                    if (typeof initSubjectRelatedBatch === "function") {
+                        initSubjectRelatedBatch();
+                    }
+
+                }
+
+            }
 
         });
 

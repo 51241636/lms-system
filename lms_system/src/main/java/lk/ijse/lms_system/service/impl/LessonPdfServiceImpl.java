@@ -80,7 +80,10 @@ public class LessonPdfServiceImpl implements LessonPdfService {
             }
             List<GetLessonPdfDetails> lessonPdfDTOList=new ArrayList<>();
             for(LessonPDF lessonPDF:lessonPdfById){
-                lessonPdfDTOList.add(new GetLessonPdfDetails(lessonPDF.getLesson().getLessonId(),lessonPDF.getFileName(),lessonPDF.getLessonFileId()));
+                if(lessonPDF.getLessonContentStatus().equals(LessonContentStatus.ACTIVE)){
+                    lessonPdfDTOList.add(new GetLessonPdfDetails(lessonPDF.getLesson().getLessonId(),lessonPDF.getFileName(),lessonPDF.getLessonFileId()));
+
+                }
             }
             return lessonPdfDTOList;
 
@@ -101,7 +104,7 @@ public class LessonPdfServiceImpl implements LessonPdfService {
             LessonPDF lessonPDF = byId.get();
             response.setHeader(
                     HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=\"" +/* use pdf download*/
+                    "inline; filename=\"" +/* use pdf download*/
                             lessonPDF.getFileName() +
                             "\""
             );
@@ -124,7 +127,80 @@ public class LessonPdfServiceImpl implements LessonPdfService {
             throw e;
         }
     }
+
+    @Override
+    public GetLessonPdfDetails getsavedLessonPdf(Integer lessonPdfId) {
+        try{
+            Optional<LessonPDF> byId = lessonPDFRepository.findById(lessonPdfId);
+            if(byId.isEmpty()){
+                throw new LmsSystemException(404,"Lesson related pdf not found");
+            }
+            LessonPDF lessonPDF = byId.get();
+            return new GetLessonPdfDetails(lessonPDF.getLesson().getLessonId(),lessonPDF.getFileName(),lessonPDF.getLessonFileId());
+
+
+
+
+
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public void updateLessonPdf(LessonPdfDTO lessonPdfDTO) throws IOException {
+        try{
+            Optional<Lesson> lessonById = lessonRepository.findById(lessonPdfDTO.getLessonId());
+            if(lessonById.isEmpty()){
+                throw new LmsSystemException(404,"Lesson not found");
+            }
+            Optional<LessonPDF> byId = lessonPDFRepository.findById(lessonPdfDTO.getLessonFileId());
+            if(byId.isEmpty()){
+                throw new LmsSystemException(404,"related lesson pdf not found");
+            }
+
+
+            if(lessonPdfDTO.getLessonPdfFile().isEmpty()){
+                throw new LmsSystemException(404,"lessonPdf is empty");
+            }
+            if(!"application/pdf".equals(lessonPdfDTO.getLessonPdfFile().getContentType())){
+                throw new LmsSystemException(404,"lessonPdf is not a PDF");
+            }
+            String savedPdf = pdfStorageService.savePdf(lessonPdfDTO.getLessonPdfFile());
+            if(savedPdf.isEmpty()){
+                throw new LmsSystemException(404,"savedPdf is empty");
+            }
+            LessonPDF lessonPDF = byId.get();
+            lessonPDF.setFileName(lessonPdfDTO.getLessonPdfFile().getOriginalFilename());
+            lessonPDF.setFilePath(savedPdf);
+            lessonPDF.setFileContentType(lessonPdfDTO.getLessonPdfFile().getContentType());
+            lessonPDF.setFileSize(lessonPdfDTO.getLessonPdfFile().getSize());
+            lessonPDF.setLesson(lessonById.get());
+            lessonPDF.setLessonContentStatus(LessonContentStatus.ACTIVE);
+            lessonPDFRepository.save(lessonPDF);
+
+
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteLessonPdf(Integer lessonPdfId) {
+        try{
+            Optional<LessonPDF> byId = lessonPDFRepository.findById(lessonPdfId);
+            if(byId.isEmpty()){
+                throw new LmsSystemException(404,"related lesson pdf not found");
+            }
+            LessonPDF lessonPDF = byId.get();
+            lessonPDF.setLessonContentStatus(LessonContentStatus.INACTIVE);
+            lessonPDFRepository.save(lessonPDF);
+        }catch (Exception e){
+            throw e;
+        }
+    }
 }
+
 
 
 //@GetMapping(

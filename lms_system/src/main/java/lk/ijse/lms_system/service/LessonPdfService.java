@@ -14,4 +14,7 @@ public interface LessonPdfService {
     void saveLessonPdf(LessonPdfDTO lessonPdfDTO) throws IOException;
     List<GetLessonPdfDetails> getLessonPdfByLessonId(Integer lessonId);
     Resource downloadSelectedPdf(Integer lessonPdfId, HttpServletResponse response) throws MalformedURLException;
+    GetLessonPdfDetails getsavedLessonPdf(Integer lessonPdfId);
+    void updateLessonPdf(LessonPdfDTO lessonPdfDTO) throws IOException;
+    void deleteLessonPdf(Integer lessonPdfId);
 }

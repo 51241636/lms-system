@@ -2154,3 +2154,73 @@ body.modal-open{overflow:hidden;}
     .msc-foot{flex-direction:column;align-items:stretch;}
     .btn-view-lessons{justify-content:center;}
 }
+/* ============================================================
+   Lesson Materials / PDF (added) — per-lesson PDF materials
+   list + upload popup. Reuses lesson-breadcrumb, lesson-batch-
+   banner, modal, modal-sm, form-section, add-lesson-bar,
+   toast-stack and empty-state components already defined above.
+   ============================================================ */
+
+.material-list{display:flex;flex-direction:column;gap:12px;}
+
+.material-card{
+    display:flex;align-items:center;gap:16px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-md);padding:16px 18px;
+    box-shadow:var(--shadow-card);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.material-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 32px -18px rgba(24,26,46,.22);
+    border-color:var(--danger);
+}
+.material-icon{
+    width:44px;height:44px;border-radius:12px;flex-shrink:0;
+    background:var(--danger-tint);color:var(--danger);
+    display:flex;align-items:center;justify-content:center;
+}
+.material-icon svg{width:20px;height:20px;}
+.material-info{flex:1;min-width:0;}
+.material-name{
+    font-size:13.5px;font-weight:700;color:var(--text);margin:0 0 2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.material-meta{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text-faint);}
+.material-meta svg{width:11px;height:11px;flex-shrink:0;}
+.material-actions{display:flex;gap:8px;flex-shrink:0;}
+.material-view-btn{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--surface-alt);border:1px solid var(--border);color:var(--text-soft);
+    padding:9px 15px;border-radius:var(--radius-sm);font-size:12.5px;font-weight:600;
+}
+.material-view-btn svg{width:14px;height:14px;}
+.material-view-btn:hover{background:var(--surface);color:var(--brand);border-color:var(--brand-light);}
+#updateBtn:hover{background:var(--surface);color:orange;border-color:orange;}
+#deleteBtn:hover{background:var(--surface);color:red;border-color:red;}
+.material-view-btn:disabled{opacity:.55;cursor:not-allowed;}
+
+/* ---------- upload dropzone (inside Add material modal) ---------- */
+.pdf-dropzone{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    border:1.5px dashed var(--border);border-radius:var(--radius-md);
+    background:var(--surface-alt);padding:30px 20px;text-align:center;cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+}
+.pdf-dropzone:hover, .pdf-dropzone.drag-over{border-color:var(--brand-light);background:var(--brand-tint);}
+.pdf-dropzone input[type="file"]{display:none;}
+.pdf-dropzone .pdf-dz-icon{
+    width:44px;height:44px;border-radius:13px;background:var(--danger-tint);color:var(--danger);
+    display:flex;align-items:center;justify-content:center;
+}
+.pdf-dropzone .pdf-dz-icon svg{width:20px;height:20px;}
+.pdf-dropzone strong{font-size:13.5px;color:var(--text);word-break:break-all;}
+.pdf-dropzone span{font-size:11.5px;color:var(--text-faint);}
+.pdf-dropzone.has-file{border-style:solid;border-color:var(--success);background:var(--success-tint);}
+.pdf-dropzone.has-file strong{color:#0E7A66;}
+
+@media (max-width:640px){
+    .material-card{flex-direction:column;align-items:flex-start;}
+    .material-actions{width:100%;}
+    .material-view-btn{flex:1;justify-content:center;}
+}

@@ -3,7 +3,7 @@ const $actionbarCountText = $('#actionbar-subject-count');
 const $batchNameCard = $('#actionbar-batch-name');
 
 
-$(document).ready(function () {
+function initSubjectBatchManageRelatedBatch(){
 
 
     loadAllBatch();
@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 
 
-});
+}
 const selectedSubjectIds = [];
 const existingSubject = [];
 let selectedBatchId=0;
