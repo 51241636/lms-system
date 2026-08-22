@@ -10,6 +10,16 @@ function  initSubjectRelatedBatch(){
 
 
 function openBatchLessons(subjectClassId, batchName, batchStartDate) {
+    const id = Number(subjectClassId);
+
+    if (!id || id <= 0) {
+        toastr.error("Invalid batch selected", "Cannot open lessons");
+        return;
+    }
+    if (!batchName || batchName.trim() === "") {
+        toastr.error("Batch name missing", "Cannot open lessons");
+        return;
+    }
 
     const params = new URLSearchParams({
         subjectClassId: subjectClassId,
@@ -27,7 +37,7 @@ function loadSubjectRelatedBatches(){
 
         batchList.forEach(function (batch){
             let card =`  <div class="batch-card" style="--batch-accent:#F2A93B" tabindex="0" role="button"
-                     onclick="openBatchLessons('${batch.subjectClassId}', '${batch.batchName}', '${batch.batchStartDate}')" onkeydown="if(event.key==='Enter')openBatchLessons('${batch.subjectClassId}', '${batch.batchName}', '${batch.batchStartDate}')">
+                     onclick="openBatchLessons('${batch.subjectClassId}', '${batch.batchName}', '${batch.batchStartDate}')">
                     <div class="batch-card-top">
                         <div>
                             <p class="batch-name">${batch.batchName}</p>

@@ -1,21 +1,25 @@
+
+
+const subjectRelateStudentManageState ={
+    updateStudentId:0,
+    batchId:0,
+    studentCount:0,
+    studentList:[]
+}
 function initsubjectRelateStudentManageRelatedBatch(){
+    // studentId=0;
+    subjectRelateStudentManageState.updateStudentId=0;
+    subjectRelateStudentManageState.batchId=0;
     loadAllStudents();
 }
 
-
-
-
-
-
-
-let studentCount=0;
-let studentList=[];
 function loadAllStudents(){
 
 
     getAllSubjectRelatedStudents(localStorage.getItem("subjectId")).done(function(response){
         $("#studentTBody").empty();
-        studentList.length=0;
+        subjectRelateStudentManageState.studentCount=0
+        subjectRelateStudentManageState.studentList=[];
         for (const responseElement of response.body) {
             const studentId = responseElement.studentId;
             const studentName = responseElement.studentName;
@@ -43,8 +47,8 @@ function loadAllStudents(){
                                    </tr>`
 
             $("#studentTBody").append(data);
-            studentList.push(responseElement);
-            studentCount +=1;
+            subjectRelateStudentManageState.studentList.push(responseElement);
+            subjectRelateStudentManageState.studentCount +=1;
 
         }
         loadRecentStudentList();
@@ -77,12 +81,10 @@ function loadAllStudents(){
 
 }
 
-let studentId;
-let batchId;
 $(document).on("click",".editBtn",function (){
-    studentId = $(this).data("id");
-        console.log(studentId);
-    getUpdateStudentById(studentId).done(function (response){
+    subjectRelateStudentManageState.updateStudentId = $(this).data("id");
+        console.log(subjectRelateStudentManageState.updateStudentId);
+    getUpdateStudentById(subjectRelateStudentManageState.updateStudentId).done(function (response){
         let student = response.body;
         $("#editStudentModal").addClass("active");
         $("body").addClass("modal-open");
@@ -91,9 +93,9 @@ $(document).on("click",".editBtn",function (){
         $("#editEmail").val(student.email);
         $("#editContact").val(student.contact);
         $("#editAddress").val(student.address);
-        batchId=student.batchDTO.classBatchId;
+        subjectRelateStudentManageState.batchId=student.batchDTO.classBatchId;
 
-        $("#editClassBatchId").val(batchId);
+        $("#editClassBatchId").val(subjectRelateStudentManageState.batchId);
         let container=$("#editSubjectContainer")
         container.empty();
 
@@ -129,7 +131,7 @@ function studentUpdate(){
     let username = $("#editStudentUsername").val().trim();
     let email= $("#editEmail").val().trim();
     let contact= $("#editContact").val().trim();
-    let classBatchId= batchId;
+    let classBatchId= subjectRelateStudentManageState.batchId;
     let address=$("#editAddress").val().trim().trim();
 
     if (!studentName) {
@@ -165,7 +167,7 @@ function studentUpdate(){
 
 
     let studentData={
-        studentId:studentId,
+        studentId:subjectRelateStudentManageState.updateStudentId,
         studentName:studentName,
         studentUsername:username,
         studentPassword:null,
@@ -220,7 +222,7 @@ function clearBtn(){
 }
 
 function loadRecentStudentList(){
-    let recentStudents = studentList.slice(-4);
+    let recentStudents = subjectRelateStudentManageState.studentList.slice(-4);
     let container = $("#recentlyUpdatedContainer");
     container.empty();
     recentStudents.forEach(function (student){
@@ -259,11 +261,11 @@ function cardsLoad(){
     activeStudentCard.empty();
     totalStudentCard.append(`
     <div class="stat-top"><span class="stat-label">My Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
-                    <div class="stat-value">0${studentCount}</div>
+                    <div class="stat-value">0${subjectRelateStudentManageState.studentCount}</div>
                     <span class="stat-sub">Across Economics &amp; ICT</span>`)
     activeStudentCard.append(`
     <div class="stat-top"><span class="stat-label">Active Students</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span></div>
-                    <div class="stat-value">0${studentCount}</div>
+                    <div class="stat-value">0${subjectRelateStudentManageState.studentCount}</div>
                     <span class="stat-sub">96% of your students</span>`)
 
 

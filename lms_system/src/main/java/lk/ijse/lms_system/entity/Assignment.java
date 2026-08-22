@@ -21,14 +21,22 @@ public class Assignment {
     private String assignmentName;
     @Column(nullable = false)
     private String assignmentDescription;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] assignmentPdf;
+    @Column(nullable = false)
+    private String fileName;
+    @Column(nullable = false)
+    private String filePath;
+    @Column(nullable = false)
+    private String fileContentType;
+    @Column(nullable = false)
+    private Long fileSize;
     @Column(nullable = false)
     private LocalDate  startDate;
     @Column(nullable = false)
     private LocalDate deadline;
+    private Double maximumMarks;
     private Double score;
+    @ManyToOne
+    private Lesson  lesson;
     @OneToMany(mappedBy = "assignment",cascade = CascadeType.ALL)
     private List<AssignmentSubmission> assignmentSubmissionList;
     @Enumerated(EnumType.STRING)

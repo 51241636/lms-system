@@ -46,7 +46,6 @@ public class LessonPdfController {
     @GetMapping(value = "/{lessonId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getAllPdfRelatedLesson(@PathVariable Integer lessonId)  {
         List<GetLessonPdfDetails> lessonPdfList = lessonPdfService.getLessonPdfByLessonId(lessonId);
-
         return new CommonResponse(OPERATION_SUCCSESS,lessonPdfList,RESPONSE_MESSAGE);
     }
 

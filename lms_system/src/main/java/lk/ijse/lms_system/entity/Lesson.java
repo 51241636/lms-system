@@ -30,6 +30,8 @@ public class Lesson {
     private SubjectBatch subjectBatch;
     @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
     private List<LessonPDF> lessonPDFList;
+    @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
+    private List<Assignment> assignmentList;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LessonStatus lessonStatus;

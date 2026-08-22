@@ -16,9 +16,14 @@ public class AssignmentSubmission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB", nullable = false)
-    private byte[] submissionPdf;
+    @Column(nullable = false)
+    private String fileName;
+    @Column(nullable = false)
+    private String filePath;
+    @Column(nullable = false)
+    private String fileContentType;
+    @Column(nullable = false)
+    private Long fileSize;
     @Column(nullable = false)
     private LocalDate submissionDate;
     @ManyToOne

@@ -1,29 +1,32 @@
-const $countBadgeText = $('#selection-count-text');
-const $actionbarCountText = $('#actionbar-subject-count');
-const $batchNameCard = $('#actionbar-batch-name');
+
+const subjectBatchManageState={
+    selectedSubjectIds:[],
+    existingSubject:[],
+    selectedBatchId:0
+
+}
+
 
 
 function initSubjectBatchManageRelatedBatch(){
-
-
+    subjectBatchManageState.selectedSubjectIds = [];
+    subjectBatchManageState.existingSubject = [];
+    subjectBatchManageState.selectedBatchId=0;
     loadAllBatch();
     loadAllSubjects()
 
 
 
 }
-const selectedSubjectIds = [];
-const existingSubject = [];
-let selectedBatchId=0;
 
 function updateSelectionCount() {
-    const count = selectedSubjectIds.length;
+    const count = subjectBatchManageState.selectedSubjectIds.length;
     const label = count === 0 ? 'No subjects selected'
         : count === 1 ? '1 subject selected'
             : `${count} subjects selected`;
 
-    $countBadgeText.text(label);
-    $actionbarCountText.text(label);
+    $('#selection-count-text').text(label);
+    $('#actionbar-subject-count').text(label);
 }
 
 $(document).on('click','.subject-pick-card', function () {
@@ -32,39 +35,39 @@ $(document).on('click','.subject-pick-card', function () {
         return;
     }
     const subjectId = Number($card.data('subject-id'));
-    const index = selectedSubjectIds.indexOf(subjectId);
+    const index = subjectBatchManageState.selectedSubjectIds.indexOf(subjectId);
 
     if (index === -1) {
-        selectedSubjectIds.push(subjectId);
+        subjectBatchManageState.selectedSubjectIds.push(subjectId);
         $card.addClass('selected');
     } else {
-        selectedSubjectIds.splice(index, 1);
+        subjectBatchManageState.selectedSubjectIds.splice(index, 1);
         $card.removeClass('selected');
     }
 
     updateSelectionCount();
-    console.log('Selected subjects:', selectedSubjectIds);
+    console.log('Selected subjects:', subjectBatchManageState.selectedSubjectIds);
 });
 
 $(document).on('click','.batch-pick-item', function () {
-
+    subjectBatchManageState.selectedBatchId=0;
     const batchId = Number(
         $(this)
             .find('input[name="batch-pick"]')
             .val()
     );
     const batchName = $(this).find('.batch-pick-info strong').text();
-    $batchNameCard.text(batchName);
+    $('#actionbar-batch-name').text(batchName);
 
     console.log("Batch ID:", batchId);
-    selectedBatchId=batchId;
+    subjectBatchManageState.selectedBatchId=batchId;
     loadAddedSubjects(batchId);
 });
 
 function loadAddedSubjects(batchId){
     getSubjectsByBatch(batchId).done(function (response){
-        selectedSubjectIds.length = 0;
-        existingSubject.length=0;
+        subjectBatchManageState.selectedSubjectIds.length = 0;
+        subjectBatchManageState.existingSubject.length=0;
 
         $('.subject-pick-card').removeClass('selected');
 
@@ -72,7 +75,7 @@ function loadAddedSubjects(batchId){
 
             const subjectId = Number(subject.subjectId);
 
-            existingSubject.push(subjectId);
+            subjectBatchManageState.existingSubject.push(subjectId);
 
             $(`.subject-pick-card[data-subject-id="${subjectId}"]` )
                 .addClass('selected ');
@@ -83,12 +86,12 @@ function loadAddedSubjects(batchId){
 
         console.log(
             "Already added subjects:",
-            selectedSubjectIds
+            subjectBatchManageState.selectedSubjectIds
         );
     }).fail(function (xhr){
         $('.subject-pick-card').removeClass('selected');
-        selectedSubjectIds.length = 0;
-        existingSubject.length=0;
+        subjectBatchManageState.selectedSubjectIds.length = 0;
+        subjectBatchManageState.existingSubject.length=0;
 
         updateSelectionCount();
 
@@ -196,17 +199,18 @@ function loadAllSubjects(){
 
 
 function addSubjectBatchBtn(){
-    if (selectedBatchId === 0) {
+    console.log(subjectBatchManageState.selectedBatchId)
+    if (subjectBatchManageState.selectedBatchId === 0) {
         alert("please select batch name");
         return;
     }
-    if (selectedSubjectIds.length === 0) {
+    if (subjectBatchManageState.selectedSubjectIds.length === 0) {
         alert("please select subject want to add");
         return;
     }
     let subjectBatchData = {
-        batchId: selectedBatchId,
-        subjectIdList: selectedSubjectIds,
+        batchId: subjectBatchManageState.selectedBatchId,
+        subjectIdList: subjectBatchManageState.selectedSubjectIds,
     };
 
     addSubjectBatch(subjectBatchData).done(function (){
@@ -214,10 +218,10 @@ function addSubjectBatchBtn(){
             "subject batch saved successfully",
             "new batch added"
         );
-        selectedBatchId=0;
-        selectedSubjectIds.length=0;
-        existingSubject.length=0;
-    }).fail(function (error){
+        subjectBatchManageState.selectedBatchId=0;
+        subjectBatchManageState.selectedSubjectIds.length=0;
+        subjectBatchManageState.existingSubject.length=0;
+    }).fail(function (xhr){
         if (xhr.status === 401 || xhr.status === 404) {
             toastr.error("subjectBatch not saved", "Save Failed");
         } else if (xhr.status === 500) {

@@ -1,4 +1,9 @@
+
+const subjectManageState={
+    subjectId:0,
+}
 function initsubjectManageRelatedBatch(){
+    subjectManageState.subjectId=0;
 
 
 
@@ -6,47 +11,9 @@ function initsubjectManageRelatedBatch(){
 
 
 
-    };
-let subjectCount=0;
-function loadCards(){
-    $("#totalSubjectCard").empty();
-    $("#totalActiveSubjectCard").empty();
-    $("#totalStudentCount").empty();
-    $("#totalSubjectCard").append(` <div class="stat-top"><span class="stat-label">Total Subjects</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/></svg></span></div>
-                    <div class="stat-value" id="stat-total">${subjectCount}</div>
-                    <span class="stat-sub">Across the commerce stream</span>`)
-    $("#totalActiveSubjectCard").append(`<div class="stat-top"><span class="stat-label">Active Subjects</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span></div>
-                    <div class="stat-value" id="stat-active">${subjectCount}</div>
-                    <span class="stat-sub" id="stat-archived-sub"> archived</span>`)
-    loadCountOfStudent().done(function (response){
-        $("#totalStudentCount").append(`<div class="stat-top"><span class="stat-label">Students Enrolled</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
-                    <div class="stat-value" id="stat-students">${response.body}</div>
-                    <span class="stat-sub">Across all subjects</span>`)
-    }).fail(function (xhr){
-        if (xhr.status === 401 || xhr.status === 404) {
+    }
 
-            toastr.error(
-                "student not yet",
-                "get student count Failed"
-            );
 
-        } else if (xhr.status === 500) {
-
-            toastr.error(
-                "Internal server error. Please try again later.",
-                "Server Error"
-            );
-
-        } else {
-
-            toastr.error(
-                "Something went wrong.",
-                "Login Failed"
-            );
-        }
-    })
-}
-let editMode=false;
 function addSubjectBtn(){
 
     let subjectName= $("#input-subject-name").val().trim();
@@ -102,6 +69,7 @@ function loadAllSubject(){
 
     getAllSubject().done(function(response){
         $("#subject-table-body").empty();
+        subjectManageState.subjectCount=0;
         for (const responseElement of response.body) {
             const subjectId = responseElement.subjectId;
             const subjectName = responseElement.subjectName;
@@ -126,10 +94,11 @@ function loadAllSubject(){
                         </tr>`
 
             $("#subject-table-body").append(data);
-            subjectCount +=1;
+            subjectManageState.subjectCount +=1;
 
         }
-        loadCards();
+
+        loadCards(response.body.length);
 
     }).fail(function (xhr){
         if (xhr.status === 401 || xhr.status === 404) {
@@ -158,6 +127,86 @@ function loadAllSubject(){
 
 }
 
+function loadCards(length) {
+
+    console.log("loadCards called");
+    console.log(length);
+
+    $("#totalSubjectCard").empty();
+    $("#totalActiveSubjectCard").empty();
+    $("#totalStudentCount").empty();
+
+    $("#totalSubjectCard").append(`
+        <div class="stat-top">
+            <span class="stat-label">Total Subjects</span>
+            <span class="stat-icon">
+                ...
+            </span>
+        </div>
+
+        <div class="stat-value">
+            ${length}
+        </div>
+
+        <span class="stat-sub">
+            Across the commerce stream
+        </span>
+    `);
+
+    $("#totalActiveSubjectCard").append(`
+        <div class="stat-top">
+            <span class="stat-label">Active Subjects</span>
+        </div>
+
+        <div class="stat-value">
+            ${length}
+        </div>
+
+        <span class="stat-sub">
+            archived
+        </span>
+    `);
+
+    loadCountOfStudent()
+        .done(function(response) {
+
+            console.log("Student count loaded:", response);
+
+            $("#totalStudentCount").append(`
+                <div class="stat-top">
+                    <span class="stat-label">Students Enrolled</span>
+                </div>
+
+                <div class="stat-value">
+                    ${response.body}
+                </div>
+
+                <span class="stat-sub">
+                    Across all subjects
+                </span>
+            `);
+
+        })
+        .fail(function(xhr) {
+
+            console.log("loadCountOfStudent failed:", xhr);
+
+            $("#totalStudentCount").append(`
+                <div class="stat-top">
+                    <span class="stat-label">Students Enrolled</span>
+                </div>
+
+                <div class="stat-value">
+                    0
+                </div>
+
+                <span class="stat-sub">
+                    Unable to load count
+                </span>
+            `);
+        });
+}
+
 
  function clearBtn(){
     $("#input-subject-id").val("");
@@ -165,41 +214,32 @@ function loadAllSubject(){
 
 }
 
-(function(){
-    "use strict";
+$(document).on("click", "#open-add-subject", function () {
+    $("#subject-modal-overlay").addClass("active");
+    $("body").addClass("modal-open");
+});
 
-    /* ---------------------------------------------------------
-       Add Subject — click opens the popup
-       --------------------------------------------------------- */
-    var overlay  = document.getElementById("subject-modal-overlay");
-    var openBtn  = document.getElementById("open-add-subject");
-    var closeBtn = document.getElementById("close-subject-modal");
-    var cancelBtn = document.getElementById("cancel-subject-modal");
+$(document).on("click", "#close-subject-modal, #cancel-subject-modal", function () {
+    closeSubjectModal();
+});
 
-    function openModal(){
-        overlay.classList.add("active");
-        document.body.classList.add("modal-open");
+$(document).on("click", "#subject-modal-overlay", function (e) {
+    if (e.target.id === "subject-modal-overlay") {
+        closeSubjectModal();
     }
-    function closeModal(){
-        overlay.classList.remove("active");
-        document.body.classList.remove("modal-open");
-        $("#save-subject-btn")
-            .html(`
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+});
+
+function closeSubjectModal() {
+    $("#subject-modal-overlay").removeClass("active");
+    $("body").removeClass("modal-open");
+    $("#save-subject-btn")
+        .html(`
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
             save subject
         `)
-        clearBtn();
-    }
-
-    openBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
-    overlay.addEventListener("click", function(e){
-        if(e.target === overlay) closeModal();
-    });
-
-})();
-
+        .attr("onclick", "addSubjectBtn()");   // see Bug 3 below
+    clearBtn();
+}
 
 $(document).on("click",".danger",function (){
     let deleteSubjectId = $(this).data("id");
@@ -235,21 +275,22 @@ $(document).on("click",".danger",function (){
         }
     });
 });
-let subjectId;
+
+
 $(document).on("click",".editSubjectBtn",function (){
+    subjectManageState.subjectId=0;
     console.log("click")
-    subjectId = $(this).data("id");
-    console.log(subjectId)
-    editMode=true;
+    subjectManageState.subjectId = $(this).data("id");
+    console.log(subjectManageState.subjectId)
     $("#save-subject-btn")
         .html(`
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
-            Update Student
+            Update subject
         `)
         .attr("onclick", "updateSubjectBtn()");
-    getSubjectById(subjectId).done(function (response){
+    getSubjectById(subjectManageState.subjectId).done(function (response){
         $("#subject-modal-overlay").addClass("active");
-        document.body.classList.add("modal-open");
+        $("body").addClass("modal-open");
         $("#input-subject-id").val(response.body.subjectId);
         $("#input-subject-name").val(response.body.subjectName);
 
@@ -279,14 +320,14 @@ function updateSubjectBtn(){
     updateSubject(subjectData).done(function (response){
         console.log("Sucess")
         loadAllSubject();
-        clearBtn();
+        closeSubjectModal();
         toastr.success(
             "subject  updated successfully",
             "update successfully"
         );
 
     }).fail(function (xhr){
-        clearBtn();
+        closeSubjectModal();
         if (xhr.status === 401 || xhr.status === 404) {
 
             toastr.error(

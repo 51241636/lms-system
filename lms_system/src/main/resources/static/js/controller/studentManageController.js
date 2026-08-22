@@ -1,21 +1,34 @@
+const studentManageState={
+    isEditMode:false,
+     selectedSubjects : [],
+     studentList:[],
+     studentCount:0,
+     activeBatchesCount:0,
+     inActiveCount:0,
+    studentId:0,
+    batchId:0,
+}
+
+
 function initstudentManageRelatedBatch(){
 
 
     loadBatches();
     loadAllStudents();
+    studentManageState.activeBatchesCount=0;
+    studentManageState.inActiveCount=0;
+    studentManageState.selectedSubjects = [];
+    studentManageState.studentList=[]
+
 
 
 
 };
 
-let isEditMode;
-let selectedSubjects = [];
-let studentList=[];
-let studentCount=0;
-let activeBatchesCount=0;
-let inActiveCount=0;
+
 function loadBatches(){
     getAllBatches().done(function (response){
+        studentManageState.activeBatchesCount=0;
         let batchList=response.body;
         let select = $("#classBatchId");
         select.empty();
@@ -29,7 +42,7 @@ function loadBatches(){
                            ${batch.classBatchName}
                         </option>
                      `);
-            activeBatchesCount +=1;
+            studentManageState.activeBatchesCount +=1;
                });
     })
         .fail(function (xhr){
@@ -58,9 +71,9 @@ function loadBatches(){
         });
 }
 
-$("#classBatchId").on("change", function () {
+$(document).on("change", "#classBatchId", function () {
     let selectedBatchId = $(this).val();
-    if(isEditMode){
+    if(studentManageState.isEditMode){
         return;
     }
     selectedBatchRelatedSubject(selectedBatchId)
@@ -108,12 +121,12 @@ $("#classBatchId").on("change", function () {
 $(document).on("change", "input[name='subjectId']", function () {
    let subjectId=parseInt($(this).val());
    if($(this).is(":checked")){
-       if (!selectedSubjects.includes(subjectId)){
-           selectedSubjects.push(subjectId)
+       if (!studentManageState.selectedSubjects.includes(subjectId)){
+           studentManageState.selectedSubjects.push(subjectId)
        }
 
    }else {
-       selectedSubjects = selectedSubjects.filter(function (id) {
+       studentManageState.selectedSubjects = studentManageState.selectedSubjects.filter(function (id) {
            return id !== subjectId;
        });
    }
@@ -171,7 +184,7 @@ function addStudentBtn(){
         return;
     }
 
-    if (selectedSubjects.length === 0) {
+    if (studentManageState.selectedSubjects.length === 0) {
         alert("Please select at least one subject");
         return;
     }
@@ -184,7 +197,7 @@ function addStudentBtn(){
         email:email,
         contact:contact,
         address:address,
-        subjectId:selectedSubjects,
+        subjectId:studentManageState.selectedSubjects,
         classBatchId:classBatchId
 
     }
@@ -225,9 +238,16 @@ function addStudentBtn(){
 
 }
 function openAddStudentModal() {
+    studentManageState.isEditMode = false;
+    studentManageState.studentId = 0;
+    studentManageState.batchId = 0;
+    studentManageState.selectedSubjects = [];
+
+    clearBtn();
     $("#addStudentModal").addClass("active");
     $("body").addClass("modal-open");
-    isEditMode = false;
+    studentManageState.isEditMode = false;
+
 
     $("#submitAddStudentBtn")
         .html(`
@@ -237,14 +257,27 @@ function openAddStudentModal() {
             Add Student
         `)
         .attr("onclick", "addStudentBtn()");
+
 }
 
 function closeAddStudentModal() {
+    clearBtn();
     $("#addStudentModal").removeClass("active");
     $("body").removeClass("modal-open");
-    selectedSubjects.length = 0;
-    isEditMode=false;
-    clearBtn();
+    studentManageState.studentId = 0;
+    studentManageState.batchId = 0;
+    studentManageState.selectedSubjects = [];
+    studentManageState.isEditMode=false;
+
+    $("#submitAddStudentBtn")
+        .html(`
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Add Student
+        `)
+        .attr("onclick", "addStudentBtn()");
+
 }
 
 function loadAllStudents(){
@@ -252,6 +285,8 @@ function loadAllStudents(){
 
     getAllStudents().done(function(response){
         $("#studentTBody").empty();
+        studentManageState.studentList = [];
+        studentManageState.studentCount = 0;
         for (const responseElement of response.body) {
             const studentId = responseElement.studentId;
             const studentName = responseElement.studentName;
@@ -282,8 +317,8 @@ function loadAllStudents(){
                                    </tr>`
 
             $("#studentTBody").append(data);
-            studentList.push(responseElement);
-            studentCount=studentCount+1;
+            studentManageState.studentList.push(responseElement);
+            studentManageState.studentCount=studentManageState.studentCount+1;
 
     }
         loadLastRecentStudent();
@@ -318,11 +353,10 @@ function loadAllStudents(){
 
 
 }
-let studentId;
-let batchId;
+
 $(document).on("click",".editBtn",function (){
-   studentId = $(this).data("id");
-   isEditMode=true;
+    studentManageState.studentId = $(this).data("id");
+    studentManageState.isEditMode=true;
     $("#submitAddStudentBtn")
         .html(`
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -331,7 +365,7 @@ $(document).on("click",".editBtn",function (){
             Update Student
         `)
         .attr("onclick", "updateStudentBtn()");
-    getStudentById(studentId).done(function (response){
+    getStudentById(studentManageState.studentId).done(function (response){
         let student = response.body;
         $("#addStudentModal").addClass("active");
         $("body").addClass("modal-open");
@@ -340,9 +374,9 @@ $(document).on("click",".editBtn",function (){
         $("#email").val(student.email);
         $("#contact").val(student.contact);
         $("#address").val(student.address);
-        batchId=student.batchDTO.classBatchId;
+        studentManageState.batchId=student.batchDTO.classBatchId;
 
-            $("#classBatchId").val(batchId);
+            $("#classBatchId").val(studentManageState.batchId);
         let container=$("#subjectContainer")
         container.empty();
 
@@ -354,9 +388,8 @@ $(document).on("click",".editBtn",function (){
                                             <span class="st-name">${subject.subjectName}</span>
                                             <span class="st-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>
                                         </label>`)
-            selectedSubjects.push(subject.subjectId)
-        })
-        console.log(selectedSubjects);
+            studentManageState.selectedSubjects.push(subject.subjectId)
+        });
 
     });
 
@@ -407,20 +440,20 @@ function updateStudentBtn(){
         return;
     }
 
-    if (selectedSubjects.length === 0) {
+    if (studentManageState.selectedSubjects.length === 0) {
         alert("Please select at least one subject");
         return;
     }
 
     let studentData={
-        studentId:studentId,
+        studentId:studentManageState.studentId,
         studentName:studentName,
         studentUsername:username,
         studentPassword:password,
         email:email,
         contact:contact,
         address:address,
-        subjectId:selectedSubjects,
+        subjectId:studentManageState.selectedSubjects,
         classBatchId:classBatchId
 
     }
@@ -428,7 +461,6 @@ function updateStudentBtn(){
         console.log("Sucess")
         closeAddStudentModal();
         loadAllStudents();
-        clearBtn();
         toastr.success(
             "student  updated successfully",
             "update successfully"
@@ -467,11 +499,19 @@ function clearBtn(){
     $("#contact").val("");
     $("#address").val("");
     $("#studentPassword").val("");
-    $("#subjectContainer").val("");
+
+    // Clear batch
+    $("#classBatchId").val("");
+
+    // Remove subject UI
+    $("#subjectContainer").empty();
+
+    // Clear selected subjects
+    studentManageState.selectedSubjects = [];
 }
 
 function loadLastRecentStudent(){
-    let recentStudents = studentList.slice(-4);
+    let recentStudents = studentManageState.studentList.slice(-4);
     let container = $("#recentlyAddedContainer");
     container.empty();
     recentStudents.forEach(function (student){
@@ -509,7 +549,7 @@ function loadStudentCount(){
     totalStudentCard.empty();
     totalStudentCard.append(`
     <div class="stat-top"><span class="stat-label">Total Students</span><span class="stat-icon" style="--tint:#E3EDFE;--tone:#3B82F6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span></div>
-                    <div class="stat-value">0${studentCount}</div>
+                    <div class="stat-value">0${studentManageState.studentCount}</div>
                     <span class="stat-delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>+18 this month</span>
     `)
 }
@@ -519,7 +559,7 @@ function loadActiveStudents(){
 
     activeStudentCard.append(`
     <div class="stat-top"><span class="stat-label">Active Students</span><span class="stat-icon" style="--tint:#DCF3EE;--tone:#16A38A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></svg></span></div>
-                    <div class="stat-value">0${studentCount}</div>
+                    <div class="stat-value">0${studentManageState.studentCount}</div>
                     <span class="stat-sub">80% of total students</span>`)
 }
 
@@ -527,7 +567,7 @@ function loadActiveBatchCount(){
     let activeBatchCountCard=$("#activeBatchCount");
     activeBatchCountCard.empty();
     activeBatchCountCard.append(`<div class="stat-top"><span class="stat-label">Active Batches</span><span class="stat-icon" style="--tint:#EFE7FE;--tone:#8B5CF6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></span></div>
-                    <div class="stat-value">${activeBatchesCount}</div>
+                    <div class="stat-value">${studentManageState.activeBatchesCount}</div>
                     <span class="stat-sub">ex: 2026 A/L</span>`)
 
 }
@@ -535,8 +575,8 @@ function loadActiveBatchCount(){
 function loadInActiveStudentCard(){
     loadInActiveStudentCount().done(function (response){
         let inActiveStudentCount=$("#inactiveStudentCard");
-        inActiveCount=response.body;
-        let percentage=(response.body/studentCount)*100;
+        studentManageState.inActiveCount=response.body;
+        let percentage=(response.body/studentManageState.studentCount)*100;
         inActiveStudentCount.empty();
         inActiveStudentCount.append(`<div class="stat-top"><span class="stat-label">Inactive Students</span><span class="stat-icon" style="--tint:#FBE4E6;--tone:#D94F5C"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5m0-5-5 5"/></svg></span></div>
                     <div class="stat-value">${response.body}</div>
@@ -586,7 +626,7 @@ $(document).on("click",".danger",function (){
     });
 });
 
-$("#searchStudent").on("keydown", function (event) {
+$(document).on("keydown", "#searchStudent", function (event) {
   if(event.key === "Enter"){
       let searchName = $(this).val().trim();
 

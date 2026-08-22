@@ -1,12 +1,18 @@
+const userManageState = {
+    isEditMode: false,
+    currentUserId:0,
+    userCount:0,
+    activeSubjectCount:0
+};
 function  initUserManageRelatedBatch(){
     loadAllSubject();
     loadAllUser();
 }
-let activeSubjectCount;
+
 function loadAllSubject(){
     getAllSubject().done(function (response){
         let subjectList=response.body;
-        activeSubjectCount=0;
+        userManageState.activeSubjectCount=0;
         let select = $("#input-user-subject");
         select.empty();
         select.append(
@@ -18,7 +24,7 @@ function loadAllSubject(){
                      
                         <option value="${subject.subjectId}">${subject.subjectName}</option>
                      `);
-            activeSubjectCount +=1;
+            userManageState.activeSubjectCount +=1;
         });
     })
         .fail(function (xhr){
@@ -140,11 +146,11 @@ function addUserBtn() {
 
 
 
-let isEditMode = false;
+
 let currentUserId;
 
 $(document).on("click", ".editBtn", function () {
-    currentUserId = $(this).data("id");
+    userManageState.currentUserId = $(this).data("id");
     isEditMode = true;
 
     $("#save-user-btn")
@@ -156,7 +162,7 @@ $(document).on("click", ".editBtn", function () {
         `)
         .attr("onclick", "updateUserBtn()");
 
-    getUserById(currentUserId).done(function (response) {
+    getUserById(userManageState.currentUserId).done(function (response) {
         let user = response.body;
 
         $("#user-modal-overlay").addClass("active");
@@ -233,7 +239,7 @@ function updateUserBtn(){
     }
 
     let userData = {
-        userId: currentUserId,
+        userId: userManageState.currentUserId,
         username: userName,
         email: email,
         contact: contact,
@@ -306,11 +312,11 @@ $(document).on("click", ".danger", function () {
     });
 
 });
-let userCount=0;
+
 function loadAllUser() {
     getAllUser().done(function (response) {
         $("#userTBody").empty();
-        userCount = 0;
+        userManageState.userCount=0;
 
 
         for (const responseElement of response.body) {
@@ -345,7 +351,7 @@ function loadAllUser() {
                         </tr>`;
 
             $("#userTBody").append(data);
-            userCount += 1;
+            userManageState.userCount += 1;
 
         }
         loadCard();
@@ -428,10 +434,10 @@ $("#searchUser").on("keydown", function (event) {
 })
 
 function loadCard(){
-    $("#totalUserCardCount").text(userCount);
-    $("#teacherCardCount").text(userCount);
-    $(".userCountTag").text(userCount);
-    $("#subjectCountCard").text(activeSubjectCount);
+    $("#totalUserCardCount").text(userManageState.userCount);
+    $("#teacherCardCount").text(userManageState.userCount);
+    $(".userCountTag").text(userManageState.userCount);
+    $("#subjectCountCard").text(userManageState.activeSubjectCount);
 }
 function clearUserBtn(){
     $("#input-user-id").val("");

@@ -1,26 +1,35 @@
+
+const  batchManageState ={
+    batchCount : 0,
+     batchId:0,
+     batchYear:[],
+}
 function initbatchManageRelatedBatch(){
 
 
+
+    batchManageState.batchCount=0;
+    batchManageState.batchId=0;
+    batchManageState.batchYear=[]
     loadAllBatch();
 
 
 
-};
+}
 
-let batchCount = 0;
-let batchId;
+
 
 
 function loadCards() {
 
 
-    $("#stat-total").text(batchCount);
-    $("#batchCount01").text(batchCount);
-    $("#batchCount02").text(batchCount);
-    $("#batchCount03").text("0"+batchCount);
-    $("#stat-started").text(batchCount);
+    $("#stat-total").text(batchManageState.batchCount);
+    $("#batchCount01").text(batchManageState.batchCount);
+    $("#batchCount02").text(batchManageState.batchCount);
+    $("#batchCount03").text("0"+batchManageState.batchCount);
+    $("#stat-started").text(batchManageState.batchCount);
     $("#stat-upcoming").text("01");
-        $("#stat-next").text(batchYear[batchYear.length-1] +" "+ "A/L");
+        $("#stat-next").text(batchManageState.batchYear[batchManageState.batchYear.length-1] +" "+ "A/L");
         $("#stat-next-sub").text(" upcoming batch");
 }
 
@@ -64,13 +73,16 @@ function addBatchBtn() {
     });
 }
 
-let batchYear=[]
+
 function loadAllBatch() {
 
     getAllBatch().done(function (response) {
         $("#batch-table-body").empty();
 
-        batchCount = 0;
+        batchManageState.batchCount = 0;
+        batchManageState.batchYear=[];
+        batchManageState.batchId=0;
+
 
 
 
@@ -100,15 +112,15 @@ function loadAllBatch() {
                             <td>
                                 <div class="row-actions" style="justify-content:flex-end;">
                                     <button type="button" title="Edit batch" aria-label="Edit ${bName}" class="editBatchBtn" data-id="${bId}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
-                                    <button type="button" class="danger" title="Delete batch" aria-label="Delete ${bName}" data-id="${bId}" data-name="${bName}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                                    <button type="button" class="danger deleteBatchBtn" title="Delete batch" aria-label="Delete ${bName}" data-id="${bId}" data-name="${bName}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
                                 </div>
                             </td>
                         </tr>`;
 
             $("#batch-table-body").append(data);
-            batchCount += 1;
+            batchManageState.batchCount += 1;
             let year=parseInt(bName.split(" ")[0])
-            batchYear.push(year+1)
+            batchManageState.batchYear.push(year+1)
 
         }
 
@@ -132,45 +144,36 @@ function clearBtn() {
 }
 
 
-(function () {
-    "use strict";
+$(document).on("click", "#open-add-batch", function () {
+    $("#batch-modal-title").text("Add batch");
+    $("#batch-modal-overlay").addClass("active");
+    $("body").addClass("modal-open");
+});
 
-    var overlay = document.getElementById("batch-modal-overlay");
-    var openBtn = document.getElementById("open-add-batch");
-    var closeBtn = document.getElementById("close-batch-modal");
-    var cancelBtn = document.getElementById("cancel-batch-modal");
+$(document).on("click", "#close-batch-modal, #cancel-batch-modal", function () {
+    closeBatchModal();
+});
 
-    function openModal() {
-        overlay.classList.add("active");
-        document.body.classList.add("modal-open");
+$(document).on("click", "#batch-modal-overlay", function (e) {
+    if (e.target.id === "batch-modal-overlay") {
+        closeBatchModal();
     }
+});
 
-    function closeModal() {
-        overlay.classList.remove("active");
-        document.body.classList.remove("modal-open");
-        $("#batch-modal-title").text("Add batch");
-        $("#save-batch-btn").html(`
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            Add batch
-        `);
-        clearBtn();
-    }
-
-    openBtn.addEventListener("click", function () {
-        $("#batch-modal-title").text("Add batch");
-        openModal();
-    });
-    closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
-    overlay.addEventListener("click", function (e) {
-        if (e.target === overlay) closeModal();
-    });
-})();
+function closeBatchModal() {
+    $("#batch-modal-overlay").removeClass("active");
+    $("body").removeClass("modal-open");
+    $("#batch-modal-title").text("Add batch");
+    $("#save-batch-btn").html(`
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Add batch
+    `).attr("onclick", "addBatchBtn()");
+    clearBtn();
+}
 
 
 $(document).on("click", ".editBatchBtn", function () {
-    batchId = $(this).data("id");
-    editMode = true;
+    batchManageState.batchId = $(this).data("id");
 
     $("#batch-modal-title").text("Edit batch");
     $("#save-batch-btn").html(`
@@ -178,7 +181,7 @@ $(document).on("click", ".editBatchBtn", function () {
             Update Student
         `)
         .attr("onclick", "updateBatchBtn()");
-    getBatchById(batchId).done(function (response) {
+    getBatchById(batchManageState.batchId).done(function (response) {
         $("#batch-modal-overlay").addClass("active");
         document.body.classList.add("modal-open");
 
@@ -220,8 +223,7 @@ function updateBatchBtn() {
     updateBatch(batchData).done(function (response) {
         console.log("Success");
         loadAllBatch();
-        clearBtn();
-        editMode = false;
+        closeBatchModal();
         toastr.success(
             "batch updated successfully",
             "update successful"
@@ -240,7 +242,7 @@ function updateBatchBtn() {
 
 
 
-$(document).on("click", ".danger", function () {
+$(document).on("click", ".deleteBatchBtn", function () {
     let deleteBatchId = $(this).data("id");
     batchDelete(deleteBatchId).done(function (response){
 
@@ -277,7 +279,7 @@ $(document).on("click", ".danger", function () {
 });
 
 
-$("#batch-search").on("keydown", function (event) {
+$(document).on("keydown", "#batch-search",function (event) {
     if (event.key === "Enter") {
         let batchName=$(this).val().trim();
         if(batchName === ""){

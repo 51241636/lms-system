@@ -1,7 +1,10 @@
 let batchId=0;
 let batchName="";
 function initStudentSubjectRelatedBatch(){
+    batchId=0;
+    batchName="";
     getStudentBatchId()
+
 }
 
 
@@ -14,6 +17,7 @@ function initStudentSubjectRelatedBatch(){
 
 function getStudentBatchId(){
     loadStudentDetail(localStorage.getItem("studentId")).done(function (response){
+        batchId=0;
         let student = response.body;
         batchId=student.batchDTO.classBatchId;
         if(batchId > 0){
@@ -35,6 +39,7 @@ function loadAllStudentRelatedSubject(){
     console.log(localStorage.getItem("studentId"),batchId)
     getAllStudentRelateSubject(localStorage.getItem("studentId"),batchId).done(function (response) {
         $("#subjectList").empty();
+        batchName="";
 
 
         for (const responseElement of response.body) {
